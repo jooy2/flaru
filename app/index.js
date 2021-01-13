@@ -1,4 +1,6 @@
-const { app, BrowserWindow, protocol } = require('electron');
+const {
+  app, BrowserWindow, protocol, shell,
+} = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
@@ -35,9 +37,11 @@ function createWindow() {
   win.on('blur', () => {
     electronLocalShortcut.unregisterAll(win);
   });
-  win.webContents.on('new-window', (event, url) => {
+  win.webContents.on('new-window', async (event, url) => {
     event.preventDefault();
-    win.loadURL(url);
+    if (url.indexOf('ruffle') === -1) {
+      await shell.openExternal(url);
+    }
   });
 }
 

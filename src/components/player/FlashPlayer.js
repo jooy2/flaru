@@ -41,6 +41,8 @@ const FlashPlayer = ({
       window.RufflePlayer = window.RufflePlayer || {};
       window.RufflePlayer.config = {
         autoPlay,
+        polyfills: false,
+        letterbox: 'on',
       };
       const ruffle = window.RufflePlayer.newest();
       const rPlayer = ruffle.createPlayer();
