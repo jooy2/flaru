@@ -5,9 +5,6 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 
-app.commandLine.appendSwitch('disable-web-security');
-app.commandLine.appendSwitch('disable-site-isolation-trials');
-
 let win;
 
 function createWindow() {
