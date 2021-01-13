@@ -9,15 +9,15 @@ i18n
   .use(initReactI18next)
   .init({
     ns: ['common', 'menu', 'notice'],
+    load: 'languageOnly',
     defaultNS: 'common',
     fallbackNS: 'common',
-    fallbackLng: 'ko',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
     react: {
       useSuspense: false,
-      wait: false,
     },
     backend: {
       loadPath: './locales/{{lng}}/{{ns}}.json',
