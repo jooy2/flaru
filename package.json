@@ -1,0 +1,94 @@
+{
+  "name": "open-ruffle-player",
+  "version": "0.1.0",
+  "description": "OpenRuffle Flash Player",
+  "main": "app/index.js",
+  "private": true,
+  "homepage": "./",
+  "scripts": {
+    "start": "react-scripts start",
+    "start-interface": "cross-env PORT=9090 BROWSER=none npm run start",
+    "start-electron": "electron .",
+    "start-electron-after-interface": "wait-on http://localhost:9090 && npm run start-electron",
+    "build:mac": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --mac",
+    "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --windows nsis:x64",
+    "build:win-portable": "react-scripts build && electron-builder --windows portable --x64",
+    "dev": "cross-env NODE_ENV=dev concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "productName": "OpenRuffle Flash Player",
+    "appId": "com.jooy.openruffle",
+    "asar": true,
+    "compression": "maximum",
+    "extends": null,
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ],
+      "icon": "./resources/installer/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true
+    },
+    "directories": {
+      "buildResources": "./resources/installer/",
+      "output": "./dist/"
+    },
+    "files": [
+      "app/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "public/**/*"
+    ]
+  },
+  "author": "leejooy96 <leejooy96@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
+    "electron": "^11.2.0",
+    "electron-builder": "^22.9.1",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "react-scripts": "^4.0.1",
+    "wait-on": "^5.2.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "electron-is-dev": "^1.2.0",
+    "electron-localshortcut": "^3.2.1",
+    "i18next": "^19.8.4",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "i18next-http-backend": "^1.0.21",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-dropzone": "^11.2.4",
+    "react-helmet": "^6.1.0",
+    "react-i18next": "^11.8.5",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
