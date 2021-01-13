@@ -52,7 +52,9 @@ if (!gotTheLock) {
       win.focus();
     }
   });
-  app.dock.hide();
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
   app.whenReady().then(() => {
     protocol.registerFileProtocol('file', (request, callback) => {
       const pathname = decodeURI(request.url.replace('file:///', ''));
