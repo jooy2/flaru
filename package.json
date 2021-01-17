@@ -38,9 +38,7 @@
     },
     "files": [
       "app/**/*",
-      "build/**/*",
-      "node_modules/**/*",
-      "public/**/*"
+      "build/**/*"
     ]
   },
   "author": "leejooy96 <leejooy96@gmail.com>",
