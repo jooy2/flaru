@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   headerArea: {
-    marginTop: '60px',
+    marginTop: '48px',
     flexShrink: 0,
   },
   layoutContentWrapper: {
@@ -29,6 +29,7 @@ const Layout = ({
   withTail = true,
   header = true,
   container = true,
+  withBackButton = false,
   children,
 }) => {
   const classes = useStyles();
@@ -41,7 +42,7 @@ const Layout = ({
           {withTail ? titleTail : ''}
         </title>
       </Helmet>
-      { header ? <Header title={title} /> : '' }
+      { header ? <Header title={title} withBackButton={withBackButton} /> : '' }
       <Grid container className={classes.layoutContentWrapper}>
         {
         container

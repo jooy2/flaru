@@ -6,12 +6,12 @@ import {
 } from '@material-ui/core';
 import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
-import { Alert } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
 
 import Layout from '../components/layouts/Layout';
 import FlashPlayer from '../components/player/FlashPlayer';
 import AppMenu from '../components/layouts/AppMenu';
+import AppAlert from '../components/views/AppAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     userSelect: 'none',
     padding: theme.spacing(3, 5),
-    minHeight: '300px',
+    minHeight: '280px',
     textAlign: 'center',
     fontStyle: 'italic',
     borderRadius: '5px',
@@ -67,8 +67,8 @@ const Home = () => {
   return (
     <Layout
       title={filePath ? t('player-title') : t('main-title')}
-      header={!filePath}
       withTail={!filePath}
+      withBackButton={filePath}
       container={!filePath}
     >
       <div className={filePath ? {} : classes.root}>
@@ -83,16 +83,18 @@ const Home = () => {
                     </Typography>
                     <input {...getInputProps()} />
                   </div>
+                  {flashContentError
+                  && (
+                  <Grid item xs={12}>
+                    <AppAlert
+                      severity="error"
+                      withMargin
+                      text={errorMessage}
+                    />
+                  </Grid>
+                  )}
                 </Paper>
               </Grid>
-              {flashContentError
-              && (
-              <Grid item xs={12}>
-                <Alert severity="error">
-                  {errorMessage}
-                </Alert>
-              </Grid>
-              )}
               <Grid item xs={12}>
                 <AppMenu />
               </Grid>

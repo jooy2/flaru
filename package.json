@@ -50,7 +50,7 @@
     "cross-env": "^7.0.3",
     "electron": "^11.2.0",
     "electron-builder": "^22.9.1",
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -62,8 +62,6 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "electron-is-dev": "^1.2.0",
     "electron-localshortcut": "^3.2.1",
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",

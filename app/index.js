@@ -1,7 +1,8 @@
 const {
   app, BrowserWindow, protocol, shell,
 } = require('electron');
-const isDev = require('electron-is-dev');
+
+const isDev = !app.isPackaged;
 const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 

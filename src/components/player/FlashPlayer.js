@@ -5,7 +5,7 @@ const useStyles = makeStyles(() => ({
   player: {
     alignItems: 'stretch',
     width: '100%',
-    height: '100vh',
+    height: 'calc(100vh - 48px)',
     top: 0,
     left: 0,
     right: 0,

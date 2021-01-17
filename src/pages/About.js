@@ -6,13 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Layout from '../components/layouts/Layout';
-import BackMenu from '../components/layouts/BackMenu';
 import { getVersionName } from '../utils/helper';
 
 const useStyles = makeStyles(theme => ({
-  buttonArea: {
-    marginBottom: theme.spacing(2),
-  },
   paper: {
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -26,10 +22,8 @@ const About = () => {
   return (
     <Layout
       title={t('about-title')}
+      withBackButton
     >
-      <Grid item xs={12} className={classes.buttonArea}>
-        <BackMenu />
-      </Grid>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Typography component="h2" variant="h5">OpenRuffle Player</Typography>
