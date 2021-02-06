@@ -4,9 +4,9 @@ export const goToExtLink = async (ev, link) => {
   await shell.openExternal(link);
 };
 
-export const getVersionCode = () => 1;
+export const getVersionCode = () => 2;
 
-export const getVersionName = () => '0.1.0';
+export const getVersionName = () => '0.2.0';
 
 export default {
   goToExtLink,

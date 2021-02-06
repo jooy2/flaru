@@ -69,6 +69,7 @@ const Home = () => {
       title={filePath ? t('player-title') : t('main-title')}
       withTail={!filePath}
       withBackButton={filePath}
+      withHelpButton={!filePath}
       container={!filePath}
     >
       <div className={filePath ? {} : classes.root}>

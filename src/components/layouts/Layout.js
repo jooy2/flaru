@@ -30,6 +30,7 @@ const Layout = ({
   header = true,
   container = true,
   withBackButton = false,
+  withHelpButton = false,
   children,
 }) => {
   const classes = useStyles();
@@ -42,7 +43,14 @@ const Layout = ({
           {withTail ? titleTail : ''}
         </title>
       </Helmet>
-      { header ? <Header title={title} withBackButton={withBackButton} /> : '' }
+      { header
+        ? (
+          <Header
+            title={title}
+            withBackButton={withBackButton}
+            withHelpButton={withHelpButton}
+          />
+        ) : '' }
       <Grid container className={classes.layoutContentWrapper}>
         {
         container

@@ -4,7 +4,7 @@ import {
   AppBar, IconButton, Toolbar, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack, HelpOutline } from '@material-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header = ({ title, withBackButton }) => {
+const Header = ({ title, withBackButton, withHelpButton }) => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -52,6 +52,17 @@ const Header = ({ title, withBackButton }) => {
           <Typography className={classes.title} variant="body1" noWrap>
             {title}
           </Typography>
+          {withHelpButton
+          && (
+          <IconButton
+            color="inherit"
+            aria-label="open"
+            onClick={() => history.push('/about')}
+            edge="end"
+          >
+            <HelpOutline />
+          </IconButton>
+          )}
         </Toolbar>
       </AppBar>
     </div>
