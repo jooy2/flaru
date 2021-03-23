@@ -2,7 +2,7 @@ const { shell } = window.require('@electron/remote');
 const remote = window.require('@electron/remote');
 
 export const goToExtLink = async (ev, link) => {
-  ev.preventDefault();
+  if (ev) ev.preventDefault();
   await shell.openExternal(link);
 };
 

@@ -54,13 +54,11 @@ const FlashPlayer = ({
     } catch (e) { return null; }
 
     return () => {
-      try {
-        window.rufflePlayer = {};
-        if (window?.rufflePlayer?.instance) {
-          window.rufflePlayer.instance.destroy();
-          window.rufflePlayer.instance = null;
-        }
-      } catch (e) { console.log(e); }
+      window.rufflePlayer = {};
+      if (window?.rufflePlayer?.instance) {
+        window.rufflePlayer.instance.destroy();
+        window.rufflePlayer.instance = null;
+      }
     };
   }, [url, filePath]);
 
