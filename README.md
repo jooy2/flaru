@@ -1,4 +1,5 @@
 # 🎮 OpenRuffle Flash Player
+![image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 This is **"Unofficial" Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs). It is Electron Desktop App compatible with Windows, macOS and Linux OS.
 
 I'm not the official developer of Ruffle. For issues and documentation related to the emulator, please refer to the official Ruffle repository documentation below.
