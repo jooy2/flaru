@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { goToExtLink } from '../../utils/helper';
 
 const AppMenu = () => {
-  const { t } = useTranslation(['common', 'menu']);
+  const [t] = useTranslation(['common', 'menu']);
 
   return (
     <Paper>

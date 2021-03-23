@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
   const classes = useStyles();
-  const { t } = useTranslation(['common', 'notice', 'menu']);
+  const [t] = useTranslation(['common', 'notice', 'menu']);
   const [filePath, setFilePath] = useState(null);
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
