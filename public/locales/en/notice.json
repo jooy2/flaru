@@ -1,4 +1,7 @@
 {
+  "beta-alert": "This is currently a beta build. There may be problems with some flash operation.",
   "wrong-file-type": "Wrong file format! You can only run SWF files.",
-  "drag-drop-execute": "Click here or drag & drop files to run."
+  "drag-drop-execute": "Click here or drag & drop files to run.",
+  "no-recent-files": "There are no recently launched files.",
+  "not-found-recent-file": "That file path does not exist. It has been removed from the list."
 }

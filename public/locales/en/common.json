@@ -2,5 +2,8 @@
   "main-title": "Select the SWF file to run",
   "about-title": "About...",
   "player-title": "OpenRuffle Flash Player",
-  "player-loading": "Preparing to run the player... Please wait."
+  "player-loading": "Preparing to run the player... Please wait.",
+  "recent-file-title": "Recent Files",
+  "loading": "Please Wait...",
+  "dialog-title-info": "Notice"
 }
