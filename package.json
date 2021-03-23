@@ -20,6 +20,13 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
+    "fileAssociations": [
+      {
+        "ext": "swf",
+        "name": "SWF File",
+        "role": "Viewer"
+      }
+    ],
     "productName": "OpenRuffle Flash Player",
     "appId": "com.jooy.openruffle",
     "asar": true,
