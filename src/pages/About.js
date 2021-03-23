@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Layout from '../components/layouts/Layout';
-import { getVersionName } from '../utils/helper';
+import { getRuffleVersion, getVersionName } from '../utils/helper';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,7 +34,9 @@ const About = () => {
             Made By leejooy96 (leejooy96@gmail.com)
           </Typography>
           <Typography component="p" variant="body1">
-            Player Based on Ruffle Flash Emulator
+            Player Based on Ruffle Flash Emulator (
+            {getRuffleVersion()}
+            )
           </Typography>
         </Paper>
       </Grid>
