@@ -1,17 +1,24 @@
 import React from 'react';
 import {
+  Button,
   Grid, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
+import { Update } from '@material-ui/icons';
 import Layout from '../components/layouts/Layout';
-import { getRuffleVersion, getVersionName } from '../utils/helper';
+import { getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
 
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    maxHeight: '250px',
+    overflowY: 'auto',
+    '& p': {
+      fontSize: '0.9em',
+    },
   },
 }));
 
@@ -37,6 +44,11 @@ const About = () => {
             Player Based on Ruffle Flash Emulator (
             {getRuffleVersion()}
             )
+          </Typography>
+          <Typography component="p" variant="body1">
+            <Button startIcon={<Update />} onClick={(ev) => goToExtLink(ev, 'https://github.com/leejooy96/open-ruffle-player/releases')}>
+              {t('menu:update-check')}
+            </Button>
           </Typography>
         </Paper>
       </Grid>
