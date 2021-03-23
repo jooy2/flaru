@@ -74,8 +74,12 @@
     "react-dropzone": "^11.3.1",
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.8.10",
+    "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-actions": "^2.6.5",
+    "redux-thunk": "^2.3.0"
   },
   "eslintConfig": {
     "extends": "react-app"
