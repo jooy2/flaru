@@ -16,11 +16,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: '48px',
     flexShrink: 0,
   },
-  layoutContentWrapper: {
+  layoutContentWrapper: props => ({
     flexGrow: 1,
     background: theme.palette.type === 'light' ? '#eaeaea' : '#333',
     userSelect: 'none',
-  },
+    padding: props.withPadding ? theme.spacing(1, 0) : 0,
+  }),
 }));
 
 const Layout = ({
@@ -29,11 +30,12 @@ const Layout = ({
   withTail = true,
   header = true,
   container = true,
+  withPadding = true,
   withBackButton = false,
   withHelpButton = false,
   children,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ withPadding });
 
   return (
     <div className={classes.layoutRoot}>

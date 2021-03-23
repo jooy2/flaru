@@ -10,6 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 const useStyles = makeStyles(() => ({
   root: {
     userSelect: 'none',
+    background: '#383838',
   },
   title: {
     flexGrow: 1,
@@ -28,44 +29,42 @@ const Header = ({ title, withBackButton, withHelpButton }) => {
     if (e) e.preventDefault();
     if (location.pathname === '/') {
       window.location.reload();
-      return;
+    } else {
+      history.push('/explorer');
     }
-    history.push('/');
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" style={{ background: '#383838' }}>
-        <Toolbar variant="dense">
-          {withBackButton
-          && (
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleGoHome}
-            edge="start"
-            className={classes.menuButton}
-          >
-            <ArrowBack />
-          </IconButton>
-          )}
-          <Typography className={classes.title} variant="body1" noWrap>
-            {title}
-          </Typography>
-          {withHelpButton
-          && (
-          <IconButton
-            color="inherit"
-            aria-label="open"
-            onClick={() => history.push('/about')}
-            edge="end"
-          >
-            <HelpOutline />
-          </IconButton>
-          )}
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="fixed" className={classes.root}>
+      <Toolbar variant="dense">
+        {withBackButton
+        && (
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleGoHome}
+          edge="start"
+          className={classes.menuButton}
+        >
+          <ArrowBack />
+        </IconButton>
+        )}
+        <Typography className={classes.title} variant="body1" noWrap>
+          {title}
+        </Typography>
+        {withHelpButton
+        && (
+        <IconButton
+          color="inherit"
+          aria-label="open"
+          onClick={() => history.push('/about')}
+          edge="end"
+        >
+          <HelpOutline />
+        </IconButton>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
