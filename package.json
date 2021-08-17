@@ -2,8 +2,8 @@
   "name": "open-ruffle-player",
   "version": "0.5.0",
   "versionCode": 50,
-  "versionDate": "2021-03-21",
-  "ruffleVersionDate": "2021-03-21",
+  "versionDate": "2021-08-17",
+  "ruffleVersionDate": "2021-08-17",
   "description": "OpenRuffle Flash Player",
   "main": "app/index.js",
   "private": true,
@@ -14,6 +14,7 @@
     "start-electron": "electron .",
     "start-electron-after-interface": "wait-on http://localhost:9090 && npm run start-electron",
     "build:mac": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --mac",
+    "build:linux": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --linux",
     "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --windows nsis:x64",
     "build:win-portable": "react-scripts build && electron-builder --windows portable --x64",
     "dev": "cross-env NODE_ENV=dev concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
@@ -41,6 +42,14 @@
     },
     "nsis": {
       "oneClick": true
+    },
+    "linux": {
+      "icon": "resources/installer",
+      "target": [
+        "deb",
+        "rpm",
+        "snap"
+      ]
     },
     "directories": {
       "buildResources": "./resources/installer/",
