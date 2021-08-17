@@ -33,6 +33,8 @@ const FlashPlayer = ({
 }) => {
   const classes = useStyles();
   const player = useRef();
+  const electron = window.require('electron');
+  const { remote } = electron;
 
   useEffect(() => {
     try {
@@ -48,7 +50,13 @@ const FlashPlayer = ({
       const rPlayer = ruffle.createPlayer();
       rPlayer.id = 'player';
       container.appendChild(rPlayer);
-      const realPath = filePath.replace('file:///', '');
+      let realPath;
+      const os = remote.getGlobal('ENV_OS');
+      if (os === 'Linux' || os === 'macOS') {
+        realPath = filePath.indexOf('file:') === -1 ? `file:///${filePath}` : filePath;
+      } else {
+        realPath = filePath.replace('file:///', '');
+      }
       rPlayer.load(realPath);
       rPlayer.addEventListener('oncontextmenu', e => e.preventDefault());
     } catch (e) { return null; }

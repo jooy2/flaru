@@ -74,6 +74,7 @@ const Explorer = ({ ConfigActions, config }) => {
     if (blob !== 'x-shockwave-flash'
           && blob !== 'futuresplash'
           && blob !== 'x-shockwave-flash2-preview'
+          && blob !== 'vnd.adobe.flash.movie'
           && blob !== 'vnd.adobe.flash-movie') {
       setFlashContentError(true);
       setErrorMessage(t('notice:wrong-file-type'));
