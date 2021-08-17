@@ -22,3 +22,6 @@ There is no built-in automatic update in the app. It is recommended to download 
 Please use the GitHub Release page attached below.
 
 [OpenRuffle Flash Player Release Page](https://github.com/leejooy96/open-ruffle-player/releases)
+
+# License
+Copyright © 2021 Jooy2 Released under the MIT license.
