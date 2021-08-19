@@ -12,6 +12,7 @@
     "airbnb/hooks"
   ],
   "rules": {
+    "linebreak-style": ["error", "windows"],
     "arrow-parens": 0,
     "consistent-return": 1,
     "generator-star-spacing": 0,
