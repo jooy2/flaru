@@ -13,7 +13,7 @@ const AppMenu = () => {
   return (
     <Paper>
       <List component="nav" aria-label="main">
-        <ListItem button onClick={(e) => goToExtLink(e, 'https://github.com/leejooy96/open-ruffle-player/releases')}>
+        <ListItem button onClick={(e) => goToExtLink(e, 'https://github.com/jooy2/open-ruffle-player/releases')}>
           <ListItemIcon>
             <OpenInNew />
           </ListItemIcon>

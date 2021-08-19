@@ -38,7 +38,7 @@ const About = () => {
             {getVersionName()}
           </Typography>
           <Typography component="p" variant="body1">
-            Made By leejooy96 (leejooy96@gmail.com)
+            Made By jooy2 (jootc.help@gmail.com)
           </Typography>
           <Typography component="p" variant="body1">
             Player Based on Ruffle Flash Emulator (
@@ -46,7 +46,7 @@ const About = () => {
             )
           </Typography>
           <Typography component="p" variant="body1">
-            <Button startIcon={<Update />} onClick={(ev) => goToExtLink(ev, 'https://github.com/leejooy96/open-ruffle-player/releases')}>
+            <Button startIcon={<Update />} onClick={(ev) => goToExtLink(ev, 'https://github.com/jooy2/open-ruffle-player/releases')}>
               {t('menu:update-check')}
             </Button>
           </Typography>
