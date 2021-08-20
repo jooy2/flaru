@@ -70,6 +70,7 @@ function createWindow() {
   });
   win.setMenuBarVisibility(false);
   win.loadURL(isDev ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`).catch(e => {
+    // eslint-disable-next-line no-console
     console.log(e);
   }).then(() => {
     if (isDev) win.webContents.openDevTools();

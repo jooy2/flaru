@@ -19,7 +19,7 @@
     "build:win-portable": "react-scripts build && electron-builder --windows portable --x64",
     "dev": "cross-env NODE_ENV=dev concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
     "postinstall": "electron-builder install-app-deps",
-    "lint:fix": "eslint --fix src --ext .js,.jsx"
+    "lint:fix": "eslint --fix src app --ext .js,.jsx"
   },
   "build": {
     "fileAssociations": [
