@@ -1,9 +1,9 @@
 {
   "name": "open-ruffle-player",
-  "version": "0.5.0",
-  "versionCode": 50,
-  "versionDate": "2021-08-17",
-  "ruffleVersionDate": "2021-08-17",
+  "version": "0.6.0",
+  "versionCode": 60,
+  "versionDate": "2021-08-20",
+  "ruffleVersionDate": "2021-08-20",
   "description": "OpenRuffle Flash Player",
   "main": "app/index.js",
   "private": true,
@@ -61,7 +61,7 @@
       "build/**/*"
     ]
   },
-  "author": "leejooy96 <leejooy96@gmail.com>",
+  "author": "jooy2 <jootc.help@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^6.2.1",
