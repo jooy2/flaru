@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Layout from '../components/layouts/Layout';
-import FlashPlayer from '../components/player/FlashPlayer';
+import FlashPlayer from '../components/views/FlashPlayer';
 import * as configActions from '../store/modules/config';
 
 const Player = ({

@@ -3,10 +3,10 @@ import { Route, HashRouter, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 import NotFound from './NotFound';
-import Home from './pages/Home';
-import Explorer from './pages/Explorer';
-import Player from './pages/Player';
-import About from './pages/About';
+import Home from './screens/Home';
+import Explorer from './screens/Explorer';
+import Player from './screens/Player';
+import About from './screens/About';
 
 const App = () => (
   <HashRouter>
