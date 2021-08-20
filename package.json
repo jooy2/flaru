@@ -30,7 +30,7 @@
       }
     ],
     "productName": "OpenRuffle Flash Player",
-    "appId": "com.jooy.openruffle",
+    "appId": "com.jooy2.openruffleplayer",
     "asar": true,
     "compression": "maximum",
     "extends": null,
@@ -66,11 +66,11 @@
   "devDependencies": {
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
-    "electron": "^13.1.9",
+    "electron": "^13.2.1",
     "electron-builder": "^22.11.7",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
