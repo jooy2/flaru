@@ -4,6 +4,7 @@ const initialState = {
   flashFileName: '',
   flashFilePath: '',
   recentFiles: [],
+  isAS3Error: false,
 };
 
 const SET_CONFIG = 'config/SET_CONFIG';

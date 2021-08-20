@@ -30,6 +30,7 @@ const FlashPlayer = ({
   url = '',
   autoPlay = true,
   filePath = null,
+  onErrorAS3,
 }) => {
   const classes = useStyles();
   const player = useRef();
@@ -49,6 +50,11 @@ const FlashPlayer = ({
       const ruffle = window.RufflePlayer.newest();
       const rPlayer = ruffle.createPlayer();
       rPlayer.id = 'player';
+      rPlayer.addEventListener('loadedmetadata', () => {
+        if (rPlayer?.metadata?.isActionScript3) {
+          onErrorAS3();
+        }
+      });
       container.appendChild(rPlayer);
       let realPath;
       const os = remote.getGlobal('ENV_OS');

@@ -3,5 +3,7 @@
   "wrong-file-type": "Wrong file format! You can only run SWF files.",
   "drag-drop-execute": "Click here or drag & drop files to run.",
   "no-recent-files": "There are no recently launched files.",
-  "not-found-recent-file": "That file path does not exist. It has been removed from the list."
+  "not-found-recent-file": "That file path does not exist. It has been removed from the list.",
+  "as3-alert-title": "This file is not yet supported!",
+  "as3-alert-desc": "Sorry. This file was created with Action Script 3 (AVM2) and is currently not running. It will be supported in the near future and you will have to wait for a future update."
 }
