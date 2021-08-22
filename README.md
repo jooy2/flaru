@@ -1,10 +1,22 @@
+<div align="center">
+
 # 🎮 OpenRuffle Flash Player
-![image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/open-ruffle-player/blob/master/LICENSE)
+[![Version](https://img.shields.io/github/package-json/v/jooy2/open-ruffle-player)](https://github.com/jooy2/open-ruffle-player/tags)
+![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/open-ruffle-player)
+[![Downloads](https://img.shields.io/github/downloads/jooy2/open-ruffle-player/total)](https://github.com/jooy2/open-ruffle-player/releases)
+![Languages](https://img.shields.io/github/languages/count/jooy2/open-ruffle-player)
+[![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
+
+![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 
 This is **"Unofficial" Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs). It is Electron Desktop App compatible with Windows, macOS and Linux OS.
 
 I'm not the official developer of Ruffle. For issues and documentation related to the emulator, please refer to the official Ruffle repository documentation below.
- - **Official Ruffle Desktop Player** is here!: https://github.com/ruffle-rs/ruffle
+
+**Official Ruffle Desktop Player** is here!: https://github.com/ruffle-rs/ruffle
+
+</div>
 
 # ⭐ Features
  - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
