@@ -1,8 +1,11 @@
 const { app } = require('electron');
 
 const os = require('os');
+const pkg = require('../../package.json');
 
 const isDev = () => !app.isPackaged;
+
+const getAppName = () => pkg.description;
 
 const getOS = () => {
   switch (os.platform()) {
@@ -28,6 +31,7 @@ const getOSVersion = () => os.release();
 
 module.exports = {
   isDev,
+  getAppName,
   getOS,
   getOSVersion,
 };

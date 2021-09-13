@@ -5,18 +5,19 @@ const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
 const fs = require('fs');
-const { getOS, getOSVersion } = require('./appUtils');
+const { getOS, getOSVersion, isDev } = require('./appUtils');
 const pkg = require('../package.json');
 require('@electron/remote/main').initialize();
 
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
+global.APP_VERSION_DATE = pkg.versionDate;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
+global.ENV_IS_DEV = isDev();
 global.ENV_OS = getOS();
 global.ENV_OS_VERSION = getOSVersion();
 const MAX_RECENT_FILES = 5;
 
-const isDev = !app.isPackaged;
 const isWindows = process.platform === 'win32';
 const store = new Store();
 let win;

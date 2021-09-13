@@ -1,29 +1,17 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
 import {
   Button,
   Grid, Paper, Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { Update } from '@material-ui/icons';
+import { Update } from '@mui/icons-material';
 import Layout from '../components/layouts/Layout';
 import { getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    maxHeight: '250px',
-    overflowY: 'auto',
-    '& p': {
-      fontSize: '0.9em',
-    },
-  },
-}));
+import { paperBase } from '../utils/styles';
 
 const About = () => {
-  const classes = useStyles();
   const [t] = useTranslation(['common', 'notice', 'menu']);
 
   return (
@@ -32,7 +20,7 @@ const About = () => {
       withBackButton
     >
       <Grid item xs={12}>
-        <Paper className={classes.paper}>
+        <Paper css={paperBase}>
           <Typography component="h2" variant="h5">OpenRuffle Player</Typography>
           <Typography component="p" variant="body1">
             {getVersionName()}
@@ -46,14 +34,17 @@ const About = () => {
             )
           </Typography>
           <Typography component="p" variant="body1">
-            <Button startIcon={<Update />} onClick={(ev) => goToExtLink(ev, 'https://github.com/jooy2/open-ruffle-player/releases')}>
+            <Button
+              startIcon={<Update />}
+              onClick={(ev) => goToExtLink(ev, 'https://github.com/jooy2/open-ruffle-player/releases')}
+            >
               {t('menu:update-check')}
             </Button>
           </Typography>
         </Paper>
       </Grid>
       <Grid item xs={12}>
-        <Paper className={classes.paper}>
+        <Paper css={paperBase}>
           <Typography component="h2" variant="h5">LICENSE</Typography>
           <Typography component="h2" variant="subtitle1">
             <strong>Ruffle By Mike Welsh (Web Based Adobe Flash Player)</strong>

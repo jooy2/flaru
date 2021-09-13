@@ -1,16 +1,17 @@
+/** @jsxImportSource @emotion/react */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Grid, LinearProgress, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
 import * as configActions from '../store/modules/config';
 import Layout from '../components/layouts/Layout';
 
-const Home = ({ ConfigActions }) => {
+const Main = ({ ConfigActions }) => {
   const [t] = useTranslation(['common']);
   const history = useHistory();
   const electron = window.require('electron');
@@ -51,9 +52,7 @@ const Home = ({ ConfigActions }) => {
   }, []);
 
   return (
-    <Layout
-      header={false}
-    >
+    <Layout header={false}>
       <Grid item xs={12}>
         <LinearProgress />
         <Typography component="p">
@@ -68,4 +67,4 @@ const mapDispatchToProps = dispatch => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Main);

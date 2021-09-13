@@ -1,58 +1,24 @@
+/** @jsxImportSource @emotion/react */
 import React, { useState, useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  Alert,
   Button,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useDropzone } from 'react-dropzone';
-import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { PlayCircleOutline } from '@material-ui/icons';
+import { PlayCircleOutline } from '@mui/icons-material';
+import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 
 import Layout from '../components/layouts/Layout';
-import AppAlert from '../components/views/AppAlert';
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  dropzone: {
-    cursor: 'pointer',
-    userSelect: 'none',
-    padding: theme.spacing(3, 5),
-    minHeight: '130px',
-    textAlign: 'center',
-    fontStyle: 'italic',
-    borderRadius: '5px',
-    border: theme.palette.type === 'light' ? '3px dashed #333' : '3px dashed #fff',
-  },
-  list: {
-    '& .MuiListItemIcon-root': {
-      minWidth: '32px',
-    },
-    '& span': {
-      fontSize: '0.8em',
-      maxWidth: '100%',
-      overflowX: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-    },
-  },
-  mT: {
-    marginTop: theme.spacing(2),
-  },
-  dialog: {
-    userSelect: 'none',
-  },
-}));
+import { paperSm, userSelectNone } from '../utils/styles';
 
 const Explorer = ({ ConfigActions, config }) => {
-  const classes = useStyles();
   const [t] = useTranslation(['common', 'notice', 'menu']);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
@@ -146,8 +112,20 @@ const Explorer = ({ ConfigActions, config }) => {
       && (
       <>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <div {...getRootProps({ className: classes.dropzone })}>
+          <Paper css={paperSm}>
+            <div {...getRootProps({
+              css: css`
+                cursor: pointer;
+                user-select: none;
+                padding: 24px 40px;
+                min-height: 130px;
+                text-align: center;
+                font-style: italic;
+                border-radius: 5px;
+                border: ${config.isDarkTheme ? '3px dashed #fff' : '3px dashed #333'};
+              `,
+            })}
+            >
               <Typography component="h2" variant="subtitle1">
                 {t('notice:drag-drop-execute')}
               </Typography>
@@ -156,17 +134,13 @@ const Explorer = ({ ConfigActions, config }) => {
             {flashContentError
             && (
             <Grid item xs={12}>
-              <AppAlert
-                severity="error"
-                withMargin
-                text={errorMessage}
-              />
+              <Alert severity="error">{errorMessage}</Alert>
             </Grid>
             )}
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>
+          <Paper css={paperSm}>
             <Typography component="h2" variant="h6">
               <strong>{t('common:recent-file-title')}</strong>
             </Typography>
@@ -179,7 +153,23 @@ const Explorer = ({ ConfigActions, config }) => {
             {config.recentFiles.length > 0 && (
             <Grid container>
               <Grid item xs={12}>
-                <List component="nav" aria-label="recent files" dense className={classes.list}>
+                <List
+                  component="nav"
+                  aria-label="recent files"
+                  dense
+                  css={css`
+                    .MuiListItemIcon-root {
+                      min-width: 32px;
+                    }
+                    span {
+                      font-size: 0.8em;
+                      max-width: 100%;
+                      overflow-x: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                    }
+                  `}
+                >
                   {config.recentFiles.map(val => (
                     <ListItem button key={val} onClick={(e) => handleClickRecentFile(e, val)}>
                       <ListItemIcon>
@@ -204,7 +194,7 @@ const Explorer = ({ ConfigActions, config }) => {
       </Grid>
       )}
       <Dialog
-        className={classes.dialog}
+        css={userSelectNone}
         open={as3DialogOpen}
         onClose={handleAS3ErrorClose}
         disableEscapeKeyDown

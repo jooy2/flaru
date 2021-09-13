@@ -1,27 +1,14 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
 
 import {
   AppBar, IconButton, Toolbar, Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack, HelpOutline } from '@material-ui/icons';
+} from '@mui/material';
+import { ArrowBack, HelpOutline } from '@mui/icons-material';
 import { useHistory, useLocation } from 'react-router-dom';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    userSelect: 'none',
-    background: '#383838',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: 5,
-  },
-}));
+import { css } from '@emotion/react';
 
 const Header = ({ title, withBackButton, withHelpButton }) => {
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
 
@@ -35,7 +22,13 @@ const Header = ({ title, withBackButton, withHelpButton }) => {
   };
 
   return (
-    <AppBar position="fixed" className={classes.root}>
+    <AppBar
+      position="fixed"
+      css={css`
+        user-select: none;
+        background: #383838;
+      `}
+    >
       <Toolbar variant="dense">
         {withBackButton
         && (
@@ -44,12 +37,12 @@ const Header = ({ title, withBackButton, withHelpButton }) => {
           aria-label="open drawer"
           onClick={handleGoHome}
           edge="start"
-          className={classes.menuButton}
+          css={css`margin-right: 5px`}
         >
           <ArrowBack />
         </IconButton>
         )}
-        <Typography className={classes.title} variant="body1" noWrap>
+        <Typography css={css`flex-grow: 1`} variant="body1" noWrap>
           {title}
         </Typography>
         {withHelpButton

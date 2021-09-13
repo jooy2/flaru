@@ -1,28 +1,12 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Container, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
+import { Container, Grid } from '@mui/material';
+import { css } from '@emotion/react';
+import { connect } from 'react-redux';
 import Header from './Header';
-
-const useStyles = makeStyles(theme => ({
-  layoutRoot: {
-    display: 'flex',
-    flexFlow: 'column',
-    height: '100vh',
-  },
-  headerArea: {
-    marginTop: '48px',
-    flexShrink: 0,
-  },
-  layoutContentWrapper: props => ({
-    flexGrow: 1,
-    background: theme.palette.type === 'light' ? '#eaeaea' : '#333',
-    userSelect: 'none',
-    padding: props.withPadding ? theme.spacing(1, 0) : 0,
-  }),
-}));
+import { headerArea } from '../../utils/styles';
 
 const Layout = ({
   title = 'OpenRuffle Player',
@@ -34,44 +18,57 @@ const Layout = ({
   withBackButton = false,
   withHelpButton = false,
   children,
-}) => {
-  const classes = useStyles({ withPadding });
-
-  return (
-    <div className={classes.layoutRoot}>
-      <Helmet>
-        <title>
-          {title}
-          {withTail ? titleTail : ''}
-        </title>
-      </Helmet>
-      { header
+  config,
+}) => (
+  <div
+    css={css`
+        display: flex;
+        flex-flow: column;
+        height: 100vh;
+      `}
+  >
+    <Helmet>
+      <title>
+        {title}
+        {withTail ? titleTail : ''}
+      </title>
+    </Helmet>
+    { header
+      ? (
+        <Header
+          title={title}
+          withBackButton={withBackButton}
+          withHelpButton={withHelpButton}
+        />
+      ) : '' }
+    <Grid
+      container
+      css={css`
+        flex-grow: 1;
+        background: ${config.isDarkTheme ? '#333' : '#eaeaea'};
+        user-select: none;
+        padding: ${withPadding ? '8px 0' : '0'};
+      `}
+    >
+      {container
         ? (
-          <Header
-            title={title}
-            withBackButton={withBackButton}
-            withHelpButton={withHelpButton}
-          />
-        ) : '' }
-      <Grid container className={classes.layoutContentWrapper}>
-        {
-        container
-          ? (
-            <Container>
-              <Grid item xs={12} className={(header ? classes.headerArea : '')}>
-                {children}
-              </Grid>
-            </Container>
-          )
-          : (
-            <Grid item xs={12} className={(header ? classes.headerArea : '')}>
+          <Container>
+            <Grid item xs={12} css={[header ? headerArea : []]}>
               {children}
             </Grid>
-          )
-        }
-      </Grid>
-    </div>
-  );
-};
+          </Container>
+        )
+        : (
+          <Grid item xs={12} css={[header ? headerArea : []]}>
+            {children}
+          </Grid>
+        )}
+    </Grid>
+  </div>
+);
 
-export default Layout;
+const mapStateToProps = state => ({
+  config: state.config,
+});
+
+export default connect(mapStateToProps)(Layout);

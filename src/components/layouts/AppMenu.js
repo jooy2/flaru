@@ -1,9 +1,10 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
 import {
   List, ListItem,
   ListItemIcon, ListItemText, Paper,
-} from '@material-ui/core';
-import { OpenInNew } from '@material-ui/icons';
+} from '@mui/material';
+import { OpenInNew } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { goToExtLink } from '../../utils/helper';
 
