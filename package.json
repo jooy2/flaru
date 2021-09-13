@@ -1,9 +1,9 @@
 {
   "name": "open-ruffle-player",
-  "version": "0.6.0",
-  "versionCode": 60,
-  "versionDate": "2021-08-20",
-  "ruffleVersionDate": "2021-08-20",
+  "version": "1.0.0",
+  "versionCode": 100,
+  "versionDate": "2021-09-13",
+  "ruffleVersionDate": "2021-09-13",
   "description": "OpenRuffle Flash Player",
   "main": "app/index.js",
   "private": true,
