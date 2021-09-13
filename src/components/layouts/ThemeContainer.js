@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { darkScrollbar } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const ThemeContainer = ({ children, config }) => {
   const darkMode = config.isDarkTheme;
-  const muiTheme = createTheme({
+  const muiTheme = useMemo(() => createTheme({
     breakpoints: {
       values: {
         xs: 0,
@@ -26,7 +26,7 @@ const ThemeContainer = ({ children, config }) => {
         main: darkMode ? '#595959' : '#909090',
       },
       background: {
-        default: darkMode ? '#101010' : '#ececec',
+        default: darkMode ? '#2c2c2c' : '#ececec',
       },
     },
     components: {
@@ -42,8 +42,15 @@ const ThemeContainer = ({ children, config }) => {
           },
         },
       },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            background: darkMode ? '#2c2c2c' : '#ffffff',
+          },
+        },
+      },
     },
-  });
+  }), [config.isDarkTheme]);
 
   return (
     <MuiThemeProvider theme={muiTheme}>

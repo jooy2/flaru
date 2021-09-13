@@ -22,10 +22,19 @@ const Layout = ({
 }) => (
   <div
     css={css`
-        display: flex;
-        flex-flow: column;
-        height: 100vh;
-      `}
+      display: flex;
+      flex-flow: column;
+      height: 100vh;
+      *::-webkit-scrollbar {
+        width: 0.4em;
+      }
+      *::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
+      }
+      *::-webkit-scrollbar-thumb {
+        background-color: ${config.isDarkTheme ? '#444444' : '#a7a7a7'};
+      }
+    `}
   >
     <Helmet>
       <title>
@@ -45,7 +54,7 @@ const Layout = ({
       container
       css={css`
         flex-grow: 1;
-        background: ${config.isDarkTheme ? '#333' : '#eaeaea'};
+        background: ${config.isDarkTheme ? '#1a1a1a' : '#eaeaea'};
         user-select: none;
         padding: ${withPadding ? '8px 0' : '0'};
       `}

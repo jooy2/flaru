@@ -12,6 +12,10 @@ export const marginTopMd = css`
   margin-top: 16px;
 `;
 
+export const marginRightXs = css`
+  margin-right: 5px;
+`;
+
 export const headerArea = css`
   margin-top: 48px;
   flex-shrink: 0;
@@ -32,11 +36,17 @@ export const paperBase = css`
   }
 `;
 
+export const buttonGroupButtonBase = css`
+  border-right: 0 !important;
+`;
+
 export default {
   textCenter,
   userSelectNone,
   marginTopMd,
+  marginRightXs,
   headerArea,
   paperSm,
   paperBase,
+  buttonGroupButtonBase,
 };

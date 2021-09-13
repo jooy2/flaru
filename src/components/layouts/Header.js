@@ -2,15 +2,29 @@
 import React from 'react';
 
 import {
-  AppBar, IconButton, Toolbar, Typography,
+  AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography,
 } from '@mui/material';
-import { ArrowBack, HelpOutline } from '@mui/icons-material';
+import { ArrowBack, HelpOutline, Settings } from '@mui/icons-material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { css } from '@emotion/react';
+import { connect } from 'react-redux';
+import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
 
-const Header = ({ title, withBackButton, withHelpButton }) => {
+const Header = ({
+  title,
+  withBackButton,
+  withRefresh,
+  config,
+}) => {
   const history = useHistory();
   const location = useLocation();
+
+  const handleGoToLink = (url) => {
+    if (url === location.pathname) {
+      if (!withRefresh) return;
+      history.go(url);
+    } else history.push(url);
+  };
 
   const handleGoHome = (e) => {
     if (e) e.preventDefault();
@@ -26,7 +40,7 @@ const Header = ({ title, withBackButton, withHelpButton }) => {
       position="fixed"
       css={css`
         user-select: none;
-        background: #383838;
+        background: ${config.isDarkTheme ? '#171717' : '#2c2c2c'};
       `}
     >
       <Toolbar variant="dense">
@@ -45,20 +59,36 @@ const Header = ({ title, withBackButton, withHelpButton }) => {
         <Typography css={css`flex-grow: 1`} variant="body1" noWrap>
           {title}
         </Typography>
-        {withHelpButton
-        && (
-        <IconButton
-          color="inherit"
-          aria-label="open"
-          onClick={() => history.push('/about')}
-          edge="end"
+        <ButtonGroup
+          variant="text"
+          disableRipple
+          disableElevation
+          css={css`border-right: 0 !important;`}
         >
-          <HelpOutline />
-        </IconButton>
-        )}
+          <Button
+            css={[marginRightXs, buttonGroupButtonBase]}
+            color="inherit"
+            aria-label="open"
+            onClick={() => handleGoToLink('/about')}
+          >
+            <HelpOutline fontSize="small" />
+          </Button>
+          <Button
+            css={[buttonGroupButtonBase]}
+            color="inherit"
+            aria-label="open"
+            onClick={() => handleGoToLink('/settings')}
+          >
+            <Settings fontSize="small" />
+          </Button>
+        </ButtonGroup>
       </Toolbar>
     </AppBar>
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  config: state.config,
+});
+
+export default connect(mapStateToProps)(Header);

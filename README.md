@@ -22,6 +22,7 @@ I'm not the official developer of Ruffle. For issues and documentation related t
  - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
  - ✅ Drag-and-drop or one-click execution of SWF files from local PC
  - ✅ Continue playing from the list of recently opened files.
+ - ✅ Customize various emulator settings.
 
 # 📢 Compatibility
 **Since the emulator is under development, some content may not run smoothly, and Flash created with ActionScript 3 as of March 2021 is not supported.**

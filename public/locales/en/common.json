@@ -4,6 +4,19 @@
   "player-title": "OpenRuffle Flash Player",
   "player-loading": "Preparing to run the player... Please wait.",
   "recent-file-title": "Recent Files",
-  "loading": "Please Wait...",
-  "dialog-title-info": "Notice"
+  "loading-1": "Initializing app",
+  "loading-2": "Checking app version",
+  "loading-3": "Retrieving app settings",
+  "loading-4": "Rendering the initial screen",
+  "loading": "Please wait...",
+  "dialog-title-info": "Notice",
+  "settings-info": "Select the desired option and it will be reflected immediately.",
+  "settings-title-1": "Player Settings",
+  "settings-desc-1": "Feel free to set up your preferred execution environment.",
+  "settings-title-2": "App Theme",
+  "settings-desc-2": "You can choose between light mode and dark mode.",
+  "settings-reset-title": "Reset App Data",
+  "settings-reset-desc": "Reset app data to default values. Saved settings and data will be permanently erased!",
+  "settings-language-title": "Language / 언어",
+  "settings-language-desc": "Select the app display language."
 }

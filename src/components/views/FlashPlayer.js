@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
+import { connect } from 'react-redux';
 import { getOS } from '../../utils/helper';
 
 const FlashPlayer = ({
@@ -9,6 +10,7 @@ const FlashPlayer = ({
   filePath = null,
   header = true,
   onErrorAS3,
+  config,
 }) => {
   const player = useRef();
 
@@ -29,7 +31,9 @@ const FlashPlayer = ({
       window.RufflePlayer.config = {
         autoPlay,
         polyfills: false,
-        letterbox: 'on',
+        letterbox: config.appConfigLetterbox ? 'on' : 'off',
+        logLevel: 'error',
+        contextMenu: !config.appConfigHideContext,
         base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(0, realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'))}`,
       };
       const ruffle = window.RufflePlayer.newest();
@@ -85,4 +89,8 @@ const FlashPlayer = ({
   );
 };
 
-export default FlashPlayer;
+const mapStateToProps = state => ({
+  config: state.config,
+});
+
+export default connect(mapStateToProps)(FlashPlayer);

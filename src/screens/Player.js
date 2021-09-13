@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,7 +11,10 @@ import * as configActions from '../store/modules/config';
 const Player = ({
   config, ConfigActions,
 }) => {
+  const electron = window.require('electron');
+  const { ipcRenderer } = electron;
   const history = useHistory();
+
   const handleErrorAS3 = async () => {
     await ConfigActions.setConfig({
       flashFileName: '',
@@ -21,15 +24,31 @@ const Player = ({
     history.push('/explorer');
   };
 
+  useEffect(() => {
+    ipcRenderer.on('receiveResumeToExplorer', async () => {
+      await ConfigActions.setConfig({
+        flashFileName: '',
+        flashFilePath: '',
+      });
+      history.push('/explorer');
+    });
+
+    return () => {
+      ipcRenderer.removeAllListeners('receiveResumeToExplorer');
+    };
+  }, []);
+
   return (
     <Layout
       title={config.flashFileName}
       withBackButton
       withPadding={false}
       container={false}
+      header={!config.appConfigHideHeader}
     >
       <FlashPlayer
         filePath={config.flashFilePath}
+        header={!config.appConfigHideHeader}
         onErrorAS3={handleErrorAS3}
       />
     </Layout>

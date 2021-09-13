@@ -3,5 +3,18 @@
   "check-for-updates": "업데이트 확인",
   "back": "뒤로가기",
   "close": "닫기",
-  "update-check": "업데이트 확인"
+  "update-check": "업데이트 확인",
+  "settings": "설정",
+  "language-auto": "자동 감지 (Auto Detect)",
+  "language-ko": "한국어 (Korean)",
+  "language-en": "영어 (English)",
+  "restore-bounds": "앱 종료 시 마지막 창의 크기와 위치 기억하기",
+  "restart": "앱 재시작",
+  "reset-and-restart": "초기화하고 앱 재시작",
+  "hide-header": "파일을 실행할 때 상단 메뉴 숨기기 (F5로 돌아가기)",
+  "letterbox": "레터박스를 사용하여 제작자가 의도한 영역만 표시되게 하기",
+  "hide-context": "컨텍스트 메뉴 강제 비활성화",
+  "theme-light": "라이트 (밝게)",
+  "theme-dark": "다크 (어둡게)",
+  "theme-auto": "자동 감지"
 }

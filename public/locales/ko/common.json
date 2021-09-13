@@ -4,6 +4,19 @@
   "player-title": "OpenRuffle Flash Player",
   "player-loading": "플레이어 실행 준비 중... 잠시만 기다려주세요.",
   "recent-file-title": "최근 실행한 파일",
+  "loading-1": "앱 초기화하는 중",
+  "loading-2": "버전 확인 중",
+  "loading-3": "앱 설정 가져오는 중",
+  "loading-4": "초기 화면을 구성하는 중",
   "loading": "잠시만 기다려주세요...",
-  "dialog-title-info": "안내"
+  "dialog-title-info": "안내",
+  "settings-info": "원하는 옵션을 선택하면, 즉시 반영됩니다.",
+  "settings-title-1": "플레이어 설정",
+  "settings-desc-1": "원하는 실행 환경을 자유롭게 설정합니다.",
+  "settings-title-2": "앱 테마 설정",
+  "settings-desc-2": "라이트 모드와 다크 모드 중 원하는 스타일을 선택할 수 있습니다.",
+  "settings-reset-title": "앱 데이터 초기화",
+  "settings-reset-desc": "앱 데이터를 초기 값으로 되돌립니다. 저장된 설정 및 데이터가 영구히 지워집니다!",
+  "settings-language-title": "언어 / Language",
+  "settings-language-desc": "앱 표시 언어를 선택합니다."
 }

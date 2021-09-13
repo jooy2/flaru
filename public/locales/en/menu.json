@@ -3,5 +3,18 @@
   "check-for-updates": "Check for updates...",
   "back": "Back to Main",
   "close": "Close",
-  "update-check": "Check for Updates"
+  "update-check": "Check for Updates",
+  "settings": "Settings",
+  "language-auto": "Auto Detect (자동 감지)",
+  "language-ko": "Korean (한국어)",
+  "language-en": "English (영어)",
+  "restore-bounds": "Remember the size and position of the last window when you exit the app",
+  "restart": "Restart App",
+  "reset-and-restart": "Reset and Restart App",
+  "hide-header": "Hide the top menu when running a file (Press F5 to return)",
+  "letterbox": "Use letterbox to ensure that only the area intended by the creator is displayed",
+  "hide-context": "Forced disable context menu",
+  "theme-light": "Light",
+  "theme-dark": "Dark",
+  "theme-auto": "Auto Detect"
 }
