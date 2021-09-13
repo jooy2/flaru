@@ -1,7 +1,7 @@
 {
   "name": "open-ruffle-player",
-  "version": "1.0.0",
-  "versionCode": 100,
+  "version": "1.0.1",
+  "versionCode": 101,
   "versionDate": "2021-09-13",
   "ruffleVersionDate": "2021-09-13",
   "description": "OpenRuffle Flash Player",
@@ -58,6 +58,7 @@
     },
     "files": [
       "app/**/*",
+      "config/**/*",
       "build/**/*"
     ]
   },
