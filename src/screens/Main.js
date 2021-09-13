@@ -74,15 +74,7 @@ const Main = ({ ConfigActions }) => {
         if (filePath) {
           await runFromExplorer(filePath);
         } else {
-          switch (configs.firstScreen) {
-            default:
-            case 'explorer':
-              history.push('/explorer');
-              break;
-            case 'archive':
-              history.push('/web-archive-view');
-              break;
-          }
+          history.push('/explorer');
         }
       });
       ipcRenderer.send('getAppConfig');
