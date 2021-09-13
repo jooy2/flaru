@@ -48,8 +48,7 @@
       "icon": "resources/installer",
       "target": [
         "deb",
-        "rpm",
-        "snap"
+        "rpm"
       ]
     },
     "directories": {
