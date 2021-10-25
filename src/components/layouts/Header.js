@@ -63,7 +63,6 @@ const Header = ({
           variant="text"
           disableRipple
           disableElevation
-          css={css`border-right: 0 !important;`}
         >
           <Button
             css={[marginRightXs, buttonGroupButtonBase]}
