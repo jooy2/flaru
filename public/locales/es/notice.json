@@ -1,0 +1,8 @@
+{
+  "wrong-file-type": "¡Formato de archivo inválido! Solo se pueden ejecutar archivos SWF.",
+  "drag-drop-execute": "Haga clic aquí o arrastre y suelte archivos para iniciar.",
+  "no-recent-files": "No hay archivos ejecutados recientemente.",
+  "not-found-recent-file": "El archivo en esa ruta no existe. Quitar de la lista.",
+  "as3-alert-title": "¡Este archivo aún no es compatible!",
+  "as3-alert-desc": "Perdón. Este archivo se creó con Action Script 3 (AVM2) y actualmente no se está ejecutando. Será compatible en un futuro próximo y tendrá que esperar una actualización futura."
+}

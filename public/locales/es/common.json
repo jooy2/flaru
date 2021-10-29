@@ -1,0 +1,22 @@
+{
+  "main-title": "Seleccione un archivo SWF para ejecutar",
+  "about-title": "Informacion de la applicacion",
+  "player-title": "OpenRuffle Flash Player",
+  "player-loading": "Jugador preparándose para correr ... Espere.",
+  "recent-file-title": "Archivos ejecutados recientemente",
+  "loading-1": "Inicializando la aplicación",
+  "loading-2": "Comprobando versión",
+  "loading-3": "Obtener la configuración de la aplicación",
+  "loading-4": "Construyendo la pantalla de bienvenida",
+  "loading": "Espere por favor...",
+  "dialog-title-info": "guía",
+  "settings-info": "Seleccione la opción deseada y se reflejará de inmediato.",
+  "settings-title-1": "Configuración del reproductor",
+  "settings-desc-1": "Puede establecer el entorno de ejecución deseado.",
+  "settings-title-2": "Configuración del tema de la aplicación",
+  "settings-desc-2": "Puede elegir el estilo que desee entre el modo claro y el modo oscuro.",
+  "settings-reset-title": "Restablecer los datos de la aplicación",
+  "settings-reset-desc": "Devuelve los datos de la aplicación a su valor inicial. ¡Su configuración y datos guardados se borrarán permanentemente!",
+  "settings-language-title": "idioma / Language",
+  "settings-language-desc": "Seleccione el idioma de visualización de la aplicación."
+}
