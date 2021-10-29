@@ -13,7 +13,7 @@
     "start-interface": "cross-env PORT=9090 BROWSER=none npm run start",
     "start-electron": "electron .",
     "start-electron-after-interface": "wait-on http://localhost:9090 && npm run start-electron",
-    "build:mac": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --mac",
+    "build:mac": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --mac",
     "build:linux": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --linux",
     "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --windows nsis:x64",
     "build:win-portable": "react-scripts build && electron-builder --windows portable --x64",
@@ -50,6 +50,9 @@
         "deb",
         "rpm"
       ]
+    },
+    "mac": {
+      "identity": null
     },
     "directories": {
       "buildResources": "./resources/installer/",
