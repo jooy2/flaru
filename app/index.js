@@ -19,7 +19,7 @@ global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
 global.ENV_IS_DEV = isDev();
 global.ENV_OS = getOS();
 global.ENV_OS_VERSION = getOSVersion();
-const MAX_RECENT_FILES = 5;
+const MAX_RECENT_FILES = 10;
 
 const isWindows = process.platform === 'win32';
 const store = new Store({ schema });
