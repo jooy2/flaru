@@ -156,7 +156,7 @@ const Settings = ({ config, ConfigActions }) => {
                     id: 'system-language',
                   }}
                 >
-                  {['auto', 'ko', 'en'].map((value) => (
+                  {['auto', 'ko', 'en', 'pt'].map((value) => (
                     <MenuItem key={value} value={value}>{t(`menu:language-${value}`)}</MenuItem>
                   ))}
                 </Select>
