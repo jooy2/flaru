@@ -10,7 +10,7 @@
 
 ![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 
-This is **"Unofficial" Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs). It is Electron Desktop App compatible with Windows, macOS and Linux OS.
+This is **"Unofficial" Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
 
 I'm not the official developer of Ruffle. For issues and documentation related to the emulator, please refer to the official Ruffle repository documentation below.
 
@@ -20,12 +20,17 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 ## ⭐ Features
  - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
+ - ✅ Cross-platform: Windows, macOS, Linux supported!
+ - ✅ Multi-language and theme support
+ - ✅ Support for running split SWF files
  - ✅ Drag-and-drop or one-click execution of SWF files from local PC
  - ✅ Continue playing from the list of recently opened files.
  - ✅ Customize various emulator settings.
 
 ## 📢 Compatibility
 **Since the emulator is under development, some content may not run smoothly, and Flash created with ActionScript 3 as of March 2021 is not supported.**
+
+See https://github.com/ruffle-rs/ruffle/issues/1368.
 
 This app plots the emulator (built for self-hosted use) in a webview, so there may be a performance difference compared to the official Ruffle Desktop Application.
 
@@ -36,5 +41,13 @@ Please use the GitHub Release page attached below.
 
 [OpenRuffle Flash Player Release Page](https://github.com/jooy2/open-ruffle-player/releases)
 
-## License
-Copyright © 2021 Jooy2 Released under the MIT license.
+## 🔧 Technical Specifications
+ - [Electron 15.x](https://www.electronjs.org/)
+ - [React 17.x](https://reactjs.org/)
+ - [Material-UI 5.x](https://mui.com/)
+ - [Ruffle Nightly 2021-xx-xx](https://ruffle.rs/)
+
+## 📋 License
+Copyright © 2021 Jooy2 Released under the MIT license. (Source code excluding Ruffle and external modules)
+
+For detailed license of Ruffle, please refer to the following document: [https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md](https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md)
