@@ -5,12 +5,14 @@ const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
 const fs = require('fs');
+const remoteMain = require('@electron/remote/main');
 const {
   getOS, getOSVersion, isDev, getAppName,
 } = require('./appUtils');
 const pkg = require('../package.json');
 const schema = require('../config/store.json');
-require('@electron/remote/main').initialize();
+
+remoteMain.initialize();
 
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
@@ -62,6 +64,7 @@ const createWindow = () => {
       enableRemoteModule: true,
     },
   });
+  remoteMain.enable(win.webContents);
   win.setMenuBarVisibility(false);
   const menu = Menu.buildFromTemplate([
     {
