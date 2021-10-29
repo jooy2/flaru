@@ -18,23 +18,23 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 </div>
 
-# ⭐ Features
+## ⭐ Features
  - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
  - ✅ Drag-and-drop or one-click execution of SWF files from local PC
  - ✅ Continue playing from the list of recently opened files.
  - ✅ Customize various emulator settings.
 
-# 📢 Compatibility
+## 📢 Compatibility
 **Since the emulator is under development, some content may not run smoothly, and Flash created with ActionScript 3 as of March 2021 is not supported.**
 
 This app plots the emulator (built for self-hosted use) in a webview, so there may be a performance difference compared to the official Ruffle Desktop Application.
 
 There is no built-in automatic update in the app. It is recommended to download the updated emulator version by referring to the GitHub Release page on a monthly basis.
 
-# 💾 Downloads
+## 💾 Downloads
 Please use the GitHub Release page attached below.
 
-[OpenRuffle Flash Player Release Page](https://github.com/leejooy96/open-ruffle-player/releases)
+[OpenRuffle Flash Player Release Page](https://github.com/jooy2/open-ruffle-player/releases)
 
-# License
+## License
 Copyright © 2021 Jooy2 Released under the MIT license.
