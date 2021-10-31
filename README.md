@@ -16,6 +16,8 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 **Official Ruffle Desktop Player** is here!: https://github.com/ruffle-rs/ruffle
 
+(*This is just an emulator and does not contain any games.)
+
 </div>
 
 ## ⭐ Features
