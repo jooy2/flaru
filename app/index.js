@@ -119,7 +119,7 @@ const createWindow = () => {
   win.webContents.once('dom-ready', () => {
     const { argv } = process;
     electronLocalShortcut.register(win, ['F12', 'CommandOrControl+R', 'CommandOrControl+Shift+R'], () => {});
-    electronLocalShortcut.register(win, ['alt+Enter'], () => {
+    electronLocalShortcut.register(win, ['Alt+Enter'], () => {
       win.setFullScreen(!win.isFullScreen());
     });
     electronLocalShortcut.register(win, 'F5', () => {
