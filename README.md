@@ -10,7 +10,7 @@
 
 ![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 
-This is **"Unofficial" Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
+This is **Unofficial Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
 
 I'm not the official developer of Ruffle. For issues and documentation related to the emulator, please refer to the official Ruffle repository documentation below.
 
@@ -49,7 +49,38 @@ Please use the GitHub Release page attached below.
  - [Material-UI 5.x](https://mui.com/)
  - [Ruffle Nightly 2021-xx-xx](https://ruffle.rs/)
 
+## 🔨 Build & Run
+Before building or running, you need to install the module and add the Ruffle script file to the project.
+
+First install the dependency module with the following command: ([NodeJS](https://nodejs.org) pre-installed required)
+```shell
+$ npm i
+```
+
+Next, download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/public/js/ruffle`
+
+You only need to paste the `.map`, `.js`, `.wasm` files inside the compressed file.
+
+To test in the `development environment`, enter the following command:
+```shell
+$ npm i
+$ npm run dev
+```
+
+And you can build on multiple platforms with the following command:
+```shell
+# Windows (.exe)
+$ npm run build:win
+$ npm run build:win-portable
+# macOS (.dmg)
+$ npm run build:mac
+# Linux (.deb, .rpm)
+$ npm run build:linux
+```
+
 ## 📋 License
 Copyright © 2021 Jooy2 Released under the MIT license. (Source code excluding Ruffle and external modules)
+
+Please use the build package only for personal testing. **Distribution of packages for production/commercial use is not permitted.**
 
 For detailed license of Ruffle, please refer to the following document: [https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md](https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md)
