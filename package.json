@@ -67,7 +67,6 @@
   "author": "jooy2 <jootc.help@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-plugin-import": "^1.13.3",
     "concurrently": "^6.3.0",
     "cross-env": "^7.0.3",
     "electron": "^15.3.0",
