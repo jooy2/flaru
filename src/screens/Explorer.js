@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PlayCircleOutline } from '@mui/icons-material';
 import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
@@ -20,7 +20,7 @@ import { paperSm, userSelectNone } from '../utils/styles';
 
 const Explorer = ({ ConfigActions, config }) => {
   const [t] = useTranslation(['common', 'notice', 'menu']);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,7 +35,7 @@ const Explorer = ({ ConfigActions, config }) => {
       flashFilePath: filePath,
     });
     ipcRenderer.send('appendRecentFiles', filePath);
-    history.push('/player');
+    navigate('/player');
     return true;
   };
   const onDrop = useCallback(async acceptedFiles => {

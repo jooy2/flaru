@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layouts/Layout';
 import FlashPlayer from '../components/views/FlashPlayer';
 import * as configActions from '../store/modules/config';
@@ -13,7 +13,7 @@ const Player = ({
 }) => {
   const electron = window.require('electron');
   const { ipcRenderer } = electron;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleErrorAS3 = async () => {
     await ConfigActions.setConfig({
@@ -21,7 +21,7 @@ const Player = ({
       flashFilePath: '',
       isAS3Error: true,
     });
-    history.push('/explorer');
+    navigate('/explorer');
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Player = ({
         flashFileName: '',
         flashFilePath: '',
       });
-      history.push('/explorer');
+      navigate('/explorer');
     });
 
     return () => {

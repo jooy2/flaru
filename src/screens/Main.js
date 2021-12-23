@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as configActions from '../store/modules/config';
 import Layout from '../components/layouts/Layout';
 import { generateUid } from '../utils/tracking';
@@ -16,7 +16,7 @@ const Main = ({ ConfigActions }) => {
   const [t, i18n] = useTranslation(['common']);
   const [loadMsg, setLoadMsg] = useState(1);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const history = useHistory();
+  const navigate = useNavigate();
   const electron = window.require('electron');
   const { ipcRenderer } = electron;
 
@@ -28,7 +28,7 @@ const Main = ({ ConfigActions }) => {
       flashFilePath: filePath,
     });
     ipcRenderer.send('appendRecentFiles', filePath);
-    history.push('/player');
+    navigate('/player');
   };
 
   const getLanguage = () => {
@@ -74,7 +74,7 @@ const Main = ({ ConfigActions }) => {
         if (filePath) {
           await runFromExplorer(filePath);
         } else {
-          history.push('/explorer');
+          navigate('/explorer');
         }
       });
       ipcRenderer.send('getAppConfig');

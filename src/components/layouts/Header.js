@@ -5,7 +5,7 @@ import {
   AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography,
 } from '@mui/material';
 import { ArrowBack, HelpOutline, Settings } from '@mui/icons-material';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { connect } from 'react-redux';
 import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
@@ -16,14 +16,14 @@ const Header = ({
   withRefresh,
   config,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleGoToLink = (url) => {
     if (url === location.pathname) {
       if (!withRefresh) return;
-      history.go(url);
-    } else history.push(url);
+      navigate(url);
+    } else navigate(url);
   };
 
   const handleGoHome = (e) => {
@@ -31,7 +31,7 @@ const Header = ({
     if (location.pathname === '/') {
       window.location.reload();
     } else {
-      history.push('/explorer');
+      navigate('/explorer');
     }
   };
 
