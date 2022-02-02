@@ -1,5 +1,11 @@
 {
   "explorer": {
     "maxRecentFiles": 10
+  },
+  "window": {
+    "minWidth": 200,
+    "minHeight": 200,
+    "defaultWidth": 1300,
+    "defaultHeight": 1300
   }
 }

@@ -10,6 +10,7 @@ const {
   getOS, getOSVersion, isDev, getAppName,
 } = require('./appUtils');
 const pkg = require('../package.json');
+const commonConfig = require('../config/common.json');
 const schema = require('../config/store.json');
 
 remoteMain.initialize();
@@ -21,7 +22,7 @@ global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
 global.ENV_IS_DEV = isDev();
 global.ENV_OS = getOS();
 global.ENV_OS_VERSION = getOSVersion();
-const MAX_RECENT_FILES = 10;
+const MAX_RECENT_FILES = commonConfig.explorer.maxRecentFiles;
 
 const isWindows = process.platform === 'win32';
 const store = new Store({ schema });
@@ -41,8 +42,8 @@ const openFromExplorer = (argv, argvIndex = 1) => {
 
 const getWindowBounds = () => {
   const defaultBounds = {
-    width: 1300,
-    height: 800,
+    width: commonConfig.window.defaultWidth,
+    height: commonConfig.window.defaultHeight,
   };
   if (store.get('restoreWindowBounds')) {
     return store.get('windowBounds') || defaultBounds;
@@ -53,8 +54,8 @@ const getWindowBounds = () => {
 const createWindow = () => {
   win = new BrowserWindow({
     ...getWindowBounds(),
-    minHeight: 200,
-    minWidth: 200,
+    minWidth: commonConfig.window.minWidth,
+    minHeight: commonConfig.window.minHeight,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: false,
