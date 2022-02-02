@@ -249,4 +249,9 @@ if (!gotTheLock) {
       win.webContents.send('receiveRecentFiles', recentFiles.reverse());
     }
   });
+
+  ipcMain.on('removeAllRecentFile', async () => {
+    store.set({ recentFiles: [] });
+    win.webContents.send('receiveRecentFiles', []);
+  });
 }

@@ -6,12 +6,12 @@ import {
   Alert,
   Button,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  Grid, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
+  Grid, IconButton, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { PlayCircleOutline } from '@mui/icons-material';
+import { DeleteForever, PlayCircleOutline } from '@mui/icons-material';
 import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 
@@ -73,6 +73,13 @@ const Explorer = ({ ConfigActions, config }) => {
   const handleAS3ErrorClose = async () => {
     await ConfigActions.setConfig({ isAS3Error: false });
     setAs3DialogOpen(false);
+  };
+
+  const handleRemoveRecentFiles = async () => {
+    ipcRenderer.send('removeAllRecentFile');
+    await ConfigActions.setConfig({
+      recentFiles: [],
+    });
   };
 
   useEffect(() => {
@@ -141,9 +148,21 @@ const Explorer = ({ ConfigActions, config }) => {
         </Grid>
         <Grid item xs={12}>
           <Paper css={paperSm}>
-            <Typography component="h2" variant="h6">
-              <strong>{t('common:recent-file-title')}</strong>
-            </Typography>
+            <Grid container justifyContent="space-between">
+              <Grid item xs={5}>
+                <Typography component="h2" variant="h6">
+                  <strong>{t('common:recent-file-title')}</strong>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  onClick={handleRemoveRecentFiles}
+                  disabled={config.recentFiles.length < 1}
+                >
+                  <DeleteForever fontSize="small" />
+                </IconButton>
+              </Grid>
+            </Grid>
             {config.recentFiles.length < 1
             && (
             <Typography component="p" variant="subtitle2">
