@@ -13,6 +13,7 @@ const initialState = {
   appConfigCurrentLanguage: 'unknown',
   appConfigAllowTracking: true,
   appConfigRestoreWindowBounds: true,
+  appConfigAdjustOriginalSize: false,
   appConfigUid: '',
   recentFiles: [],
   isAS3Error: false,

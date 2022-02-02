@@ -35,6 +35,9 @@ const Settings = ({ config, ConfigActions }) => {
   const [
     restoreWindowBoundsChecked, setRestoreBoundsChecked,
   ] = useState(config.appConfigRestoreWindowBounds);
+  const [
+    adjustOriginalSizeChecked, setAdjustOriginalSizeChecked,
+  ] = useState(config.appConfigAdjustOriginalSize);
   const electron = window.require('electron');
   const { ipcRenderer } = electron;
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -79,6 +82,11 @@ const Settings = ({ config, ConfigActions }) => {
         setRestoreBoundsChecked(value);
         ipcRenderer.send('setAppConfig', { restoreWindowBounds: value });
         await ConfigActions.setConfig({ appConfigRestoreWindowBounds: value });
+        break;
+      case 'adjustOriginalSizeChecked':
+        setAdjustOriginalSizeChecked(value);
+        ipcRenderer.send('setAppConfig', { adjustOriginalSize: value });
+        await ConfigActions.setConfig({ appConfigAdjustOriginalSize: value });
         break;
       default:
         break;
@@ -181,6 +189,12 @@ const Settings = ({ config, ConfigActions }) => {
                   <FormControlLabel
                     control={<Checkbox color="primary" checked={hideContextChecked} onChange={handleCheckboxChange} name="hideContextChecked" />}
                     label={t('menu:hide-context')}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Checkbox color="primary" checked={adjustOriginalSizeChecked} onChange={handleCheckboxChange} name="adjustOriginalSizeChecked" />}
+                    label={t('menu:adjust-original-size')}
                   />
                 </Grid>
                 <Grid item xs={12}>

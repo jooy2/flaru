@@ -228,6 +228,14 @@ if (!gotTheLock) {
     });
   });
 
+  ipcMain.on('resizeWindow', async (event, args) => {
+    if (args && args.width && args.height
+        && args.width > commonConfig.window.minWidth
+        && args.height > commonConfig.window.minHeight) {
+      win.setSize(args.width, args.height, true);
+    }
+  });
+
   ipcMain.on('removeRecentFile', async (event, args) => {
     const response = await dialog.showMessageBox(win, {
       type: 'info',

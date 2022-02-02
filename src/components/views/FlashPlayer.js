@@ -13,6 +13,8 @@ const FlashPlayer = ({
   config,
 }) => {
   const player = useRef();
+  const electron = window.require('electron');
+  const { ipcRenderer } = electron;
 
   useEffect(() => {
     try {
@@ -40,8 +42,15 @@ const FlashPlayer = ({
       const rPlayer = ruffle.createPlayer();
       rPlayer.id = 'player';
       rPlayer.addEventListener('loadedmetadata', () => {
-        if (rPlayer?.metadata?.isActionScript3) {
+        const metaData = rPlayer?.metadata;
+        if (metaData?.isActionScript3) {
           onErrorAS3();
+        }
+        if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
+          ipcRenderer.send('resizeWindow', {
+            width: metaData.width,
+            height: metaData.height,
+          });
         }
       });
       container.appendChild(rPlayer);

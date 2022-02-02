@@ -22,6 +22,7 @@
   "hide-header": "Ocultar el menú superior al ejecutar el archivo (volver a F5)",
   "letterbox": "Usar formato de pantalla ancha para garantizar que solo se muestren las áreas previstas por el creador",
   "hide-context": "Forzar el menú contextual de desactivación",
+  "adjust-original-size": "Cambia automáticamente el tamaño de la ventana para que se ajuste al tamaño original del archivo",
   "theme-light": "luz",
   "theme-dark": "oscuro",
   "theme-auto": "Detección automática"

@@ -40,5 +40,9 @@
   },
   "windowBounds": {
     "type": "object"
+  },
+  "adjustOriginalSize": {
+    "type": "boolean",
+    "default": false
   }
 }

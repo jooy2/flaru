@@ -53,6 +53,7 @@ const Main = ({ ConfigActions }) => {
           appConfigLanguage: configs.language,
           appConfigCurrentLanguage: getLanguage(),
           appConfigRestoreWindowBounds: configs.restoreWindowBounds,
+          appConfigAdjustOriginalSize: configs.adjustOriginalSize,
           appConfigUid: uid,
         });
         if (configs.theme === 'auto') {
