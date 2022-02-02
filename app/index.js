@@ -4,10 +4,9 @@ const {
 const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
-const fs = require('fs');
 const remoteMain = require('@electron/remote/main');
 const {
-  getOS, getOSVersion, isDev, getAppName,
+  getOS, getOSVersion, isDev, getAppName, fileExists,
 } = require('./appUtils');
 const pkg = require('../package.json');
 const commonConfig = require('../config/common.json');
@@ -22,16 +21,15 @@ global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
 global.ENV_IS_DEV = isDev();
 global.ENV_OS = getOS();
 global.ENV_OS_VERSION = getOSVersion();
-const MAX_RECENT_FILES = commonConfig.explorer.maxRecentFiles;
 
-const isWindows = process.platform === 'win32';
+const MAX_RECENT_FILES = commonConfig.explorer.maxRecentFiles;
+const IS_WINDOWS = getOS() === 'Windows';
+const IS_MAC_OS = getOS() === 'macOS';
 const store = new Store({ schema });
 let win;
 
-const fileExists = async p => !!(await fs.promises.stat(p).catch(() => false));
-
 const openFromExplorer = (argv, argvIndex = 1) => {
-  if (isWindows && argv && argv.length >= argvIndex
+  if (IS_WINDOWS && argv && argv.length >= argvIndex
       && argv[argvIndex]?.indexOf('.swf') !== -1) {
     win.webContents.send('receiveNextRenderer', argv[argvIndex]);
     win.webContents.send('receiveOpenFile', argv[argvIndex]);
@@ -65,9 +63,11 @@ const createWindow = () => {
       enableRemoteModule: true,
     },
   });
+
   remoteMain.enable(win.webContents);
   win.setMenuBarVisibility(false);
-  const menu = Menu.buildFromTemplate([
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
     {
       label: getAppName(),
       submenu: [
@@ -97,35 +97,42 @@ const createWindow = () => {
         { role: 'front' },
       ],
     },
-  ]);
-  Menu.setApplicationMenu(menu);
+  ]));
 
-  if (getOS() === 'Mac') {
+  if (IS_MAC_OS) {
     systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', 'true');
     systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', 'true');
   }
 
-  win.loadURL(isDev() ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`).catch(() => null).then(() => {
-    if (isDev()) win.webContents.openDevTools();
-  });
+  win.loadURL(isDev() ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`)
+    .catch(() => null).then(() => {
+      if (isDev()) win.webContents.openDevTools();
+    });
+
   win.webContents.once('dom-ready', () => {
     const { argv } = process;
     openFromExplorer(argv, 1);
   });
+
   win.on('close', () => {
     store.set({
       windowBounds: win ? win.getBounds() : null,
     });
   });
+
   win.webContents.once('dom-ready', () => {
     const { argv } = process;
+
     electronLocalShortcut.register(win, ['F12', 'CommandOrControl+R', 'CommandOrControl+Shift+R'], () => {});
+
     electronLocalShortcut.register(win, ['Alt+Enter'], () => {
       win.setFullScreen(!win.isFullScreen());
     });
+
     electronLocalShortcut.register(win, 'F5', () => {
       win.webContents.send('receiveResumeToExplorer');
     });
+
     openFromExplorer(argv, 1);
   });
 
@@ -153,10 +160,12 @@ if (!gotTheLock) {
       openFromExplorer(argv, 2);
     }
   });
+
   app.on('open-file', (event, pathParam) => {
     event.preventDefault();
-    if (!isWindows) win.webContents.send('receiveOpenFile', pathParam);
+    if (!IS_WINDOWS) win.webContents.send('receiveOpenFile', pathParam);
   });
+
   app.whenReady().then(() => {
     protocol.registerFileProtocol('file', (request, callback) => {
       const pathname = decodeURI(request.url.replace('file:///', ''));
@@ -164,9 +173,11 @@ if (!gotTheLock) {
     });
     createWindow();
   });
+
   app.on('window-all-closed', () => {
     closeApp();
   });
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
