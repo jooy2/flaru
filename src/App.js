@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import NotFound from './NotFound';
 import Main from './screens/Main';
@@ -9,7 +9,7 @@ import About from './screens/About';
 import Settings from './screens/Settings';
 
 const App = () => (
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
       <Route path="/">
         <Route index element={<Main />} />
@@ -20,7 +20,7 @@ const App = () => (
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default App;
