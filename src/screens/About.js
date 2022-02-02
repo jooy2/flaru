@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Update } from '@mui/icons-material';
 import Layout from '../components/layouts/Layout';
-import { getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
+import { getVersionName, goToExtLink } from '../utils/helper';
 import { paperBase } from '../utils/styles';
 
 const About = () => {
@@ -29,9 +29,7 @@ const About = () => {
             Made By jooy2 (jootc.help@gmail.com)
           </Typography>
           <Typography component="p" variant="body1">
-            Player Based on Ruffle Flash Emulator (
-            {getRuffleVersion()}
-            )
+            Player Based on Ruffle Flash Emulator
           </Typography>
           <Typography component="p" variant="body1">
             <Button
