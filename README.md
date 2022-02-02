@@ -44,10 +44,10 @@ Please use the GitHub Release page attached below.
 [OpenRuffle Flash Player Release Page](https://github.com/jooy2/open-ruffle-player/releases)
 
 ## 🔧 Technical Specifications
- - [Electron 15.x](https://www.electronjs.org/)
+ - [Electron 17.x](https://www.electronjs.org/)
  - [React 17.x](https://reactjs.org/)
  - [Material-UI 5.x](https://mui.com/)
- - [Ruffle Nightly 2021-xx-xx](https://ruffle.rs/)
+ - [Ruffle](https://ruffle.rs/)
 
 ## 🔨 Build & Run
 Before building or running, you need to install the module and add the Ruffle script file to the project.
@@ -72,8 +72,10 @@ And you can build on multiple platforms with the following command:
 # Windows (.exe)
 $ npm run build:win
 $ npm run build:win-portable
+
 # macOS (.dmg)
 $ npm run build:mac
+
 # Linux (.deb, .rpm)
 $ npm run build:linux
 ```
