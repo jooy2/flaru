@@ -53,8 +53,8 @@ const getWindowBounds = () => {
 const createWindow = () => {
   win = new BrowserWindow({
     ...getWindowBounds(),
-    minHeight: 620,
-    minWidth: 750,
+    minHeight: 200,
+    minWidth: 200,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: false,
