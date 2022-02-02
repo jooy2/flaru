@@ -14,6 +14,17 @@ import Layout from '../components/layouts/Layout';
 import * as configActions from '../store/modules/config';
 import { marginTopMd } from '../utils/styles';
 
+const Header = ({ title, desc }) => (
+  <>
+    <Typography component="h3">
+      {title}
+    </Typography>
+    <Typography component="span">
+      {desc}
+    </Typography>
+  </>
+);
+
 const Settings = ({ config, ConfigActions }) => {
   const [t, i18n] = useTranslation(['common', 'notice', 'menu']);
   const [themeCheck, setThemeCheck] = useState(config.appConfigTheme);
@@ -31,8 +42,6 @@ const Settings = ({ config, ConfigActions }) => {
   const handleRadioChange = async (event) => {
     const { value } = event.target;
     switch (event.target.name) {
-      default:
-        break;
       case 'themeCheck':
         setThemeCheck(value);
         ipcRenderer.send('setAppConfig', { theme: value });
@@ -43,14 +52,14 @@ const Settings = ({ config, ConfigActions }) => {
           await ConfigActions.setConfig({ isDarkTheme: value !== 'light' });
         }
         break;
+      default:
+        break;
     }
   };
 
   const handleCheckboxChange = async (event) => {
     const value = event.target.checked;
     switch (event.target.name) {
-      default:
-        break;
       case 'hideHeaderChecked':
         setHideHeaderChecked(value);
         ipcRenderer.send('setAppConfig', { hideHeader: value });
@@ -71,19 +80,21 @@ const Settings = ({ config, ConfigActions }) => {
         ipcRenderer.send('setAppConfig', { restoreWindowBounds: value });
         await ConfigActions.setConfig({ appConfigRestoreWindowBounds: value });
         break;
+      default:
+        break;
     }
   };
 
   const handleSelectChange = async (event) => {
     const { value } = event.target;
     switch (event.target.name) {
-      default:
-        break;
       case 'language':
         setLanguage(value);
         ipcRenderer.send('setAppConfig', { language: value });
         await ConfigActions.setConfig({ appConfigLanguage: value });
         await i18n.changeLanguage(value);
+        break;
+      default:
         break;
     }
   };
@@ -96,17 +107,6 @@ const Settings = ({ config, ConfigActions }) => {
       ipcRenderer.send('restart');
     }
   };
-
-  const Header = ({ title, desc }) => (
-    <>
-      <Typography component="h3">
-        {title}
-      </Typography>
-      <Typography component="span">
-        {desc}
-      </Typography>
-    </>
-  );
 
   return (
     <Layout title={t('menu:settings')} withBackButton>
