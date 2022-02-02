@@ -2,7 +2,7 @@
   "name": "open-ruffle-player",
   "version": "1.2.0",
   "versionCode": 120,
-  "versionDate": "2021-10-29",
+  "versionDate": "2022-02-02",
   "description": "OpenRuffle Flash Player",
   "main": "app/index.js",
   "private": true,
