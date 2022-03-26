@@ -59,6 +59,7 @@ const Explorer = ({ ConfigActions, config }) => {
     accept: '.swf',
     multiple: false,
     onDrop,
+    useFsAccessApi: false,
   });
 
   const handleClickRecentFile = async (ev, file) => {
