@@ -7,6 +7,9 @@
 [![Downloads](https://img.shields.io/github/downloads/jooy2/open-ruffle-player/total)](https://github.com/jooy2/open-ruffle-player/releases)
 ![Languages](https://img.shields.io/github/languages/count/jooy2/open-ruffle-player)
 [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
+![Stars](https://img.shields.io/github/stars/jooy2/open-ruffle-player?style=social)
+![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/open-ruffle-player)
+![Line Count](https://img.shields.io/tokei/lines/github/jooy2/open-ruffle-player)
 
 ![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 
