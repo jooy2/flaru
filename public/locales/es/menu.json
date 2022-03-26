@@ -25,5 +25,6 @@
   "adjust-original-size": "Cambia automáticamente el tamaño de la ventana para que se ajuste al tamaño original del archivo",
   "theme-light": "luz",
   "theme-dark": "oscuro",
-  "theme-auto": "Detección automática"
+  "theme-auto": "Detección automática",
+  "view-license": "Ver licencia"
 }
