@@ -1,0 +1,8 @@
+{
+  "wrong-file-type": "Ungültiges Dateiformat! Es können nur SWF-Dateien ausgeführt werden.",
+  "drag-drop-execute": "Klicken Sie hier oder ziehen Sie Dateien per Drag & Drop zum Starten.",
+  "no-recent-files": "Es gibt keine kürzlich ausgeführten Dateien.",
+  "not-found-recent-file": "Die Datei in diesem Pfad existiert nicht. Aus Liste entfernen.",
+  "as3-alert-title": "Diese Datei wird noch nicht unterstützt!",
+  "as3-alert-desc": "Verzeihung. Diese Datei wurde mit Action Script 3 (AVM2) erstellt und läuft derzeit nicht. Es wird in naher Zukunft unterstützt und Sie müssen auf ein zukünftiges Update warten."
+}
