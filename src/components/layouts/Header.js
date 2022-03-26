@@ -4,17 +4,23 @@ import React from 'react';
 import {
   AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography,
 } from '@mui/material';
-import { ArrowBack, HelpOutline, Settings } from '@mui/icons-material';
+import {
+  ArrowBack, BarChart, HelpOutline, Settings,
+} from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
+import * as configActions from '../../store/modules/config';
+import ModalMetadata from '../dialogs/ModalMetadata';
 
 const Header = ({
   title,
   withBackButton,
   withRefresh,
   config,
+  ConfigActions,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +39,10 @@ const Header = ({
     } else {
       navigate('/explorer');
     }
+  };
+
+  const handleOpenMetadata = async () => {
+    await ConfigActions.setConfig({ dialogMetadataOpen: true });
   };
 
   return (
@@ -64,23 +74,39 @@ const Header = ({
           disableRipple
           disableElevation
         >
-          <Button
-            css={[marginRightXs, buttonGroupButtonBase]}
-            color="inherit"
-            aria-label="open"
-            onClick={() => handleGoToLink('/about')}
-          >
-            <HelpOutline fontSize="small" />
-          </Button>
-          <Button
-            css={[buttonGroupButtonBase]}
-            color="inherit"
-            aria-label="open"
-            onClick={() => handleGoToLink('/settings')}
-          >
-            <Settings fontSize="small" />
-          </Button>
+          {location.pathname === '/player'
+            && (
+            <Button
+              css={[buttonGroupButtonBase]}
+              color="inherit"
+              onClick={() => handleOpenMetadata()}
+            >
+              <BarChart fontSize="small" />
+            </Button>
+            )}
+          {!withBackButton
+            && (
+            <>
+              <Button
+                css={[marginRightXs, buttonGroupButtonBase]}
+                color="inherit"
+                aria-label="open"
+                onClick={() => handleGoToLink('/about')}
+              >
+                <HelpOutline fontSize="small" />
+              </Button>
+              <Button
+                css={[buttonGroupButtonBase]}
+                color="inherit"
+                aria-label="open"
+                onClick={() => handleGoToLink('/settings')}
+              >
+                <Settings fontSize="small" />
+              </Button>
+            </>
+            )}
         </ButtonGroup>
+        <ModalMetadata />
       </Toolbar>
     </AppBar>
   );
@@ -90,4 +116,8 @@ const mapStateToProps = state => ({
   config: state.config,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => ({
+  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

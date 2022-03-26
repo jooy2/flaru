@@ -4,6 +4,12 @@ const initialState = {
   checkVersion: false,
   flashFileName: '',
   flashFilePath: '',
+  flashFileSwfVer: 0,
+  flashFileFrame: 0,
+  flashFileAs3: false,
+  flashFileWidth: 0,
+  flashFileHeight: 0,
+  flashFileBackgroundColor: '',
   isDarkTheme: false,
   appConfigTheme: 'light',
   appConfigHideHeader: false,
@@ -17,6 +23,7 @@ const initialState = {
   appConfigUid: '',
   recentFiles: [],
   isAS3Error: false,
+  dialogMetadataOpen: false,
 };
 
 const SET_CONFIG = 'config/SET_CONFIG';

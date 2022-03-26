@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getOS } from '../../utils/helper';
+import * as configActions from '../../store/modules/config';
 
 const FlashPlayer = ({
   url = '',
@@ -11,6 +13,7 @@ const FlashPlayer = ({
   header = true,
   onErrorAS3,
   config,
+  ConfigActions,
 }) => {
   const player = useRef();
   const electron = window.require('electron');
@@ -41,11 +44,19 @@ const FlashPlayer = ({
       const ruffle = window.RufflePlayer.newest();
       const rPlayer = ruffle.createPlayer();
       rPlayer.id = 'player';
-      rPlayer.addEventListener('loadedmetadata', () => {
+      rPlayer.addEventListener('loadedmetadata', async () => {
         const metaData = rPlayer?.metadata;
         if (metaData?.isActionScript3) {
           onErrorAS3();
         }
+        await ConfigActions.setConfig({
+          flashFileSwfVer: metaData?.swfVersion,
+          flashFileFrame: metaData?.numFrames,
+          flashFileAs3: metaData?.isActionScript3,
+          flashFileWidth: metaData?.width,
+          flashFileHeight: metaData?.height,
+          flashFileBackgroundColor: '',
+        });
         if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
           ipcRenderer.send('resizeWindow', {
             width: metaData.width,
@@ -102,4 +113,8 @@ const mapStateToProps = state => ({
   config: state.config,
 });
 
-export default connect(mapStateToProps)(FlashPlayer);
+const mapDispatchToProps = dispatch => ({
+  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FlashPlayer);
