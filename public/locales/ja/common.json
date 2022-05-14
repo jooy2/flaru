@@ -1,0 +1,21 @@
+{
+  "main-title": "実行するSWFファイルの選択",
+  "about-title": "アプリ情報",
+  "player-loading": "プレイヤーの実行準備中...しばらくお待ちください。",
+  "recent-file-title": "最近実行したファイル",
+  "loading-1": "アプリの初期化中",
+  "loading-2": "バージョン確認中",
+  "loading-3": "アプリ設定のインポート中",
+  "loading-4": "初期画面の設定中",
+  "loading": "しばらくお待ちください...",
+  "dialog-title-info": "ご案内",
+  "settings-info": "希望のオプションを選択すると、すぐに反映されます。",
+  "settings-title-1": "プレーヤー設定",
+  "settings-desc-1": "目的の実行環境を自由に設定します。",
+  "settings-title-2": "アプリのテーマ設定",
+  "settings-desc-2": "ライトモードとダークモードのどちらでも好きなスタイルを選択できます。",
+  "settings-reset-title": "アプリデータの初期化",
+  "settings-reset-desc": "アプリデータを初期値に戻します。 保存した設定とデータが永久に消去されます！",
+  "settings-language-title": "言語 / Language",
+  "settings-language-desc": "アプリ表示言語を選択します。"
+}
