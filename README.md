@@ -47,8 +47,8 @@ Please use the GitHub Release page attached below.
 [OpenRuffle Flash Player Release Page](https://github.com/jooy2/open-ruffle-player/releases)
 
 ## 🔧 Technical Specifications
- - [Electron 17.x](https://www.electronjs.org/)
- - [React 17.x](https://reactjs.org/)
+ - [Electron 18.x](https://www.electronjs.org/)
+ - [React 18.x](https://reactjs.org/)
  - [Material-UI 5.x](https://mui.com/)
  - [Ruffle](https://ruffle.rs/)
 
