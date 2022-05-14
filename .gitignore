@@ -3,3 +3,4 @@
 /build
 .eslintcache
 .idea/
+/public/js/ruffle/*
