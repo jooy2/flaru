@@ -14,6 +14,7 @@ const Layout = ({
   withTail = true,
   header = true,
   container = true,
+  center = false,
   withPadding = true,
   withBackButton = false,
   withHelpButton = false,
@@ -58,6 +59,7 @@ const Layout = ({
         user-select: none;
         padding: ${withPadding ? '8px 0' : '0'};
       `}
+      alignItems={center ? 'center' : 'start'}
     >
       {container
         ? (

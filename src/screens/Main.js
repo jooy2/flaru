@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  Grid, LinearProgress, Typography, useMediaQuery,
+  CircularProgress,
+  Grid, Typography, useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
+import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 import Layout from '../components/layouts/Layout';
 import { generateUid } from '../utils/tracking';
@@ -110,10 +112,13 @@ const Main = ({ ConfigActions }) => {
   }, []);
 
   return (
-    <Layout header={false}>
-      <Grid item xs={12}>
-        <LinearProgress />
-        <Typography component="p">
+    <Layout
+      center
+      header={false}
+    >
+      <Grid item xs={12} css={css`text-align: center`}>
+        <CircularProgress size={80} thickness={6} />
+        <Typography component="p" css={css`font-size: 1.1em; margin-top: 20px`}>
           <strong>{t('loading')}</strong>
           {' '}
           (
