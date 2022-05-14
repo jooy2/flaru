@@ -56,7 +56,9 @@ const Explorer = ({ ConfigActions, config }) => {
     return true;
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: '.swf',
+    accept: {
+      'application/x-shockwave-flash': ['.swf'],
+    },
     multiple: false,
     onDrop,
     useFsAccessApi: false,
