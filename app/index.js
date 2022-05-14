@@ -108,11 +108,6 @@ const createWindow = () => {
       if (isDev()) win.webContents.openDevTools();
     });
 
-  win.webContents.once('dom-ready', () => {
-    const { argv } = process;
-    openFromExplorer(argv, 1);
-  });
-
   win.on('close', () => {
     store.set({
       windowBounds: win ? win.getBounds() : null,
@@ -181,6 +176,10 @@ if (!gotTheLock) {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
+  });
+
+  ipcMain.on('mainLoaded', async () => {
+    openFromExplorer(process?.argv, 1);
   });
 
   ipcMain.on('getAppConfig', () => {

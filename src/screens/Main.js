@@ -33,7 +33,9 @@ const Main = ({ ConfigActions }) => {
 
   const getLanguage = () => {
     if (i18n.languages && i18n.languages.length > 0) {
-      if (i18n.languages[0] === 'auto') return i18n.languages[1] || 'unknown';
+      if (i18n.languages[0] === 'auto') {
+        return i18n.languages[1] || 'unknown';
+      }
       return i18n.languages[0];
     }
     return 'unknown';
@@ -41,8 +43,12 @@ const Main = ({ ConfigActions }) => {
 
   const loadOrMove = (filePath) => {
     handleVersionCheck().then(async (result) => {
-      if (!result) return;
+      if (!result) {
+        return;
+      }
+
       setLoadMsg(3);
+
       ipcRenderer.on('receiveAppConfig', async (appConfigEvent, configs) => {
         const uid = configs.uid || await generateUid();
         await ConfigActions.setConfig({
@@ -56,6 +62,7 @@ const Main = ({ ConfigActions }) => {
           appConfigAdjustOriginalSize: configs.adjustOriginalSize,
           appConfigUid: uid,
         });
+
         if (configs.theme === 'auto') {
           await ConfigActions.setConfig({
             appConfigTheme: 'auto',
@@ -67,17 +74,24 @@ const Main = ({ ConfigActions }) => {
             isDarkTheme: configs.theme !== 'light',
           });
         }
-        if (configs.language !== 'auto') await i18n.changeLanguage(configs.language);
+
+        if (configs.language !== 'auto') {
+          await i18n.changeLanguage(configs.language);
+        }
+
         ipcRenderer.on('receiveOpenFile', async (openFileEvent, receivePath) => {
           await runFromExplorer(receivePath);
         });
+
         setLoadMsg(4);
+
         if (filePath) {
           await runFromExplorer(filePath);
         } else {
           navigate('/explorer');
         }
       });
+
       ipcRenderer.send('getAppConfig');
     });
   };
@@ -86,6 +100,8 @@ const Main = ({ ConfigActions }) => {
     ipcRenderer.on('receiveNextRenderer', (nextRendererEvent, filePath) => {
       loadOrMove(filePath);
     });
+
+    ipcRenderer.send('mainLoaded');
 
     return () => {
       ipcRenderer.removeAllListeners('receiveAppConfig');
