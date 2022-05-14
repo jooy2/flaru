@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "versionCode": 130,
   "versionDate": "2022-03-26",
+  "ruffleVersionDate": "2022-05-14",
   "description": "OpenRuffle Flash Player",
   "main": "app/index.js",
   "private": true,

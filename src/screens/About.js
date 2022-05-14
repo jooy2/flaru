@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Button,
   Grid, Paper, Typography,
@@ -8,11 +8,12 @@ import { useTranslation } from 'react-i18next';
 
 import { Article, Update } from '@mui/icons-material';
 import Layout from '../components/layouts/Layout';
-import { getVersionName, goToExtLink } from '../utils/helper';
+import { getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
 import { paperBase } from '../utils/styles';
 
 const About = () => {
   const [t] = useTranslation(['common', 'notice', 'menu']);
+  const ruffleVersion = useMemo(() => getRuffleVersion(), []);
 
   return (
     <Layout
@@ -45,6 +46,9 @@ const About = () => {
           </Typography>
           <Typography component="p" variant="body1">
             <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/ruffle-logo.png`} />
+          </Typography>
+          <Typography component="p" variant="body1">
+            {ruffleVersion}
           </Typography>
           <Typography component="p" variant="body1">
             <Button
