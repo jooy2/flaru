@@ -43,11 +43,13 @@ const Explorer = ({ ConfigActions, config }) => {
     const fileType = file?.type;
     const filePath = file?.path;
     const blob = fileType ? fileType.split('/')[1] : null;
-    if (blob !== 'x-shockwave-flash'
+    if ((!blob && !/\.(swf|dcr|dxr|dir)/.test(filePath)) || (
+      blob !== 'x-shockwave-flash'
           && blob !== 'futuresplash'
           && blob !== 'x-shockwave-flash2-preview'
           && blob !== 'vnd.adobe.flash.movie'
-          && blob !== 'vnd.adobe.flash-movie') {
+          && blob !== 'vnd.adobe.flash-movie')) {
+      setLoading(false);
       setFlashContentError(true);
       setErrorMessage(t('notice:wrong-file-type'));
       return false;
