@@ -6,7 +6,7 @@ import {
   Alert,
   Button,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  Grid, IconButton, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
+  Grid, IconButton, CircularProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
@@ -119,7 +119,12 @@ const Explorer = ({ ConfigActions, config }) => {
   }, []);
 
   return (
-    <Layout title={t('main-title')} withHelpButton>
+    <Layout
+      withHelpButton
+      header={!loading}
+      center={loading}
+      title={t('main-title')}
+    >
       {!loading
       && (
       <>
@@ -212,9 +217,11 @@ const Explorer = ({ ConfigActions, config }) => {
       )}
       {loading
       && (
-      <Grid item xs={12}>
-        <LinearProgress />
-        {t('player-loading')}
+      <Grid item xs={12} css={css`text-align: center`}>
+        <CircularProgress size={80} thickness={6} />
+        <Typography component="p" css={css`font-size: 1.1em; margin-top: 20px`}>
+          <strong>{t('player-loading')}</strong>
+        </Typography>
       </Grid>
       )}
       <Dialog
