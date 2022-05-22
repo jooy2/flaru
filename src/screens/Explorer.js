@@ -6,7 +6,8 @@ import {
   Alert,
   Button,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  Grid, IconButton, CircularProgress, List, ListItem, ListItemIcon, ListItemText, Paper, Typography,
+  Grid, IconButton, CircularProgress, List, ListItem, ListItemIcon,
+  ListItemText, Paper, Typography, ListItemButton,
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
@@ -200,11 +201,19 @@ const Explorer = ({ ConfigActions, config }) => {
                   `}
                 >
                   {config.recentFiles.map(val => (
-                    <ListItem button key={val} onClick={(e) => handleClickRecentFile(e, val)}>
-                      <ListItemIcon>
-                        <PlayCircleOutline />
-                      </ListItemIcon>
-                      <ListItemText primary={val} />
+                    <ListItem
+                      disablePadding
+                      key={val}
+                    >
+                      <ListItemButton
+                        component="a"
+                        onClick={(e) => handleClickRecentFile(e, val)}
+                      >
+                        <ListItemIcon>
+                          <PlayCircleOutline />
+                        </ListItemIcon>
+                        <ListItemText primary={val} />
+                      </ListItemButton>
                     </ListItem>
                   ))}
                 </List>
