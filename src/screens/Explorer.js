@@ -7,7 +7,7 @@ import {
   Button,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid, IconButton, CircularProgress, List, ListItem, ListItemIcon,
-  ListItemText, Paper, Typography, ListItemButton,
+  ListItemText, Paper, Typography, ListItemButton, useTheme,
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +17,10 @@ import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 
 import Layout from '../components/layouts/Layout';
-import { paperSm, userSelectNone } from '../utils/styles';
+import { loadingText, paperSm, userSelectNone } from '../utils/styles';
 
 const Explorer = ({ ConfigActions, config }) => {
+  const theme = useTheme();
   const [t] = useTranslation(['common', 'notice', 'menu']);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -228,7 +229,7 @@ const Explorer = ({ ConfigActions, config }) => {
       && (
       <Grid item xs={12} css={css`text-align: center`}>
         <CircularProgress size={80} thickness={6} />
-        <Typography component="p" css={css`font-size: 1.1em; margin-top: 20px`}>
+        <Typography component="p" css={loadingText(theme)}>
           <strong>{t('player-loading')}</strong>
         </Typography>
       </Grid>

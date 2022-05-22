@@ -20,6 +20,15 @@ export const isOnline = () => (window ? window.navigator.onLine : false);
 
 export const isProduction = () => !remote.getGlobal('ENV_IS_DEV');
 
+export const isDarkMode = (theme) => {
+  if (theme.theme) {
+    return theme.theme.palette.mode === 'dark';
+  } if (theme.palette) {
+    return theme.palette.mode === 'dark';
+  }
+  return false;
+};
+
 export default {
   getOS,
   getOSVersion,
@@ -28,4 +37,5 @@ export default {
   getVersionName,
   isOnline,
   isProduction,
+  isDarkMode,
 };

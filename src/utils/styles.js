@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { isDarkMode } from './helper';
 
 export const textCenter = css`
   text-align: center;
@@ -40,6 +41,12 @@ export const buttonGroupButtonBase = css`
   border-right: 0 !important;
 `;
 
+export const loadingText = props => css`
+  font-size: 1.1em;
+  margin-top: 20px;
+  color: ${isDarkMode(props) ? '#fff' : '#333'}
+`;
+
 export default {
   textCenter,
   userSelectNone,
@@ -49,4 +56,5 @@ export default {
   paperSm,
   paperBase,
   buttonGroupButtonBase,
+  loadingText,
 };
