@@ -206,6 +206,9 @@ if (!gotTheLock) {
 
   ipcMain.on('appendRecentFiles', (event, file) => {
     try {
+      if (!file || file.length < 1) {
+        return;
+      }
       const recentFiles = store.get('recentFiles');
       const fileIndex = recentFiles.findIndex(x => x === file);
       if (fileIndex !== -1) recentFiles.splice(fileIndex, 1);
