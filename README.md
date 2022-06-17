@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎮 OpenRuffle Flash Player
+![open-ruffle-player-logo](public/images/open-ruffle-player-logo.png)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/open-ruffle-player/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/jooy2/open-ruffle-player)](https://github.com/jooy2/open-ruffle-player/tags)
 ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/open-ruffle-player)
