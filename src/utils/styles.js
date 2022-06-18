@@ -28,12 +28,13 @@ export const paperSm = css`
 `;
 
 export const paperBase = css`
+  text-align: center;
   padding: 16px;
   margin-bottom: 16px;
   max-height: 250px;
   overflow-y: auto;
   p {
-    font-size: 0.9em;
+    font-size: 1.05em;
   }
 `;
 
