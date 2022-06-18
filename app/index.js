@@ -17,6 +17,7 @@ remoteMain.initialize();
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
+global.APP_AUTHOR = pkg.author;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
 global.ENV_IS_DEV = isDev();
 global.ENV_OS = getOS();

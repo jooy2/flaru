@@ -16,6 +16,8 @@ export const getVersionName = () => remote.getGlobal('APP_VERSION_NAME');
 
 export const getRuffleVersion = () => remote.getGlobal('APP_RUFFLE_VERSION_DATE');
 
+export const getAuthor = () => remote.getGlobal('APP_AUTHOR');
+
 export const isOnline = () => (window ? window.navigator.onLine : false);
 
 export const isProduction = () => !remote.getGlobal('ENV_IS_DEV');
