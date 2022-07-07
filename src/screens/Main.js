@@ -107,6 +107,12 @@ const Main = ({ ConfigActions }) => {
 
     ipcRenderer.send('mainLoaded');
 
+    window.addEventListener('mouseup', (event) => {
+      if (event.button === 3 || event.button === 4) {
+        event.preventDefault();
+      }
+    });
+
     return () => {
       ipcRenderer.removeAllListeners('receiveAppConfig');
       ipcRenderer.removeAllListeners('receiveNextRenderer');
