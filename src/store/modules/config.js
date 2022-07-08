@@ -20,7 +20,6 @@ const initialState = {
   appConfigRestoreWindowBounds: true,
   appConfigAdjustOriginalSize: false,
   recentFiles: [],
-  isAS3Error: false,
   dialogMetadataOpen: false,
 };
 

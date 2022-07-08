@@ -14,15 +14,6 @@ const Player = ({
   const { ipcRenderer } = window.require('electron');
   const navigate = useNavigate();
 
-  const handleErrorAS3 = async () => {
-    await ConfigActions.setConfig({
-      flashFileName: '',
-      flashFilePath: '',
-      isAS3Error: true,
-    });
-    navigate('/explorer');
-  };
-
   useEffect(() => {
     ipcRenderer.on('receiveResumeToExplorer', async () => {
       await ConfigActions.setConfig({
@@ -48,7 +39,6 @@ const Player = ({
       <FlashPlayer
         filePath={config.flashFilePath}
         header={!config.appConfigHideHeader}
-        onErrorAS3={handleErrorAS3}
       />
     </Layout>
   );

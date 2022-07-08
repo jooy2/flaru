@@ -11,7 +11,6 @@ const FlashPlayer = ({
   autoPlay = true,
   filePath = null,
   header = true,
-  onErrorAS3,
   config,
   ConfigActions,
 }) => {
@@ -45,9 +44,6 @@ const FlashPlayer = ({
       rPlayer.id = 'player';
       rPlayer.addEventListener('loadedmetadata', async () => {
         const metaData = rPlayer?.metadata;
-        if (metaData?.isActionScript3) {
-          onErrorAS3();
-        }
         await ConfigActions.setConfig({
           flashFileSwfVer: metaData?.swfVersion,
           flashFileFrame: metaData?.numFrames,

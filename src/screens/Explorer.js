@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Alert,
-  Button,
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid, IconButton, CircularProgress, List, ListItem, ListItemIcon,
   ListItemText, Paper, Typography, ListItemButton, useTheme,
 } from '@mui/material';
@@ -17,7 +15,7 @@ import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 
 import Layout from '../components/layouts/Layout';
-import { loadingText, paperSm, userSelectNone } from '../utils/styles';
+import { loadingText, paperSm } from '../utils/styles';
 
 const Explorer = ({ ConfigActions, config }) => {
   const theme = useTheme();
@@ -26,7 +24,6 @@ const Explorer = ({ ConfigActions, config }) => {
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [as3DialogOpen, setAs3DialogOpen] = useState(false);
   const { ipcRenderer } = window.require('electron');
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
@@ -76,11 +73,6 @@ const Explorer = ({ ConfigActions, config }) => {
     });
   };
 
-  const handleAS3ErrorClose = async () => {
-    await ConfigActions.setConfig({ isAS3Error: false });
-    setAs3DialogOpen(false);
-  };
-
   const handleRemoveRecentFiles = async () => {
     ipcRenderer.send('removeAllRecentFile');
     await ConfigActions.setConfig({
@@ -89,10 +81,6 @@ const Explorer = ({ ConfigActions, config }) => {
   };
 
   useEffect(() => {
-    if (config.isAS3Error && !as3DialogOpen) {
-      setAs3DialogOpen(true);
-    }
-
     ipcRenderer.on('receiveRecentFiles', async (event, argument) => {
       await ConfigActions.setConfig({
         recentFiles: argument,
@@ -242,30 +230,6 @@ const Explorer = ({ ConfigActions, config }) => {
         </Typography>
       </Grid>
       )}
-      <Dialog
-        css={userSelectNone}
-        open={as3DialogOpen}
-        onClose={handleAS3ErrorClose}
-        disableEscapeKeyDown
-        aria-labelledby="error-title"
-        aria-describedby="error-desc"
-      >
-        <DialogTitle id="error-title">
-          ⛔
-          {' '}
-          <strong>{t('notice:as3-alert-title')}</strong>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="error-desc">
-            {t('notice:as3-alert-desc')}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={e => handleAS3ErrorClose(e)} color="primary">
-            {t('menu:close')}
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Layout>
   );
 };
