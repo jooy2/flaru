@@ -12,7 +12,7 @@ import {
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { DeleteForever, PlayCircleOutline } from '@mui/icons-material';
+import { DeleteForever, FileOpen, PlayCircleOutline } from '@mui/icons-material';
 import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 
@@ -136,18 +136,27 @@ const Explorer = ({ ConfigActions, config }) => {
               css: css`
                 cursor: pointer;
                 user-select: none;
-                padding: 24px 40px;
+                padding: 40px 35px;
                 min-height: 130px;
                 text-align: center;
                 font-style: italic;
-                border-radius: 5px;
+                border-radius: 15px;
                 border: ${config.isDarkTheme ? '3px dashed #fff' : '3px dashed #333'};
+                opacity: 0.8;
+                h2 {
+                  margin: 10px 0;
+                  font-size: 1.1em
+                }
+                :hover {
+                  opacity: 0.6;
+                }
               `,
             })}
             >
               <Typography component="h2" variant="subtitle1">
-                {t('notice:drag-drop-execute')}
+                <strong>{t('notice:drag-drop-execute')}</strong>
               </Typography>
+              <FileOpen fontSize="large" />
               <input {...getInputProps()} />
             </div>
             {flashContentError
