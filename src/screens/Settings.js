@@ -13,17 +13,7 @@ import { css } from '@emotion/react';
 import Layout from '../components/layouts/Layout';
 import * as configActions from '../store/modules/config';
 import { marginTopMd } from '../utils/styles';
-
-const Header = ({ title, desc }) => (
-  <>
-    <Typography component="h3">
-      {title}
-    </Typography>
-    <Typography component="span">
-      {desc}
-    </Typography>
-  </>
-);
+import PanelHeader from '../components/views/PanelHeader';
 
 const Settings = ({ config, ConfigActions }) => {
   const [t, i18n] = useTranslation(['common', 'notice', 'menu']);
@@ -152,7 +142,10 @@ const Settings = ({ config, ConfigActions }) => {
             `}
           >
             <Grid item xs={12}>
-              <Header title={t('settings-language-title')} desc={t('settings-language-desc')} />
+              <PanelHeader
+                title={t('settings-language-title')}
+                desc={t('settings-language-desc')}
+              />
               <Typography component="div">
                 <Select
                   size="small"
@@ -171,7 +164,10 @@ const Settings = ({ config, ConfigActions }) => {
               </Typography>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <Header title={t('settings-title-1')} desc={t('settings-desc-1')} />
+              <PanelHeader
+                title={t('settings-title-1')}
+                desc={t('settings-desc-1')}
+              />
               <Grid container>
                 <Grid item xs={12}>
                   <FormControlLabel
@@ -206,7 +202,10 @@ const Settings = ({ config, ConfigActions }) => {
               </Grid>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <Header title={t('settings-title-2')} desc={t('settings-desc-2')} />
+              <PanelHeader
+                title={t('settings-title-2')}
+                desc={t('settings-desc-2')}
+              />
               <RadioGroup
                 row
                 aria-label="theme"
@@ -239,7 +238,10 @@ const Settings = ({ config, ConfigActions }) => {
               </RadioGroup>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <Header title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
+              <PanelHeader
+                title={t('settings-reset-title')}
+                desc={t('settings-reset-desc')}
+              />
               <Typography component="div" css={marginTopMd}>
                 <Button variant="contained" size="medium" onClick={ev => handleReset(ev, true)}>
                   {t('menu:reset-and-restart')}
