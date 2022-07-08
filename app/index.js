@@ -4,33 +4,39 @@ const {
 const path = require('path');
 const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
-const remoteMain = require('@electron/remote/main');
+const electronRemote = require('@electron/remote/main');
 const {
   getOS, getOSVersion, isDev, getAppName, fileExists,
 } = require('./appUtils');
 const pkg = require('../package.json');
-const commonConfig = require('../config/common.json');
 const schema = require('../config/store.json');
 
-remoteMain.initialize();
+const CURRENT_OS = getOS();
+const MAX_RECENT_FILES = 10;
+const DEFAULT_WINDOW_ATTR = {
+  minWidth: 100,
+  minHeight: 100,
+  width: 1300,
+  height: 800,
+};
 
+global.APP_NAME = getAppName();
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
 global.APP_AUTHOR = pkg.author;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
 global.ENV_IS_DEV = isDev();
-global.ENV_OS = getOS();
+global.ENV_OS = CURRENT_OS;
+global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
+global.ENV_IS_MAC = CURRENT_OS === 'macOS';
 global.ENV_OS_VERSION = getOSVersion();
 
-const MAX_RECENT_FILES = commonConfig.explorer.maxRecentFiles;
-const IS_WINDOWS = getOS() === 'Windows';
-const IS_MAC_OS = getOS() === 'macOS';
 const store = new Store({ schema });
 let win;
 
 const openFromExplorer = (argv, argvIndex = 1) => {
-  if (IS_WINDOWS && argv && argv.length >= argvIndex
+  if (global.ENV_IS_WINDOWS && argv && argv.length >= argvIndex
       && argv[argvIndex]?.indexOf('.swf') !== -1) {
     win.webContents.send('receiveNextRenderer', argv[argvIndex]);
     win.webContents.send('receiveOpenFile', argv[argvIndex]);
@@ -41,39 +47,41 @@ const openFromExplorer = (argv, argvIndex = 1) => {
 
 const getWindowBounds = () => {
   const defaultBounds = {
-    width: commonConfig.window.defaultWidth,
-    height: commonConfig.window.defaultHeight,
+    width: DEFAULT_WINDOW_ATTR.width,
+    height: DEFAULT_WINDOW_ATTR.height,
   };
+
   if (store.get('restoreWindowBounds')) {
     return store.get('windowBounds') || defaultBounds;
   }
+
   return defaultBounds;
 };
 
 const createWindow = () => {
   win = new BrowserWindow({
     ...getWindowBounds(),
-    minWidth: commonConfig.window.minWidth,
-    minHeight: commonConfig.window.minHeight,
+    minWidth: DEFAULT_WINDOW_ATTR.minWidth,
+    minHeight: DEFAULT_WINDOW_ATTR.minHeight,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: false,
       webSecurity: false,
-      devTools: isDev(),
+      devTools: global.ENV_IS_DEV,
       contextIsolation: false,
       enableRemoteModule: true,
     },
   });
 
-  remoteMain.enable(win.webContents);
+  electronRemote.enable(win.webContents);
   win.setMenuBarVisibility(false);
 
   Menu.setApplicationMenu(Menu.buildFromTemplate([
     {
-      label: getAppName(),
+      label: global.APP_NAME,
       submenu: [
         {
-          label: `Quit ${getAppName()}`,
+          label: `Quit ${global.APP_NAME}`,
           role: 'quit',
         },
       ],
@@ -100,14 +108,17 @@ const createWindow = () => {
     },
   ]));
 
-  if (IS_MAC_OS) {
+  if (global.IS_MAC) {
     systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', 'true');
     systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', 'true');
   }
 
-  win.loadURL(isDev() ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`)
-    .catch(() => null).then(() => {
-      if (isDev()) win.webContents.openDevTools();
+  win.loadURL(global.ENV_IS_DEV ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`)
+    .catch(() => null)
+    .then(() => {
+      if (global.ENV_IS_DEV) {
+        win.webContents.openDevTools();
+      }
     });
 
   win.on('close', () => {
@@ -132,7 +143,9 @@ const createWindow = () => {
     openFromExplorer(argv, 1);
   });
 
-  win.webContents.setWindowOpenHandler(({ url }) => ({ action: url.indexOf('ruffle') === -1 ? 'allow' : 'deny' }));
+  win.webContents.setWindowOpenHandler(({ url }) => ({
+    action: url.indexOf('ruffle') === -1 ? 'allow' : 'deny',
+  }));
 };
 
 const closeApp = () => {
@@ -151,7 +164,9 @@ if (!gotTheLock) {
 } else {
   app.on('second-instance', (e, argv) => {
     if (win) {
-      if (win.isMinimized()) win.restore();
+      if (win.isMinimized()) {
+        win.restore();
+      }
       win.focus();
       openFromExplorer(argv, 2);
     }
@@ -159,14 +174,19 @@ if (!gotTheLock) {
 
   app.on('open-file', (event, pathParam) => {
     event.preventDefault();
-    if (!IS_WINDOWS) win.webContents.send('receiveOpenFile', pathParam);
+    if (!global.ENV_IS_WINDOWS) {
+      win.webContents.send('receiveOpenFile', pathParam);
+    }
   });
 
-  app.whenReady().then(() => {
+  app.on('ready', () => {
+    electronRemote.initialize();
+
     protocol.registerFileProtocol('file', (request, callback) => {
       const pathname = decodeURI(request.url.replace('file:///', ''));
       callback(pathname);
     });
+
     createWindow();
   });
 
@@ -210,11 +230,20 @@ if (!gotTheLock) {
       if (!file || file.length < 1) {
         return;
       }
+
       const recentFiles = store.get('recentFiles');
       const fileIndex = recentFiles.findIndex(x => x === file);
-      if (fileIndex !== -1) recentFiles.splice(fileIndex, 1);
+
+      if (fileIndex !== -1) {
+        recentFiles.splice(fileIndex, 1);
+      }
+
       recentFiles.push(file);
-      if (recentFiles.length > MAX_RECENT_FILES) recentFiles.shift();
+
+      if (recentFiles.length > MAX_RECENT_FILES) {
+        recentFiles.shift();
+      }
+
       store.set({ recentFiles });
     } catch (e) {
       store.set({
@@ -233,8 +262,8 @@ if (!gotTheLock) {
 
   ipcMain.on('resizeWindow', async (event, args) => {
     if (args && args.width && args.height
-        && args.width > commonConfig.window.minWidth
-        && args.height > commonConfig.window.minHeight) {
+        && args.width > DEFAULT_WINDOW_ATTR.minWidth
+        && args.height > DEFAULT_WINDOW_ATTR.minHeight) {
       win.setSize(args.width, args.height, true);
     }
   });
@@ -245,6 +274,7 @@ if (!gotTheLock) {
       title: args.title,
       message: args.message,
     });
+
     if (response && response.response < 2) {
       const recentFiles = store.get('recentFiles');
       const fileIndex = recentFiles.findIndex(x => x === args.path);
