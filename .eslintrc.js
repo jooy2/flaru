@@ -12,7 +12,7 @@ module.exports = {
     'airbnb/hooks',
   ],
   rules: {
-    'linebreak-style': ['error', 'windows'],
+    'linebreak-style': 0,
     'arrow-parens': 0,
     'consistent-return': 1,
     'generator-star-spacing': 0,
