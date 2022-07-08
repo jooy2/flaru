@@ -49,7 +49,7 @@ const Main = ({ ConfigActions }) => {
         return;
       }
 
-      setLoadMsg(3);
+      setLoadMsg(2);
 
       ipcRenderer.on('receiveAppConfig', async (appConfigEvent, configs) => {
         await ConfigActions.setConfig({
@@ -83,7 +83,7 @@ const Main = ({ ConfigActions }) => {
           await runFromExplorer(receivePath);
         });
 
-        setLoadMsg(4);
+        setLoadMsg(3);
 
         if (filePath) {
           await runFromExplorer(filePath);
