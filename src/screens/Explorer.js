@@ -27,8 +27,7 @@ const Explorer = ({ ConfigActions, config }) => {
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [as3DialogOpen, setAs3DialogOpen] = useState(false);
-  const electron = window.require('electron');
-  const { ipcRenderer } = electron;
+  const { ipcRenderer } = window.require('electron');
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
     await ConfigActions.setConfig({

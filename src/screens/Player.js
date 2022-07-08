@@ -11,8 +11,7 @@ import * as configActions from '../store/modules/config';
 const Player = ({
   config, ConfigActions,
 }) => {
-  const electron = window.require('electron');
-  const { ipcRenderer } = electron;
+  const { ipcRenderer } = window.require('electron');
   const navigate = useNavigate();
 
   const handleErrorAS3 = async () => {

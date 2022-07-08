@@ -20,8 +20,7 @@ const Main = ({ ConfigActions }) => {
   const [loadMsg, setLoadMsg] = useState(1);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const navigate = useNavigate();
-  const electron = window.require('electron');
-  const { ipcRenderer } = electron;
+  const { ipcRenderer } = window.require('electron');
 
   const handleVersionCheck = async () => true; // TODO version check
 

@@ -28,8 +28,7 @@ const Settings = ({ config, ConfigActions }) => {
   const [
     adjustOriginalSizeChecked, setAdjustOriginalSizeChecked,
   ] = useState(config.appConfigAdjustOriginalSize);
-  const electron = window.require('electron');
-  const { ipcRenderer } = electron;
+  const { ipcRenderer } = window.require('electron');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const handleRadioChange = async (event) => {

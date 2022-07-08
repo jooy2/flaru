@@ -16,8 +16,7 @@ const FlashPlayer = ({
   ConfigActions,
 }) => {
   const player = useRef();
-  const electron = window.require('electron');
-  const { ipcRenderer } = electron;
+  const { ipcRenderer } = window.require('electron');
 
   useEffect(() => {
     try {
