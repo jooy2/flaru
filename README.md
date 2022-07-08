@@ -1,6 +1,6 @@
 <div align="center">
 
-![open-ruffle-player-logo](public/images/open-ruffle-player-logo.png)
+![open-ruffle-player-logo](public/images/open-ruffle-player-logo.webp)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/open-ruffle-player/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/jooy2/open-ruffle-player)](https://github.com/jooy2/open-ruffle-player/tags)

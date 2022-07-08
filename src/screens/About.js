@@ -27,7 +27,7 @@ const About = ({ config }) => {
     >
       <Grid item xs={12}>
         <Paper css={[paperBase, config.isDarkTheme ? css`background: #4a4a4a` : []]}>
-          <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/open-ruffle-player-logo.png`} />
+          <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/open-ruffle-player-logo.webp`} />
           <Typography component="p" variant="body1">
             By
             {' '}
@@ -52,7 +52,7 @@ const About = ({ config }) => {
             Emulator Based on:
           </Typography>
           <Typography component="p" variant="body1">
-            <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/ruffle-logo.png`} />
+            <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/ruffle-logo.webp`} />
           </Typography>
           <Typography component="p" variant="body1">
             {ruffleVersion}
