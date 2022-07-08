@@ -23,13 +23,6 @@
     "type": "string",
     "default": "auto"
   },
-  "allowTracking": {
-    "type": "boolean",
-    "default": true
-  },
-  "uid": {
-    "type": "string"
-  },
   "ruffleVersion": {
     "type": "string",
     "default": "latest"

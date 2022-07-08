@@ -100,8 +100,7 @@
     "react-router-dom": "^6.3.0",
     "redux": "^4.2.0",
     "redux-actions": "^2.6.5",
-    "redux-thunk": "^2.4.0",
-    "uuid": "^8.3.2"
+    "redux-thunk": "^2.4.0"
   },
   "eslintConfig": {
     "extends": "react-app"

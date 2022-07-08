@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import * as configActions from '../store/modules/config';
 import Layout from '../components/layouts/Layout';
-import { generateUid } from '../utils/tracking';
 import { loadingText } from '../utils/styles';
 
 const Main = ({ ConfigActions }) => {
@@ -54,7 +53,6 @@ const Main = ({ ConfigActions }) => {
       setLoadMsg(3);
 
       ipcRenderer.on('receiveAppConfig', async (appConfigEvent, configs) => {
-        const uid = configs.uid || await generateUid();
         await ConfigActions.setConfig({
           appConfigHideHeader: configs.hideHeader,
           appConfigTheme: configs.theme,
@@ -64,7 +62,6 @@ const Main = ({ ConfigActions }) => {
           appConfigCurrentLanguage: getLanguage(),
           appConfigRestoreWindowBounds: configs.restoreWindowBounds,
           appConfigAdjustOriginalSize: configs.adjustOriginalSize,
-          appConfigUid: uid,
         });
 
         if (configs.theme === 'auto') {
