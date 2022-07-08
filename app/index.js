@@ -157,135 +157,123 @@ const restartApp = () => {
   app.exit();
 };
 
-const gotTheLock = app.requestSingleInstanceLock();
+app.on('open-file', (event, pathParam) => {
+  event.preventDefault();
+  if (!global.ENV_IS_WINDOWS) {
+    win.webContents.send('receiveOpenFile', pathParam);
+  }
+});
 
-if (!gotTheLock) {
-  app.quit();
-} else {
-  app.on('second-instance', (e, argv) => {
-    if (win) {
-      if (win.isMinimized()) {
-        win.restore();
-      }
-      win.focus();
-      openFromExplorer(argv, 2);
-    }
+app.on('ready', () => {
+  electronRemote.initialize();
+
+  protocol.registerFileProtocol('file', (request, callback) => {
+    const pathname = decodeURI(request.url.replace('file:///', ''));
+    callback(pathname);
   });
 
-  app.on('open-file', (event, pathParam) => {
-    event.preventDefault();
-    if (!global.ENV_IS_WINDOWS) {
-      win.webContents.send('receiveOpenFile', pathParam);
-    }
-  });
+  createWindow();
+});
 
-  app.on('ready', () => {
-    electronRemote.initialize();
+app.on('window-all-closed', () => {
+  closeApp();
+});
 
-    protocol.registerFileProtocol('file', (request, callback) => {
-      const pathname = decodeURI(request.url.replace('file:///', ''));
-      callback(pathname);
-    });
-
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
-  });
+  }
+});
 
-  app.on('window-all-closed', () => {
-    closeApp();
-  });
+ipcMain.on('mainLoaded', async () => {
+  openFromExplorer(process?.argv, 1);
+});
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+ipcMain.on('getAppConfig', () => {
+  win.webContents.send('receiveAppConfig', store.store);
+});
+
+ipcMain.on('getRecentFiles', () => {
+  win.webContents.send('receiveRecentFiles', store.get('recentFiles').reverse());
+});
+
+ipcMain.on('setAppConfig', (event, args) => {
+  store.set(args);
+});
+
+ipcMain.on('resetAppConfig', () => {
+  store.clear();
+  restartApp();
+});
+
+ipcMain.on('restart', () => {
+  restartApp();
+});
+
+ipcMain.on('appendRecentFiles', (event, file) => {
+  try {
+    if (!file || file.length < 1) {
+      return;
     }
-  });
 
-  ipcMain.on('mainLoaded', async () => {
-    openFromExplorer(process?.argv, 1);
-  });
+    const recentFiles = store.get('recentFiles');
+    const fileIndex = recentFiles.findIndex(x => x === file);
 
-  ipcMain.on('getAppConfig', () => {
-    win.webContents.send('receiveAppConfig', store.store);
-  });
-
-  ipcMain.on('getRecentFiles', () => {
-    win.webContents.send('receiveRecentFiles', store.get('recentFiles').reverse());
-  });
-
-  ipcMain.on('setAppConfig', (event, args) => {
-    store.set(args);
-  });
-
-  ipcMain.on('resetAppConfig', () => {
-    store.clear();
-    restartApp();
-  });
-
-  ipcMain.on('restart', () => {
-    restartApp();
-  });
-
-  ipcMain.on('appendRecentFiles', (event, file) => {
-    try {
-      if (!file || file.length < 1) {
-        return;
-      }
-
-      const recentFiles = store.get('recentFiles');
-      const fileIndex = recentFiles.findIndex(x => x === file);
-
-      if (fileIndex !== -1) {
-        recentFiles.splice(fileIndex, 1);
-      }
-
-      recentFiles.push(file);
-
-      if (recentFiles.length > MAX_RECENT_FILES) {
-        recentFiles.shift();
-      }
-
-      store.set({ recentFiles });
-    } catch (e) {
-      store.set({
-        recentFiles: [],
-      });
+    if (fileIndex !== -1) {
+      recentFiles.splice(fileIndex, 1);
     }
-  });
 
-  ipcMain.on('checkFileExist', async (event, args) => {
-    win.webContents.send('receiveFileExist', {
-      name: args.name,
-      path: args.path,
-      exist: await fileExists(args.path),
+    recentFiles.push(file);
+
+    if (recentFiles.length > MAX_RECENT_FILES) {
+      recentFiles.shift();
+    }
+
+    store.set({ recentFiles });
+  } catch (e) {
+    store.set({
+      recentFiles: [],
     });
-  });
+  }
+});
 
-  ipcMain.on('resizeWindow', async (event, args) => {
-    if (args && args.width && args.height
+ipcMain.on('checkFileExist', async (event, args) => {
+  win.webContents.send('receiveFileExist', {
+    name: args.name,
+    path: args.path,
+    exist: await fileExists(args.path),
+  });
+});
+
+ipcMain.on('resizeWindow', async (event, args) => {
+  if (args && args.width && args.height
         && args.width > DEFAULT_WINDOW_ATTR.minWidth
         && args.height > DEFAULT_WINDOW_ATTR.minHeight) {
-      win.setSize(args.width, args.height, true);
+    win.setSize(args.width, args.height, true);
+  }
+});
+
+ipcMain.on('removeRecentFile', async (event, args) => {
+  const response = await dialog.showMessageBox(win, {
+    type: 'info',
+    title: args.title,
+    message: args.message,
+  });
+
+  if (response && response.response < 2) {
+    const recentFiles = store.get('recentFiles');
+    const fileIndex = recentFiles.findIndex(x => x === args.path);
+
+    if (fileIndex !== -1) {
+      recentFiles.splice(fileIndex, 1);
     }
-  });
 
-  ipcMain.on('removeRecentFile', async (event, args) => {
-    const response = await dialog.showMessageBox(win, {
-      type: 'info',
-      title: args.title,
-      message: args.message,
-    });
+    store.set({ recentFiles });
+    win.webContents.send('receiveRecentFiles', recentFiles.reverse());
+  }
+});
 
-    if (response && response.response < 2) {
-      const recentFiles = store.get('recentFiles');
-      const fileIndex = recentFiles.findIndex(x => x === args.path);
-      if (fileIndex !== -1) recentFiles.splice(fileIndex, 1);
-      store.set({ recentFiles });
-      win.webContents.send('receiveRecentFiles', recentFiles.reverse());
-    }
-  });
-
-  ipcMain.on('removeAllRecentFile', async () => {
-    store.set({ recentFiles: [] });
-    win.webContents.send('receiveRecentFiles', []);
-  });
-}
+ipcMain.on('removeAllRecentFile', async () => {
+  store.set({ recentFiles: [] });
+  win.webContents.send('receiveRecentFiles', []);
+});
