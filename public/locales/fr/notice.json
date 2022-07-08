@@ -1,0 +1,8 @@
+{
+  "wrong-file-type": "Format de fichier invalide! Seuls les fichiers SWF peuvent être exécutés.",
+  "drag-drop-execute": "Cliquez ici ou glissez-déposez les fichiers pour lancer.",
+  "no-recent-files": "Il n'y a pas de fichiers récemment exécutés.",
+  "not-found-recent-file": "Le fichier dans ce chemin n'existe pas. Retirer de la liste.",
+  "as3-alert-title": "Ce fichier n'est pas encore pris en charge!",
+  "as3-alert-desc": "Pardon. Ce fichier a été créé avec Action Script 3 (AVM2) et n'est actuellement pas en cours d'exécution. Il sera pris en charge dans un avenir proche et vous devrez attendre une future mise à jour."
+}

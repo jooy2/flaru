@@ -1,0 +1,20 @@
+{
+  "main-title": "Sélectionnez un fichier SWF à exécuter",
+  "about-title": "Informations sur l'application",
+  "player-loading": "Le joueur se prépare à courir... Veuillez patienter.",
+  "recent-file-title": "Fichiers récemment exécutés",
+  "loading-1": "Initialisation de l'application",
+  "loading-2": "Obtenir les paramètres de l'application",
+  "loading-3": "Construire l'écran de démarrage",
+  "loading": "veuillez patienter un instant...",
+  "dialog-title-info": "guide",
+  "settings-info": "Sélectionnez l'option souhaitée et elle sera reflétée immédiatement.",
+  "settings-title-1": "paramètres du lecteur",
+  "settings-desc-1": "Vous êtes libre de définir l'environnement d'exécution souhaité.",
+  "settings-title-2": "Paramètres du thème de l'application",
+  "settings-desc-2": "Vous pouvez choisir le style que vous souhaitez entre le mode clair et le mode sombre.",
+  "settings-reset-title": "Réinitialiser les données de l'application",
+  "settings-reset-desc": "Renvoie les données de l'application à leur valeur initiale. Vos paramètres et données enregistrés seront définitivement effacés!",
+  "settings-language-title": "Langue / Language",
+  "settings-language-desc": "Sélectionnez la langue d'affichage de l'application."
+}
