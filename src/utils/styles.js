@@ -1,10 +1,6 @@
 import { css } from '@emotion/react';
 import { isDarkMode } from './helper';
 
-export const textCenter = css`
-  text-align: center;
-`;
-
 export const userSelectNone = css`
   user-select: none;
 `;
@@ -49,7 +45,6 @@ export const loadingText = props => css`
 `;
 
 export default {
-  textCenter,
   userSelectNone,
   marginTopMd,
   marginRightXs,
