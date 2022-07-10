@@ -6,7 +6,7 @@ const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
 const electronRemote = require('@electron/remote/main');
 const {
-  getOS, getOSVersion, isDev, getAppName, fileExists,
+  getOS, getOSVersion, isDev, fileExists,
 } = require('./appUtils');
 const pkg = require('../package.json');
 const schema = require('../config/store.json');
@@ -20,7 +20,7 @@ const DEFAULT_WINDOW_ATTR = {
   height: 800,
 };
 
-global.APP_NAME = getAppName();
+global.APP_NAME = pkg.build.productName;
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
