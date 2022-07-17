@@ -5,6 +5,7 @@ import App from './App';
 import store from './store';
 import './i18n';
 import ThemeContainer from './components/layouts/ThemeContainer';
+import 'v8-compile-cache';
 
 createRoot(document.getElementById('app'))
   .render(
