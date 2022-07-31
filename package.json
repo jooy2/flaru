@@ -9,7 +9,7 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "start-interface": "cross-env PORT=9090 BROWSER=none npm run start",
     "start-electron": "electron .",
     "start-electron-after-interface": "wait-on http://127.0.0.1:9090 && npm run start-electron",
