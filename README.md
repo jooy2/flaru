@@ -12,7 +12,7 @@
 ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
 ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
 
-![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
+![Logo Image](readme-screenshot.png)
 
 This is **Unofficial Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
 
