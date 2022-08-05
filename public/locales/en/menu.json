@@ -23,6 +23,5 @@
   "adjust-original-size": "Automatically resizes the window to fit the file's original size",
   "theme-light": "Light",
   "theme-dark": "Dark",
-  "theme-auto": "Auto Detect",
-  "view-license": "View License"
+  "theme-auto": "Auto Detect"
 }

@@ -1,6 +1,6 @@
 {
-    "short_name": "OpenRuffle Player",
-    "name": "OpenRuffle Flash Player",
+    "short_name": "Flaru Player",
+    "name": "Flaru Flash Player",
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#000000",

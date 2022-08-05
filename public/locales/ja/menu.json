@@ -23,6 +23,5 @@
   "adjust-original-size": "ファイルの元のサイズに合わせてウィンドウサイズを自動的に調整",
   "theme-light": "ライト",
   "theme-dark": "ダーク",
-  "theme-auto": "自動検出",
-  "view-license": "ライセンスを見る"
+  "theme-auto": "自動検出"
 }

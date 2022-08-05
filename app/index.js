@@ -20,7 +20,7 @@ const DEFAULT_WINDOW_ATTR = {
   height: 800,
 };
 
-global.APP_NAME = pkg.build.productName;
+global.APP_NAME = pkg.displayName;
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;

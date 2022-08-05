@@ -23,6 +23,5 @@
   "adjust-original-size": "Passt die Größe des Fensters automatisch an die Originalgröße der Datei an",
   "theme-light": "Licht (hell)",
   "theme-dark": "Dunkel (dunkel)",
-  "theme-auto": "automatische Erkennung",
-  "view-license": "Lizenzen anzeigen"
+  "theme-auto": "automatische Erkennung"
 }

@@ -23,6 +23,5 @@
   "adjust-original-size": "Redimensiona automaticamente a janela para caber no tamanho original do arquivo",
   "theme-light": "luz",
   "theme-dark": "Sombrio",
-  "theme-auto": "detecção automática",
-  "view-license": "Ver licença"
+  "theme-auto": "detecção automática"
 }

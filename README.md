@@ -1,16 +1,16 @@
 <div align="center">
 
-![open-ruffle-player-logo](public/images/open-ruffle-player-logo.webp)
+![flaru-logo](public/images/flaru-logo.webp)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/open-ruffle-player/blob/master/LICENSE)
-[![Version](https://img.shields.io/github/package-json/v/jooy2/open-ruffle-player)](https://github.com/jooy2/open-ruffle-player/tags)
-![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/open-ruffle-player)
-[![Downloads](https://img.shields.io/github/downloads/jooy2/open-ruffle-player/total)](https://github.com/jooy2/open-ruffle-player/releases)
-![Languages](https://img.shields.io/github/languages/count/jooy2/open-ruffle-player)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE)
+[![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags)
+![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/flaru)
+[![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases)
+![Languages](https://img.shields.io/github/languages/count/jooy2/flaru)
 [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
-![Stars](https://img.shields.io/github/stars/jooy2/open-ruffle-player?style=social)
-![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/open-ruffle-player)
-![Line Count](https://img.shields.io/tokei/lines/github/jooy2/open-ruffle-player)
+![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social)
+![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
+![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
 
 ![Logo Image](https://user-images.githubusercontent.com/48266008/112129289-9b6b6380-8c0a-11eb-9b1a-759ffbd10ffc.png)
 
@@ -45,7 +45,7 @@ There is no built-in automatic update in the app. It is recommended to download 
 ## 💾 Downloads
 Please use the GitHub Release page attached below.
 
-[OpenRuffle Flash Player Release Page](https://github.com/jooy2/open-ruffle-player/releases)
+[Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
 
 ## 🔧 Technical Specifications
  - [Electron 18.x](https://www.electronjs.org/)

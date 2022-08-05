@@ -23,6 +23,5 @@
   "adjust-original-size": "파일의 원본 사이즈에 맞추어 윈도우 크기를 자동으로 조정",
   "theme-light": "라이트 (밝게)",
   "theme-dark": "다크 (어둡게)",
-  "theme-auto": "자동 감지",
-  "view-license": "라이선스 보기"
+  "theme-auto": "자동 감지"
 }

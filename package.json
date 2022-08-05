@@ -1,10 +1,11 @@
 {
-  "name": "open-ruffle-player",
+  "name": "flaru-player",
+  "displayName": "Flaru Player",
   "version": "1.5.0",
   "versionCode": 150,
   "versionDate": "2022-07-08",
   "ruffleVersionDate": "2022-07-08",
-  "description": "OpenRuffle Flash Player",
+  "description": "Flaru Flash Player",
   "main": "app/index.js",
   "private": true,
   "homepage": "./",
@@ -29,8 +30,8 @@
         "role": "Viewer"
       }
     ],
-    "productName": "OpenRuffle Flash Player",
-    "appId": "com.jooy2.openruffleplayer",
+    "productName": "Flaru Player",
+    "appId": "com.flaru.flaru",
     "asar": true,
     "compression": "maximum",
     "extends": null,

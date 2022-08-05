@@ -23,6 +23,5 @@
   "adjust-original-size": "Redimensionne automatiquement la fenêtre pour l'adapter à la taille d'origine du fichier",
   "theme-light": "lumière",
   "theme-dark": "foncé",
-  "theme-auto": "détection automatique",
-  "view-license": "Afficher les licences"
+  "theme-auto": "détection automatique"
 }

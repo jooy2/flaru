@@ -9,8 +9,8 @@ import Header from './Header';
 import { headerArea } from '../../utils/styles';
 
 const Layout = ({
-  title = 'OpenRuffle Player',
-  titleTail = ' - OpenRuffle Flash Player',
+  title = 'Flaru Player',
+  titleTail = ' - Flaru Flash Player',
   withTail = true,
   header = true,
   container = true,
