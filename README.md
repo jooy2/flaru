@@ -48,7 +48,7 @@ Please use the GitHub Release page attached below.
 [Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
 
 ## 🔧 Technical Specifications
- - [Electron 18.x](https://www.electronjs.org/)
+ - [Electron 20.x](https://www.electronjs.org/)
  - [React 18.x](https://reactjs.org/)
  - [Material-UI 5.x](https://mui.com/)
  - [Ruffle](https://ruffle.rs/)
@@ -85,7 +85,7 @@ $ npm run build:linux
 ```
 
 ## 📋 License
-Copyright © 2021 Jooy2 Released under the MIT license. (Source code excluding Ruffle and external modules)
+Copyright © 2021-2022 Jooy2 Released under the MIT license. (Source code excluding Ruffle and external modules)
 
 Please use the build package only for personal testing. **Distribution of packages for production/commercial use is not permitted.**
 
