@@ -53,7 +53,17 @@
       ]
     },
     "mac": {
-      "identity": null
+      "identity": null,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "icon": "resources/installer/icon.icns",
+      "type": "distribution",
+      "target": {
+        "target": "dmg",
+        "arch": [
+          "x64", "arm64", "universal"
+        ]
+      }
     },
     "directories": {
       "buildResources": "./resources/installer/",
