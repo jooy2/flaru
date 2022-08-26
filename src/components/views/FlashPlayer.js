@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { css } from '@emotion/react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,6 +16,7 @@ const FlashPlayer = ({
 }) => {
   const player = useRef();
   const { ipcRenderer } = window.require('electron');
+  const os = useMemo(() => getOS(), []);
 
   useEffect(() => {
     try {
@@ -23,7 +24,6 @@ const FlashPlayer = ({
       container.innerHTML = '';
 
       let realPath;
-      const os = getOS();
       if (os === 'Linux' || os === 'macOS') {
         realPath = filePath.indexOf('file:') === -1 ? `file:///${filePath}` : filePath;
       } else {
@@ -34,6 +34,7 @@ const FlashPlayer = ({
       window.RufflePlayer.config = {
         autoPlay,
         polyfills: false,
+        preloader: false,
         letterbox: config.appConfigLetterbox ? 'on' : 'off',
         logLevel: 'error',
         contextMenu: !config.appConfigHideContext,

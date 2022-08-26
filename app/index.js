@@ -6,7 +6,7 @@ const electronLocalShortcut = require('electron-localshortcut');
 const Store = require('electron-store');
 const electronRemote = require('@electron/remote/main');
 const {
-  getOS, getOSVersion, isDev, fileExists,
+  getOS, getOSVersion, fileExists,
 } = require('./appUtils');
 const pkg = require('../package.json');
 const schema = require('../config/store.json');
@@ -26,7 +26,7 @@ global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
 global.APP_AUTHOR = pkg.author;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
-global.ENV_IS_DEV = isDev();
+global.ENV_IS_DEV = !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';

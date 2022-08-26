@@ -28,6 +28,7 @@ const About = () => {
           <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/flaru-logo.webp`} />
           <Typography component="p" variant="body1">
             Flaru
+            {' '}
             {getVersionName()}
             {' '}
             By
