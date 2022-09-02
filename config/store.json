@@ -23,10 +23,6 @@
     "type": "string",
     "default": "auto"
   },
-  "ruffleVersion": {
-    "type": "string",
-    "default": "latest"
-  },
   "restoreWindowBounds": {
     "type": "boolean",
     "default": true
