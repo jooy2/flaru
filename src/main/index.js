@@ -8,8 +8,8 @@ const electronRemote = require('@electron/remote/main');
 const {
   getOS, getOSVersion, fileExists,
 } = require('./appUtils');
-const pkg = require('../package.json');
-const schema = require('../config/store.json');
+const pkg = require('../../package.json');
+const schema = require('./config/store.json');
 
 const CURRENT_OS = getOS();
 const MAX_RECENT_FILES = 10;
@@ -113,13 +113,19 @@ const createWindow = () => {
     systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', 'true');
   }
 
-  win.loadURL(global.ENV_IS_DEV ? 'http://localhost:9090' : `file://${path.join(__dirname, '../build/index.html')}`)
-    .catch(() => null)
-    .then(() => {
-      if (global.ENV_IS_DEV) {
+  if (global.ENV_IS_DEV) {
+    win.loadURL('http://localhost:5173')
+      .catch(e => {
+        console.log(e);
+      })
+      .then(() => {
         win.webContents.openDevTools();
-      }
+      });
+  } else {
+    win.loadFile(path.join(__dirname, '../index.html')).catch(e => {
+      console.log(e);
     });
+  }
 
   win.on('close', () => {
     store.set({

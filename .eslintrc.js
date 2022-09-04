@@ -28,6 +28,7 @@ module.exports = {
     'react/prop-types': 0,
     'react-hooks/exhaustive-deps': 0,
     'react/jsx-props-no-spreading': 0,
+    'react/no-unknown-property': 1,
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/label-has-associated-control': 1,
     'jsx-a11y/no-noninteractive-element-interactions': 0,

@@ -1,6 +1,6 @@
 <div align="center">
 
-![flaru-logo](public/images/flaru-logo.webp)
+![flaru-logo](src/renderer/public/images/flaru-logo.webp)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags)
@@ -48,10 +48,11 @@ Please use the GitHub Release page attached below.
 [Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
 
 ## 🔧 Technical Specifications
- - [Electron 20.x](https://www.electronjs.org/)
- - [React 18.x](https://reactjs.org/)
- - [Material-UI 5.x](https://mui.com/)
- - [Ruffle](https://ruffle.rs/)
+ - [ViteJS 3.x](https://vitejs.dev)
+ - [Electron 20.x](https://www.electronjs.org)
+ - [React 18.x](https://reactjs.org)
+ - [Material-UI 5.x](https://mui.com)
+ - [Ruffle](https://ruffle.rs)
 
 ## 🔨 Build & Run
 Before building or running, you need to install the module and add the Ruffle script file to the project.

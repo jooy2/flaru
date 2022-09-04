@@ -6,21 +6,22 @@
   "versionDate": "2022-08-05",
   "ruffleVersionDate": "2022-08-05",
   "description": "Flaru Flash Player",
-  "main": "app/index.js",
+  "main": "dist/main/index.js",
   "private": true,
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
-    "start-interface": "cross-env PORT=9090 BROWSER=none npm run start",
+    "start": "vite",
+    "start-interface": "cross-env PORT=5173 BROWSER=none npm run start",
     "start-electron": "electron .",
-    "start-electron-after-interface": "wait-on http://127.0.0.1:9090 && npm run start-electron",
-    "build:mac": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --mac",
-    "build:linux": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --linux",
-    "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-scripts build && electron-builder --windows nsis:x64",
-    "build:win-portable": "react-scripts build && electron-builder --windows portable --x64",
+    "start-electron-after-interface": "wait-on http://127.0.0.1:5173 && npm run start-electron",
+    "build:mac": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder --mac",
+    "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production && vite build && electron-builder --windows nsis:x64",
+    "build:win-portable": "cross-env vite build NODE_ENV=production && electron-builder --windows portable --x64",
+    "build:linux": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder --linux",
     "dev": "cross-env NODE_ENV=dev concurrently -n interface,app 'npm:start-interface' 'npm:start-electron-after-interface'",
     "postinstall": "electron-builder install-app-deps",
-    "lint:fix": "eslint --fix src app --ext .js,.jsx"
+    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
+    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src"
   },
   "build": {
     "fileAssociations": [
@@ -69,28 +70,29 @@
     },
     "directories": {
       "buildResources": "./resources/installer/",
-      "output": "./dist/"
+      "output": "./dist/release/${version}"
     },
     "files": [
-      "app/**/*",
-      "config/**/*",
-      "build/**/*"
+      "dist/**/*",
+      "!dist/release/**/*"
     ]
   },
   "author": "jooy2 <jootc.help@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@vitejs/plugin-react": "^2.0.1",
     "concurrently": "^7.3.0",
     "cross-env": "^7.0.3",
     "electron": "^20.1.1",
     "electron-builder": "^23.3.3",
-    "eslint": "^8.22.0",
+    "eslint": "8.22.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "react-scripts": "^5.0.1",
+    "vite": "^3.0.9",
+    "vite-plugin-electron": "^0.9.2",
     "wait-on": "^6.0.1"
   },
   "dependencies": {
