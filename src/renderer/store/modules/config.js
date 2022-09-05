@@ -1,7 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
-  checkVersion: false,
   flashFileName: '',
   flashFilePath: '',
   flashFileSwfVer: 0,
