@@ -25,7 +25,7 @@ const About = () => {
     >
       <Grid item xs={12}>
         <Paper css={paperBase}>
-          <img draggable="false" alt="logo" src={`${process.env.PUBLIC_URL}/images/flaru-logo.webp`} />
+          <img draggable="false" alt="logo" src="images/flaru-logo.webp" />
           <Typography component="p" variant="body1">
             Flaru
             {' '}
