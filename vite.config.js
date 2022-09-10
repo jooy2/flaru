@@ -28,13 +28,13 @@ export default defineConfig({
     react(),
     electron({
       main: {
-        entry: 'src/main/index.js',
-        format: 'cjs',
+        entry: 'index.js',
         vite: {
+          root: resolve('./src/main'),
           publicDir: resolve('./src/main'),
           build: {
             emptyOutDir: true,
-            outDir: 'dist/main',
+            outDir: '../../dist/main',
           },
         },
       },
