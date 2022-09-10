@@ -1,15 +1,36 @@
-const {
+import {
   app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences,
-} = require('electron');
-const path = require('path');
-const electronLocalShortcut = require('electron-localshortcut');
-const Store = require('electron-store');
-const electronRemote = require('@electron/remote/main');
-const {
-  getOS, getOSVersion, fileExists,
-} = require('./appUtils');
-const pkg = require('../../package.json');
-const schema = require('./config/store.json');
+} from 'electron';
+import path from 'path';
+import Store from 'electron-store';
+import * as electronLocalShortcut from 'electron-localshortcut';
+import * as electronRemote from '@electron/remote/main';
+import { release, platform } from 'os';
+import { promises } from 'fs';
+import pkg from '../../package.json';
+import schema from './config/store.json';
+
+const getOS = () => {
+  switch (platform()) {
+    case 'win32':
+      return 'Windows';
+    case 'linux':
+    case 'aix':
+    case 'sunos':
+    case 'netbsd':
+    case 'openbsd':
+    case 'freebsd':
+    case 'cygwin':
+    case 'android':
+      return 'Linux';
+    case 'darwin':
+      return 'macOS';
+    default:
+      return 'Unknown';
+  }
+};
+
+const fileExists = async p => !!(await promises.stat(p).catch(() => false));
 
 const CURRENT_OS = getOS();
 const MAX_RECENT_FILES = 10;
@@ -30,7 +51,7 @@ global.ENV_IS_DEV = !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';
-global.ENV_OS_VERSION = getOSVersion();
+global.ENV_OS_VERSION = release();
 
 const store = new Store({ schema });
 let win;
