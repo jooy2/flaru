@@ -25,6 +25,7 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 </div>
 
 ## ⭐ Features
+
  - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
  - ✅ Cross-platform: Windows, macOS, Linux supported!
  - ✅ Multi-language and theme support
@@ -34,6 +35,7 @@ I'm not the official developer of Ruffle. For issues and documentation related t
  - ✅ Customize various emulator settings.
 
 ## 📢 Compatibility
+
 **Since the emulator is under development, some content may not run smoothly, and Flash created with ActionScript 3 as of March 2021 is not supported.**
 
 See https://github.com/ruffle-rs/ruffle/issues/1368.
@@ -43,11 +45,13 @@ This app plots the emulator (built for self-hosted use) in a webview, so there m
 There is no built-in automatic update in the app. It is recommended to download the updated emulator version by referring to the GitHub Release page on a monthly basis.
 
 ## 💾 Downloads
+
 Please use the GitHub Release page attached below.
 
 [Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
 
 ## 🔧 Technical Specifications
+
  - [ViteJS 3.x](https://vitejs.dev)
  - [Electron 20.x](https://www.electronjs.org)
  - [React 18.x](https://reactjs.org)
@@ -55,6 +59,7 @@ Please use the GitHub Release page attached below.
  - [Ruffle](https://ruffle.rs)
 
 ## 🔨 Build & Run
+
 Before building or running, you need to install the module and add the Ruffle script file to the project.
 
 First install the dependency module with the following command: ([NodeJS](https://nodejs.org) pre-installed required)
@@ -62,17 +67,19 @@ First install the dependency module with the following command: ([NodeJS](https:
 $ npm i
 ```
 
-Next, download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/public/js/ruffle`
+Next, download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/src/renderer/public/js/ruffle`
 
 You only need to paste the `.map`, `.js`, `.wasm` files inside the compressed file.
 
 To test in the `development environment`, enter the following command:
+
 ```shell
 $ npm i
 $ npm run dev
 ```
 
 And you can build on multiple platforms with the following command:
+
 ```shell
 # Windows (.exe)
 $ npm run build:win
@@ -86,6 +93,7 @@ $ npm run build:linux
 ```
 
 ## 📋 License
+
 Copyright © 2021-2022 Jooy2 Released under the MIT license. (Source code excluding Ruffle and external modules)
 
 Please use the build package only for personal testing. **Distribution of packages for production/commercial use is not permitted.**
