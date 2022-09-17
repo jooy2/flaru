@@ -22,6 +22,8 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 (*This is just an emulator and does not contain any games.)
 
+> Flaru for mobile (POC/WIP) is here: https://github.com/jooy2/flaru-mobile
+
 </div>
 
 ## ⭐ Features
