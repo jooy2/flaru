@@ -24,6 +24,12 @@
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src"
   },
   "build": {
+    "productName": "Flaru Player",
+    "appId": "com.flaru.flaru",
+    "asar": true,
+    "compression": "maximum",
+    "extends": null,
+    "artifactName": "${productName} ${version}.${ext}",
     "fileAssociations": [
       {
         "ext": "swf",
@@ -31,27 +37,21 @@
         "role": "Viewer"
       }
     ],
-    "productName": "Flaru Player",
-    "appId": "com.flaru.flaru",
-    "asar": true,
-    "compression": "maximum",
-    "extends": null,
     "win": {
       "target": [
-        "zip",
-        "nsis"
+        {
+          "target": "zip",
+          "arch": "x64"
+        },
+        {
+          "target": "nsis",
+          "arch": "x64"
+        }
       ],
       "icon": "./resources/installer/icon.ico"
     },
     "nsis": {
       "oneClick": true
-    },
-    "linux": {
-      "icon": "resources/installer",
-      "target": [
-        "deb",
-        "rpm"
-      ]
     },
     "mac": {
       "identity": null,
@@ -59,14 +59,31 @@
       "gatekeeperAssess": false,
       "icon": "resources/installer/icon.icns",
       "type": "distribution",
-      "target": {
-        "target": "dmg",
-        "arch": [
-          "x64",
-          "arm64",
-          "universal"
-        ]
-      }
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64",
+            "universal"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "executableName": "flaru",
+      "icon": "resources/installer",
+      "category": "Game",
+      "target": [
+        {
+          "target": "deb",
+          "arch": "x64"
+        },
+        {
+          "target": "rpm",
+          "arch": "x64"
+        }
+      ]
     },
     "directories": {
       "buildResources": "./resources/installer/",
