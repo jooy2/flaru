@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { darkScrollbar } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
+import { css, Global, ThemeProvider } from '@emotion/react';
 import { connect } from 'react-redux';
 
 const ThemeContainer = ({ children, config }) => {
@@ -54,6 +54,13 @@ const ThemeContainer = ({ children, config }) => {
 
   return (
     <MuiThemeProvider theme={muiTheme}>
+      <Global
+        styles={css`
+          body {
+            margin: 0;
+          }
+        `}
+      />
       <ThemeProvider theme={muiTheme}>
         {children}
       </ThemeProvider>
