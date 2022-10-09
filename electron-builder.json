@@ -1,0 +1,71 @@
+{
+  "productName": "Flaru Player",
+  "appId": "com.flaru.flaru",
+  "asar": true,
+  "compression": "maximum",
+  "extends": null,
+  "artifactName": "${productName} ${version}.${ext}",
+  "fileAssociations": [
+    {
+      "ext": "swf",
+      "name": "SWF File",
+      "role": "Viewer"
+    }
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "zip",
+        "arch": "x64"
+      },
+      {
+        "target": "nsis",
+        "arch": "x64"
+      }
+    ],
+    "icon": "./resources/installer/icon.ico"
+  },
+  "nsis": {
+    "oneClick": true
+  },
+  "mac": {
+    "identity": null,
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "icon": "resources/installer/icon.icns",
+    "type": "distribution",
+    "target": [
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64",
+          "universal"
+        ]
+      }
+    ]
+  },
+  "linux": {
+    "executableName": "flaru",
+    "icon": "resources/installer",
+    "category": "Game",
+    "target": [
+      {
+        "target": "deb",
+        "arch": "x64"
+      },
+      {
+        "target": "rpm",
+        "arch": "x64"
+      }
+    ]
+  },
+  "directories": {
+    "buildResources": "./resources/installer/",
+    "output": "./dist/release/${version}"
+  },
+  "files": [
+    "dist/**/*",
+    "!dist/release/**/*"
+  ]
+}
