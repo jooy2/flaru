@@ -114,122 +114,133 @@ const Explorer = ({ ConfigActions, config }) => {
       center={loading}
       title={t('main-title')}
     >
-      {!loading
-      && (
-      <>
-        <Grid item xs={12}>
-          <Paper css={paperSm}>
-            <div {...getRootProps({
-              css: css`
-                cursor: pointer;
-                user-select: none;
-                padding: 40px 35px;
-                min-height: 130px;
-                text-align: center;
-                font-style: italic;
-                border-radius: 15px;
-                border: ${config.isDarkTheme ? '3px dashed #fff' : '3px dashed #333'};
-                opacity: 0.8;
-                h2 {
-                  margin: 10px 0;
-                  font-size: 1.1em
-                }
-                :hover {
-                  opacity: 0.6;
-                }
-              `,
-            })}
-            >
-              <Typography component="h2" variant="subtitle1">
-                <strong>{t('notice:drag-drop-execute')}</strong>
-              </Typography>
-              <FileOpen fontSize="large" />
-              <input {...getInputProps()} />
-            </div>
-            {flashContentError
-            && (
+      <Grid
+        item
+        xs={12}
+        css={css`
+          max-height: calc(100vh - 68px);
+          overflow-y: auto
+        `}
+      >
+        <Grid container>
+          {!loading
+          && (
+          <>
             <Grid item xs={12}>
-              <Alert severity="error">{errorMessage}</Alert>
-            </Grid>
-            )}
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper css={paperSm}>
-            <Grid container justifyContent="space-between">
-              <Grid item xs={5}>
-                <Typography component="h2" variant="h6">
-                  <strong>{t('common:recent-file-title')}</strong>
-                </Typography>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={handleRemoveRecentFiles}
-                  disabled={config.recentFiles.length < 1}
-                >
-                  <DeleteForever fontSize="small" />
-                </IconButton>
-              </Grid>
-            </Grid>
-            {config.recentFiles.length < 1
-            && (
-            <Typography component="p" variant="subtitle2">
-              {t('notice:no-recent-files')}
-            </Typography>
-            )}
-            {config.recentFiles.length > 0 && (
-            <Grid container>
-              <Grid item xs={12}>
-                <List
-                  component="nav"
-                  aria-label="recent files"
-                  dense
-                  css={css`
-                    .MuiListItemIcon-root {
-                      min-width: 32px;
+              <Paper css={paperSm}>
+                <div {...getRootProps({
+                  css: css`
+                    cursor: pointer;
+                    user-select: none;
+                    padding: 40px 35px;
+                    min-height: 130px;
+                    text-align: center;
+                    font-style: italic;
+                    border-radius: 15px;
+                    border: ${config.isDarkTheme ? '3px dashed #fff' : '3px dashed #333'};
+                    opacity: 0.8;
+                    h2 {
+                      margin: 10px 0;
+                      font-size: 1.1em
                     }
-                    span {
-                      font-size: 0.8em;
-                      max-width: 100%;
-                      overflow-x: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
+                    :hover {
+                      opacity: 0.6;
                     }
-                  `}
+                  `,
+                })}
                 >
-                  {config.recentFiles.map(val => (
-                    <ListItem
-                      disablePadding
-                      key={val}
+                  <Typography component="h2" variant="subtitle1">
+                    <strong>{t('notice:drag-drop-execute')}</strong>
+                  </Typography>
+                  <FileOpen fontSize="large" />
+                  <input {...getInputProps()} />
+                </div>
+                {flashContentError
+                && (
+                <Grid item xs={12}>
+                  <Alert severity="error">{errorMessage}</Alert>
+                </Grid>
+                )}
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper css={paperSm}>
+                <Grid container justifyContent="space-between">
+                  <Grid item xs={5}>
+                    <Typography component="h2" variant="h6">
+                      <strong>{t('common:recent-file-title')}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      onClick={handleRemoveRecentFiles}
+                      disabled={config.recentFiles.length < 1}
                     >
-                      <ListItemButton
-                        component="a"
-                        onClick={(e) => handleClickRecentFile(e, val)}
-                      >
-                        <ListItemIcon>
-                          <PlayCircleOutline />
-                        </ListItemIcon>
-                        <ListItemText primary={val} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-              </Grid>
+                      <DeleteForever fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+                {config.recentFiles.length < 1
+                && (
+                <Typography component="p" variant="subtitle2">
+                  {t('notice:no-recent-files')}
+                </Typography>
+                )}
+                {config.recentFiles.length > 0 && (
+                <Grid container>
+                  <Grid item xs={12}>
+                    <List
+                      component="nav"
+                      aria-label="recent files"
+                      dense
+                      css={css`
+                        .MuiListItemIcon-root {
+                          min-width: 32px;
+                        }
+                        span {
+                          font-size: 0.8em;
+                          max-width: 100%;
+                          overflow-x: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        }
+                      `}
+                    >
+                      {config.recentFiles.map(val => (
+                        <ListItem
+                          disablePadding
+                          key={val}
+                        >
+                          <ListItemButton
+                            component="a"
+                            onClick={(e) => handleClickRecentFile(e, val)}
+                          >
+                            <ListItemIcon>
+                              <PlayCircleOutline />
+                            </ListItemIcon>
+                            <ListItemText primary={val} />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Grid>
+                </Grid>
+                )}
+              </Paper>
+            </Grid>
+          </>
+          )}
+          {loading
+            && (
+            <Grid item xs={12} css={css`text-align: center`}>
+              <CircularProgress size={80} thickness={6} />
+              <Typography component="p" css={loadingText(theme)}>
+                <strong>{t('player-loading')}</strong>
+              </Typography>
             </Grid>
             )}
-          </Paper>
         </Grid>
-      </>
-      )}
-      {loading
-      && (
-      <Grid item xs={12} css={css`text-align: center`}>
-        <CircularProgress size={80} thickness={6} />
-        <Typography component="p" css={loadingText(theme)}>
-          <strong>{t('player-loading')}</strong>
-        </Typography>
       </Grid>
-      )}
     </Layout>
   );
 };
