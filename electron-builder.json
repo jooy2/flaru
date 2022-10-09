@@ -1,10 +1,11 @@
 {
   "productName": "Flaru Player",
   "appId": "com.flaru.flaru",
+  "copyright": "ⓒ 2021-2022 Jooy2",
   "asar": true,
-  "compression": "maximum",
   "extends": null,
-  "artifactName": "${productName} ${version}.${ext}",
+  "compression": "maximum",
+  "artifactName": "${productName} ${version}_${arch}.${ext}",
   "fileAssociations": [
     {
       "ext": "swf",
