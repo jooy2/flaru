@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { css } from '@emotion/react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

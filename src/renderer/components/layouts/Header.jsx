@@ -1,6 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
-
 import {
   AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography,
 } from '@mui/material';

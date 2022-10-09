@@ -21,6 +21,7 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 0,
     'max-len': 1,
     'import/no-extraneous-dependencies': 0,
+    'react/react-in-jsx-scope': 0,
     'react/function-component-definition': 0,
     'react/jsx-filename-extension': [1, {
       extensions: ['.js', '.jsx'],
