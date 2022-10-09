@@ -4,7 +4,7 @@
   "version": "1.8.0",
   "versionCode": 180,
   "versionDate": "2022-10-09",
-  "ruffleVersionDate": "2022-10-09",
+  "ruffleVersionDate": "2022-10-08",
   "description": "Flaru Flash Player",
   "main": "dist/main/index.js",
   "private": true,
