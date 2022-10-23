@@ -1,17 +1,17 @@
 import {
   app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences,
 } from 'electron';
-import path from 'path';
+import { join } from 'path';
 import Store from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import * as electronRemote from '@electron/remote/main';
-import { release, platform } from 'os';
+import { release } from 'os';
 import { promises } from 'fs';
 import pkg from '../../package.json';
 import schema from './config/store.json';
 
 const getOS = () => {
-  switch (platform()) {
+  switch (process.platform) {
     case 'win32':
       return 'Windows';
     case 'linux':
@@ -143,7 +143,7 @@ const createWindow = () => {
         win.webContents.openDevTools();
       });
   } else {
-    win.loadFile(path.join(__dirname, '../index.html')).catch(e => {
+    win.loadFile(join(__dirname, '../index.html')).catch(e => {
       console.log(e);
     });
   }

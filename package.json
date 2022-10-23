@@ -10,7 +10,7 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev vite",
+    "dev": "cross-env NODE_ENV=development vite",
     "build": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder -wml",
     "build:mac": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder --mac",
     "build:win": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder --windows nsis:x64",
