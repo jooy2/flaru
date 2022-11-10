@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import electronPlugin from 'vite-plugin-electron';
 import rendererPlugin from 'vite-plugin-electron-renderer';
+import eslintPlugin from 'vite-plugin-eslint';
 import reactPlugin from '@vitejs/plugin-react';
 import { resolve, dirname } from 'path';
 import { builtinModules } from 'module';
@@ -25,6 +26,8 @@ export default defineConfig({
   },
   plugins: [
     reactPlugin(),
+    // Docs: https://github.com/gxmari007/vite-plugin-eslint
+    eslintPlugin(),
     // Docs: https://github.com/electron-vite/vite-plugin-electron
     electronPlugin([
       {
