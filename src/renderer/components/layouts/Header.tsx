@@ -9,7 +9,7 @@ import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
 import * as configActions from '../../store/modules/config';
 import ModalMetadata from '../dialogs/ModalMetadata';
 
-const Header = ({ title, withBackButton, withRefresh, config, ConfigActions }) => {
+const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActions }) => {
   const navigate = useNavigate();
   const location = useLocation();
 

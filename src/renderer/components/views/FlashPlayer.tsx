@@ -6,19 +6,26 @@ import { connect } from 'react-redux';
 import { getOS } from '../../utils/helper';
 import * as configActions from '../../store/modules/config';
 
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface Window {
+    RufflePlayer: any;
+  }
+}
+
 const FlashPlayer = ({
   url = '',
   autoPlay = true,
-  filePath = null,
+  filePath = '',
   header = true,
   config,
   ConfigActions,
 }) => {
-  const player = useRef();
+  const player: any = useRef();
   const { ipcRenderer } = window.require('electron');
   const os = useMemo(() => getOS(), []);
 
-  useEffect(() => {
+  useEffect((): any => {
     try {
       const container = player.current;
       container.innerHTML = '';
@@ -71,10 +78,10 @@ const FlashPlayer = ({
     }
 
     return () => {
-      window.rufflePlayer = {};
-      if (window?.rufflePlayer?.instance) {
-        window.rufflePlayer.instance.destroy();
-        window.rufflePlayer.instance = null;
+      window.RufflePlayer = {};
+      if (window?.RufflePlayer?.instance) {
+        window.RufflePlayer.instance.destroy();
+        window.RufflePlayer.instance = null;
       }
     };
   }, [url, filePath]);

@@ -47,6 +47,7 @@ Please use the GitHub Release page attached below.
 ## 🔧 Technical Specifications
 
 - [ViteJS 3.x](https://vitejs.dev)
+- [TypeScript 4.x](https://www.typescriptlang.org)
 - [Electron 21.x](https://www.electronjs.org)
 - [React 18.x](https://reactjs.org)
 - [Material-UI 5.x](https://mui.com)

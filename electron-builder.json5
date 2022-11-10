@@ -6,6 +6,11 @@
   extends: null,
   compression: 'maximum',
   artifactName: '${productName} ${version}_${arch}.${ext}',
+  directories: {
+    buildResources: './buildAssets/installer/',
+    output: './release/${version}',
+  },
+  files: ['dist/**/*', '!release/**/*'],
   fileAssociations: [
     {
       ext: 'swf',
@@ -56,10 +61,5 @@
         arch: 'x64',
       },
     ],
-  },
-  directories: {
-    buildResources: './buildAssets/installer/',
-    output: './release/${version}',
-  },
-  files: ['dist/**/*', '!release/**/*'],
+  }
 }

@@ -5,7 +5,7 @@ import store from './store';
 import './i18n';
 import ThemeContainer from './components/layouts/ThemeContainer';
 
-createRoot(document.getElementById('app')).render(
+createRoot(document.getElementById('app')!).render(
   <Provider store={store}>
     <ThemeContainer>
       <App />

@@ -66,7 +66,7 @@ const ModalMetadata = ({ ConfigActions, config }) => {
         </TableContainer>
       </DialogContent>
       <DialogActions>
-        <Button onClick={(e) => handleDialogClose(e)} color="primary">
+        <Button onClick={handleDialogClose} color="primary">
           {t('menu:close')}
         </Button>
       </DialogActions>

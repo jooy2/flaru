@@ -31,7 +31,7 @@ export default defineConfig({
     // Docs: https://github.com/electron-vite/vite-plugin-electron
     electronPlugin([
       {
-        entry: ['src/main/index.js'],
+        entry: ['src/main/index.ts'],
         onstart: (options) => {
           options.startup(['.', '--no-sandbox']);
         },

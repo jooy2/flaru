@@ -16,7 +16,6 @@ const Layout = ({
   center = false,
   withPadding = true,
   withBackButton = false,
-  withHelpButton = false,
   children,
   config,
 }) => (
@@ -42,11 +41,7 @@ const Layout = ({
         {withTail ? titleTail : ''}
       </title>
     </Helmet>
-    {header ? (
-      <Header title={title} withBackButton={withBackButton} withHelpButton={withHelpButton} />
-    ) : (
-      ''
-    )}
+    {header ? <Header title={title} withBackButton={withBackButton} /> : ''}
     <Grid
       container
       css={css`

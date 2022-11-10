@@ -119,7 +119,7 @@ const Explorer = ({ ConfigActions, config }) => {
   }, []);
 
   return (
-    <Layout withHelpButton header={!loading} center={loading} title={t('main-title')}>
+    <Layout header={!loading} center={loading} title={t('main-title')}>
       <Grid
         item
         xs={12}

@@ -1,12 +1,14 @@
 import { app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences } from 'electron';
 import { join } from 'path';
-import Store from 'electron-store';
+import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import * as electronRemote from '@electron/remote/main';
 import { release } from 'os';
 import { promises } from 'fs';
 import pkg from '../../package.json';
-import schema from './config/store.json';
+import mainStoreSchema from './schema';
+
+type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
 const getOS = () => {
   switch (process.platform) {
@@ -51,7 +53,8 @@ global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';
 global.ENV_OS_VERSION = release();
 
-const store = new Store({ schema });
+const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
+const store = new ElectronStore({ schema });
 let win;
 
 const openFromExplorer = (argv, argvIndex = 1) => {
@@ -92,7 +95,6 @@ const createWindow = () => {
       webSecurity: false,
       devTools: global.ENV_IS_DEV,
       contextIsolation: false,
-      enableRemoteModule: true,
     },
   });
 
@@ -126,8 +128,8 @@ const createWindow = () => {
   );
 
   if (global.IS_MAC) {
-    systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', 'true');
-    systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', 'true');
+    systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', true);
+    systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', true);
   }
 
   if (global.ENV_IS_DEV) {
@@ -222,7 +224,8 @@ ipcMain.on('getAppConfig', () => {
 });
 
 ipcMain.on('getRecentFiles', () => {
-  win.webContents.send('receiveRecentFiles', store.get('recentFiles').reverse());
+  const recentFiles: any = store.get('recentFiles');
+  win.webContents.send('receiveRecentFiles', recentFiles.reverse());
 });
 
 ipcMain.on('setAppConfig', (event, args) => {
@@ -244,7 +247,7 @@ ipcMain.on('appendRecentFiles', (event, file) => {
       return;
     }
 
-    const recentFiles = store.get('recentFiles');
+    const recentFiles: any = store.get('recentFiles');
     const fileIndex = recentFiles.findIndex((x) => x === file);
 
     if (fileIndex !== -1) {
@@ -293,7 +296,7 @@ ipcMain.on('removeRecentFile', async (event, args) => {
   });
 
   if (response && response.response < 2) {
-    const recentFiles = store.get('recentFiles');
+    const recentFiles: any = store.get('recentFiles');
     const fileIndex = recentFiles.findIndex((x) => x === args.path);
 
     if (fileIndex !== -1) {
