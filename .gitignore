@@ -1,5 +1,6 @@
 # Project files
 node_modules/
+release/
 dist/
 
 .eslintcache
@@ -19,6 +20,7 @@ Thumbs.db
 
 # IDEs
 .idea/
+.vscode/
 
 # dotenv environment variables file
 .env

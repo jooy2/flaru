@@ -24,7 +24,7 @@
         "arch": "x64"
       }
     ],
-    "icon": "./resources/installer/icon.ico"
+    "icon": "./buildAssets/installer/icon.ico"
   },
   "nsis": {
     "oneClick": true
@@ -33,7 +33,7 @@
     "identity": null,
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
-    "icon": "resources/installer/icon.icns",
+    "icon": "buildAssets/installer/icon.icns",
     "type": "distribution",
     "target": [
       {
@@ -48,7 +48,7 @@
   },
   "linux": {
     "executableName": "flaru",
-    "icon": "resources/installer",
+    "icon": "buildAssets/installer",
     "category": "Game",
     "target": [
       {
@@ -62,11 +62,11 @@
     ]
   },
   "directories": {
-    "buildResources": "./resources/installer/",
-    "output": "./dist/release/${version}"
+    "buildResources": "./buildAssets/installer/",
+    "output": "./release/${version}"
   },
   "files": [
     "dist/**/*",
-    "!dist/release/**/*"
+    "!release/**/*"
   ]
 }

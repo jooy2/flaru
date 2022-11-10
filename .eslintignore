@@ -1,2 +1,8 @@
 node_modules/
+buildAssets/
+release/
 dist/
+
+.idea/
+.vscode/
+.github/
