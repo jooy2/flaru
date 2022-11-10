@@ -29,7 +29,7 @@ const Layout = ({
         width: 0.4em;
       }
       *::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
       }
       *::-webkit-scrollbar-thumb {
         background-color: ${config.isDarkTheme ? '#444444' : '#a7a7a7'};
@@ -42,14 +42,11 @@ const Layout = ({
         {withTail ? titleTail : ''}
       </title>
     </Helmet>
-    { header
-      ? (
-        <Header
-          title={title}
-          withBackButton={withBackButton}
-          withHelpButton={withHelpButton}
-        />
-      ) : '' }
+    {header ? (
+      <Header title={title} withBackButton={withBackButton} withHelpButton={withHelpButton} />
+    ) : (
+      ''
+    )}
     <Grid
       container
       css={css`
@@ -60,24 +57,22 @@ const Layout = ({
       `}
       alignItems={center ? 'center' : 'start'}
     >
-      {container
-        ? (
-          <Container>
-            <Grid item xs={12} css={[header ? headerArea : []]}>
-              {children}
-            </Grid>
-          </Container>
-        )
-        : (
+      {container ? (
+        <Container>
           <Grid item xs={12} css={[header ? headerArea : []]}>
             {children}
           </Grid>
-        )}
+        </Container>
+      ) : (
+        <Grid item xs={12} css={[header ? headerArea : []]}>
+          {children}
+        </Grid>
+      )}
     </Grid>
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 

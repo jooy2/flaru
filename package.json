@@ -8,7 +8,9 @@
   "description": "Flaru Flash Player",
   "main": "dist/main/index.js",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://github.com/jooy2/flaru",
+  "author": "jooy2 <jootc.help@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder -wml",
@@ -18,10 +20,10 @@
     "build:linux": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production vite build && electron-builder --linux",
     "postinstall": "electron-builder install-app-deps",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src"
+    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
+    "format": "prettier .",
+    "format:fix": "prettier . --write"
   },
-  "author": "jooy2 <jootc.help@gmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "@vitejs/plugin-react": "^2.2.0",
     "cross-env": "^7.0.3",
@@ -29,12 +31,14 @@
     "electron-builder": "^23.6.0",
     "eslint": "^8.27.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1",
     "vite": "^3.2.3",
-    "vite-plugin-electron": "^0.10.3",
+    "vite-plugin-electron": "0.10.2",
     "vite-plugin-electron-renderer": "^0.10.3"
   },
   "dependencies": {

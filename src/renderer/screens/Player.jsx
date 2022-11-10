@@ -8,9 +8,7 @@ import Layout from '../components/layouts/Layout';
 import FlashPlayer from '../components/views/FlashPlayer';
 import * as configActions from '../store/modules/config';
 
-const Player = ({
-  config, ConfigActions,
-}) => {
+const Player = ({ config, ConfigActions }) => {
   const { ipcRenderer } = window.require('electron');
   const navigate = useNavigate();
 
@@ -36,19 +34,16 @@ const Player = ({
       container={false}
       header={!config.appConfigHideHeader}
     >
-      <FlashPlayer
-        filePath={config.flashFilePath}
-        header={!config.appConfigHideHeader}
-      />
+      <FlashPlayer filePath={config.flashFilePath} header={!config.appConfigHideHeader} />
     </Layout>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 

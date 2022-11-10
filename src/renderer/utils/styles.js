@@ -38,10 +38,10 @@ export const buttonGroupButtonBase = css`
   border-right: 0 !important;
 `;
 
-export const loadingText = props => css`
+export const loadingText = (props) => css`
   font-size: 1.1em;
   margin-top: 20px;
-  color: ${isDarkMode(props) ? '#fff' : '#333'}
+  color: ${isDarkMode(props) ? '#fff' : '#333'};
 `;
 
 export default {

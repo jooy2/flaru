@@ -11,15 +11,7 @@ rmSync('dist', { recursive: true, force: true });
 
 export default defineConfig({
   resolve: {
-    extensions: [
-      '.mjs',
-      '.js',
-      '.ts',
-      '.jsx',
-      '.tsx',
-      '.json',
-      '.scss',
-    ],
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
     alias: {
       '@': resolve(dirname(fileURLToPath(import.meta.url)), 'src'),
     },
@@ -28,6 +20,7 @@ export default defineConfig({
   root: resolve('./src/renderer'),
   publicDir: resolve('./src/renderer/public'),
   build: {
+    assetsDir: '', // See: https://github.com/electron-vite/electron-vite-vue/issues/287
     outDir: resolve('./dist'),
   },
   plugins: [
@@ -35,12 +28,13 @@ export default defineConfig({
     // Docs: https://github.com/electron-vite/vite-plugin-electron
     electronPlugin([
       {
-        entry: 'src/main/index.js',
+        entry: ['src/main/index.js'],
         onstart: (options) => {
           options.startup(['.', '--no-sandbox']);
         },
         vite: {
           build: {
+            assetsDir: '.',
             outDir: 'dist/main',
             rollupOptions: {
               external: ['electron', ...builtinModules],

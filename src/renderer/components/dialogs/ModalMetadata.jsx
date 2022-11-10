@@ -8,7 +8,8 @@ import {
   DialogContent,
   Paper,
   Table,
-  TableBody, TableCell,
+  TableBody,
+  TableCell,
   TableContainer,
   TableRow,
 } from '@mui/material';
@@ -45,17 +46,14 @@ const ModalMetadata = ({ ConfigActions, config }) => {
                 { name: 'SWF Height', value: config.flashFileHeight },
                 { name: 'SWF Background Color', value: config.flashFileBackgroundColor },
               ].map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell
                     component="th"
                     scope="row"
                     css={css`
                       background: #1c1c1c;
                       color: white;
-                      font-weight: bold
+                      font-weight: bold;
                     `}
                   >
                     {row.name}
@@ -68,7 +66,7 @@ const ModalMetadata = ({ ConfigActions, config }) => {
         </TableContainer>
       </DialogContent>
       <DialogActions>
-        <Button onClick={e => handleDialogClose(e)} color="primary">
+        <Button onClick={(e) => handleDialogClose(e)} color="primary">
           {t('menu:close')}
         </Button>
       </DialogActions>
@@ -76,11 +74,11 @@ const ModalMetadata = ({ ConfigActions, config }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 

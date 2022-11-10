@@ -20,7 +20,8 @@ export const getAuthor = () => getGlobal('APP_AUTHOR');
 export const isDarkMode = (theme) => {
   if (theme.theme) {
     return theme.theme.palette.mode === 'dark';
-  } if (theme.palette) {
+  }
+  if (theme.palette) {
     return theme.palette.mode === 'dark';
   }
   return false;

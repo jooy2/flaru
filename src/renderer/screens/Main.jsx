@@ -2,10 +2,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  CircularProgress,
-  Grid, Typography, useMediaQuery, useTheme,
-} from '@mui/material';
+import { CircularProgress, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
@@ -116,29 +113,28 @@ const Main = ({ ConfigActions }) => {
   }, []);
 
   return (
-    <Layout
-      center
-      header={false}
-    >
-      <Grid item xs={12} css={css`text-align: center`}>
+    <Layout center header={false}>
+      <Grid
+        item
+        xs={12}
+        css={css`
+          text-align: center;
+        `}
+      >
         <CircularProgress size={80} thickness={6} />
         <Typography component="p" css={loadingText(theme)}>
-          <strong>{t('loading')}</strong>
-          {' '}
-          (
-          {t(`loading-${loadMsg}`)}
-          )
+          <strong>{t('loading')}</strong> ({t(`loading-${loadMsg}`)})
         </Typography>
       </Grid>
     </Layout>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 

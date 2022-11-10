@@ -1,9 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from 'react';
 import {
-  Button, Checkbox,
+  Button,
+  Checkbox,
   FormControlLabel,
-  Grid, MenuItem, Paper, Radio, RadioGroup, Select, Typography, useMediaQuery,
+  Grid,
+  MenuItem,
+  Paper,
+  Radio,
+  RadioGroup,
+  Select,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -22,12 +30,12 @@ const Settings = ({ config, ConfigActions }) => {
   const [hideHeaderChecked, setHideHeaderChecked] = useState(config.appConfigHideHeader);
   const [letterboxChecked, setLetterboxChecked] = useState(config.appConfigLetterbox);
   const [hideContextChecked, setHideContextChecked] = useState(config.appConfigHideContext);
-  const [
-    restoreWindowBoundsChecked, setRestoreBoundsChecked,
-  ] = useState(config.appConfigRestoreWindowBounds);
-  const [
-    adjustOriginalSizeChecked, setAdjustOriginalSizeChecked,
-  ] = useState(config.appConfigAdjustOriginalSize);
+  const [restoreWindowBoundsChecked, setRestoreBoundsChecked] = useState(
+    config.appConfigRestoreWindowBounds,
+  );
+  const [adjustOriginalSizeChecked, setAdjustOriginalSizeChecked] = useState(
+    config.appConfigAdjustOriginalSize,
+  );
   const { ipcRenderer } = window.require('electron');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -119,8 +127,14 @@ const Settings = ({ config, ConfigActions }) => {
           }
         `}
       >
-        <Paper css={css`padding: 16px`}>
-          <Typography component="h2" variant="h4">{t('menu:settings')}</Typography>
+        <Paper
+          css={css`
+            padding: 16px;
+          `}
+        >
+          <Typography component="h2" variant="h4">
+            {t('menu:settings')}
+          </Typography>
           <Typography component="span">{t('settings-info')}</Typography>
           <Grid
             container
@@ -157,54 +171,85 @@ const Settings = ({ config, ConfigActions }) => {
                   }}
                 >
                   {['auto', 'ko', 'en', 'es', 'pt', 'de', 'fr', 'ja'].map((value) => (
-                    <MenuItem key={value} value={value}>{t(`menu:language-${value}`)}</MenuItem>
+                    <MenuItem key={value} value={value}>
+                      {t(`menu:language-${value}`)}
+                    </MenuItem>
                   ))}
                 </Select>
               </Typography>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <PanelHeader
-                title={t('settings-title-1')}
-                desc={t('settings-desc-1')}
-              />
+              <PanelHeader title={t('settings-title-1')} desc={t('settings-desc-1')} />
               <Grid container>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={hideHeaderChecked} onChange={handleCheckboxChange} name="hideHeaderChecked" />}
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={hideHeaderChecked}
+                        onChange={handleCheckboxChange}
+                        name="hideHeaderChecked"
+                      />
+                    }
                     label={t('menu:hide-header')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={letterboxChecked} onChange={handleCheckboxChange} name="letterboxChecked" />}
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={letterboxChecked}
+                        onChange={handleCheckboxChange}
+                        name="letterboxChecked"
+                      />
+                    }
                     label={t('menu:letterbox')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={hideContextChecked} onChange={handleCheckboxChange} name="hideContextChecked" />}
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={hideContextChecked}
+                        onChange={handleCheckboxChange}
+                        name="hideContextChecked"
+                      />
+                    }
                     label={t('menu:hide-context')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={adjustOriginalSizeChecked} onChange={handleCheckboxChange} name="adjustOriginalSizeChecked" />}
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={adjustOriginalSizeChecked}
+                        onChange={handleCheckboxChange}
+                        name="adjustOriginalSizeChecked"
+                      />
+                    }
                     label={t('menu:adjust-original-size')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={restoreWindowBoundsChecked} onChange={handleCheckboxChange} name="restoreWindowBoundsChecked" />}
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={restoreWindowBoundsChecked}
+                        onChange={handleCheckboxChange}
+                        name="restoreWindowBoundsChecked"
+                      />
+                    }
                     label={t('menu:restore-bounds')}
                   />
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <PanelHeader
-                title={t('settings-title-2')}
-                desc={t('settings-desc-2')}
-              />
+              <PanelHeader title={t('settings-title-2')} desc={t('settings-desc-2')} />
               <RadioGroup
                 row
                 aria-label="theme"
@@ -215,34 +260,25 @@ const Settings = ({ config, ConfigActions }) => {
               >
                 <FormControlLabel
                   value="auto"
-                  control={
-                    <Radio size="small" />
-                  }
+                  control={<Radio size="small" />}
                   label={t('menu:theme-auto')}
                 />
                 <FormControlLabel
                   value="light"
-                  control={
-                    <Radio size="small" />
-                  }
+                  control={<Radio size="small" />}
                   label={t('menu:theme-light')}
                 />
                 <FormControlLabel
                   value="dark"
-                  control={(
-                    <Radio size="small" />
-                  )}
+                  control={<Radio size="small" />}
                   label={t('menu:theme-dark')}
                 />
               </RadioGroup>
             </Grid>
             <Grid item xs={12} css={marginTopMd}>
-              <PanelHeader
-                title={t('settings-reset-title')}
-                desc={t('settings-reset-desc')}
-              />
+              <PanelHeader title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
               <Typography component="div" css={marginTopMd}>
-                <Button variant="contained" size="medium" onClick={ev => handleReset(ev, true)}>
+                <Button variant="contained" size="medium" onClick={(ev) => handleReset(ev, true)}>
                   {t('menu:reset-and-restart')}
                 </Button>
               </Typography>
@@ -254,11 +290,11 @@ const Settings = ({ config, ConfigActions }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 

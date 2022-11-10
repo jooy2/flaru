@@ -38,7 +38,10 @@ const FlashPlayer = ({
         letterbox: config.appConfigLetterbox ? 'on' : 'off',
         logLevel: 'error',
         contextMenu: !config.appConfigHideContext,
-        base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(0, realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'))}`,
+        base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(
+          0,
+          realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'),
+        )}`,
       };
       const ruffle = window.RufflePlayer.newest();
       const rPlayer = ruffle.createPlayer();
@@ -62,8 +65,10 @@ const FlashPlayer = ({
       });
       container.appendChild(rPlayer);
       rPlayer.load(realPath);
-      rPlayer.addEventListener('oncontextmenu', e => e.preventDefault());
-    } catch (e) { return null; }
+      rPlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
+    } catch (e) {
+      return null;
+    }
 
     return () => {
       window.rufflePlayer = {};
@@ -105,11 +110,11 @@ const FlashPlayer = ({
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 

@@ -5,12 +5,9 @@ module.exports = {
     es6: true,
   },
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2022,
   },
-  extends: [
-    'airbnb',
-    'airbnb/hooks',
-  ],
+  extends: ['airbnb', 'airbnb/hooks', 'prettier'],
   rules: {
     'linebreak-style': 0,
     'arrow-parens': 0,
@@ -23,9 +20,12 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'react/react-in-jsx-scope': 0,
     'react/function-component-definition': 0,
-    'react/jsx-filename-extension': [1, {
-      extensions: ['.js', '.jsx'],
-    }],
+    'react/jsx-filename-extension': [
+      1,
+      {
+        extensions: ['.js', '.jsx'],
+      },
+    ],
     'react/prop-types': 0,
     'react-hooks/exhaustive-deps': 0,
     'react/jsx-props-no-spreading': 0,

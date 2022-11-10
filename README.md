@@ -2,15 +2,7 @@
 
 ![flaru-logo](src/renderer/public/images/flaru-logo.webp)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE)
-[![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags)
-![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/flaru)
-[![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases)
-![Languages](https://img.shields.io/github/languages/count/jooy2/flaru)
-[![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2)
-![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social)
-![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
-![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/flaru) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) ![Languages](https://img.shields.io/github/languages/count/jooy2/flaru) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru) ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
 
 ![Logo Image](readme-screenshot.webp)
 
@@ -20,7 +12,7 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 **Official Ruffle Desktop Player** is here!: https://github.com/ruffle-rs/ruffle
 
-(*This is just an emulator and does not contain any games.)
+(\*This is just an emulator and does not contain any games.)
 
 > Flaru for mobile (POC/WIP) is here: https://github.com/jooy2/flaru-mobile
 
@@ -28,13 +20,13 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 ## ⭐ Features
 
- - ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
- - ✅ Cross-platform: Windows, macOS, Linux supported!
- - ✅ Multi-language and theme support
- - ✅ Support for running split SWF files
- - ✅ Drag-and-drop or one-click execution of SWF files from local PC
- - ✅ Continue playing from the list of recently opened files.
- - ✅ Customize various emulator settings.
+- ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
+- ✅ Cross-platform: Windows, macOS, Linux supported!
+- ✅ Multi-language and theme support
+- ✅ Support for running split SWF files
+- ✅ Drag-and-drop or one-click execution of SWF files from local PC
+- ✅ Continue playing from the list of recently opened files.
+- ✅ Customize various emulator settings.
 
 ## 📢 Compatibility
 
@@ -54,17 +46,18 @@ Please use the GitHub Release page attached below.
 
 ## 🔧 Technical Specifications
 
- - [ViteJS 3.x](https://vitejs.dev)
- - [Electron 21.x](https://www.electronjs.org)
- - [React 18.x](https://reactjs.org)
- - [Material-UI 5.x](https://mui.com)
- - [Ruffle](https://ruffle.rs)
+- [ViteJS 3.x](https://vitejs.dev)
+- [Electron 21.x](https://www.electronjs.org)
+- [React 18.x](https://reactjs.org)
+- [Material-UI 5.x](https://mui.com)
+- [Ruffle](https://ruffle.rs)
 
 ## 🔨 Build & Run
 
 Before building or running, you need to install the module and add the Ruffle script file to the project.
 
 First install the dependency module with the following command: ([NodeJS](https://nodejs.org) pre-installed required)
+
 ```shell
 $ npm i
 ```

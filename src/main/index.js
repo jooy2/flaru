@@ -1,6 +1,4 @@
-import {
-  app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences,
-} from 'electron';
+import { app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences } from 'electron';
 import { join } from 'path';
 import Store from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
@@ -30,7 +28,7 @@ const getOS = () => {
   }
 };
 
-const fileExists = async p => !!(await promises.stat(p).catch(() => false));
+const fileExists = async (p) => !!(await promises.stat(p).catch(() => false));
 
 const CURRENT_OS = getOS();
 const MAX_RECENT_FILES = 10;
@@ -57,8 +55,12 @@ const store = new Store({ schema });
 let win;
 
 const openFromExplorer = (argv, argvIndex = 1) => {
-  if (global.ENV_IS_WINDOWS && argv && argv.length >= argvIndex
-      && argv[argvIndex]?.indexOf('.swf') !== -1) {
+  if (
+    global.ENV_IS_WINDOWS &&
+    argv &&
+    argv.length >= argvIndex &&
+    argv[argvIndex]?.indexOf('.swf') !== -1
+  ) {
     win.webContents.send('receiveNextRenderer', argv[argvIndex]);
     win.webContents.send('receiveOpenFile', argv[argvIndex]);
   } else {
@@ -97,37 +99,31 @@ const createWindow = () => {
   electronRemote.enable(win.webContents);
   win.setMenuBarVisibility(false);
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    {
-      label: global.APP_NAME,
-      submenu: [
-        {
-          label: `Quit ${global.APP_NAME}`,
-          role: 'quit',
-        },
-      ],
-    },
-    {
-      label: 'Edit',
-      submenu: [
-        { role: 'copy' },
-        { role: 'paste' },
-      ],
-    },
-    {
-      label: 'View',
-      submenu: [
-        { role: 'togglefullscreen' },
-      ],
-    },
-    {
-      label: 'Window',
-      submenu: [
-        { role: 'minimize' },
-        { role: 'front' },
-      ],
-    },
-  ]));
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate([
+      {
+        label: global.APP_NAME,
+        submenu: [
+          {
+            label: `Quit ${global.APP_NAME}`,
+            role: 'quit',
+          },
+        ],
+      },
+      {
+        label: 'Edit',
+        submenu: [{ role: 'copy' }, { role: 'paste' }],
+      },
+      {
+        label: 'View',
+        submenu: [{ role: 'togglefullscreen' }],
+      },
+      {
+        label: 'Window',
+        submenu: [{ role: 'minimize' }, { role: 'front' }],
+      },
+    ]),
+  );
 
   if (global.IS_MAC) {
     systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', 'true');
@@ -135,15 +131,16 @@ const createWindow = () => {
   }
 
   if (global.ENV_IS_DEV) {
-    win.loadURL('http://localhost:5173')
-      .catch(e => {
+    win
+      .loadURL('http://localhost:5173')
+      .catch((e) => {
         console.log(e);
       })
       .then(() => {
         win.webContents.openDevTools();
       });
   } else {
-    win.loadFile(join(__dirname, '../index.html')).catch(e => {
+    win.loadFile(join(__dirname, '../index.html')).catch((e) => {
       console.log(e);
     });
   }
@@ -157,7 +154,11 @@ const createWindow = () => {
   win.webContents.once('dom-ready', () => {
     const { argv } = process;
 
-    electronLocalShortcut.register(win, ['F12', 'CommandOrControl+R', 'CommandOrControl+Shift+R'], () => {});
+    electronLocalShortcut.register(
+      win,
+      ['F12', 'CommandOrControl+R', 'CommandOrControl+Shift+R'],
+      () => {},
+    );
 
     electronLocalShortcut.register(win, ['Alt+Enter'], () => {
       win.setFullScreen(!win.isFullScreen());
@@ -244,7 +245,7 @@ ipcMain.on('appendRecentFiles', (event, file) => {
     }
 
     const recentFiles = store.get('recentFiles');
-    const fileIndex = recentFiles.findIndex(x => x === file);
+    const fileIndex = recentFiles.findIndex((x) => x === file);
 
     if (fileIndex !== -1) {
       recentFiles.splice(fileIndex, 1);
@@ -273,9 +274,13 @@ ipcMain.on('checkFileExist', async (event, args) => {
 });
 
 ipcMain.on('resizeWindow', async (event, args) => {
-  if (args && args.width && args.height
-        && args.width > DEFAULT_WINDOW_ATTR.minWidth
-        && args.height > DEFAULT_WINDOW_ATTR.minHeight) {
+  if (
+    args &&
+    args.width &&
+    args.height &&
+    args.width > DEFAULT_WINDOW_ATTR.minWidth &&
+    args.height > DEFAULT_WINDOW_ATTR.minHeight
+  ) {
     win.setSize(args.width, args.height, true);
   }
 });
@@ -289,7 +294,7 @@ ipcMain.on('removeRecentFile', async (event, args) => {
 
   if (response && response.response < 2) {
     const recentFiles = store.get('recentFiles');
-    const fileIndex = recentFiles.findIndex(x => x === args.path);
+    const fileIndex = recentFiles.findIndex((x) => x === args.path);
 
     if (fileIndex !== -1) {
       recentFiles.splice(fileIndex, 1);

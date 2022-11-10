@@ -1,72 +1,65 @@
 {
-  "productName": "Flaru Player",
-  "appId": "com.flaru.flaru",
-  "copyright": "ⓒ 2021-2022 Jooy2",
-  "asar": true,
-  "extends": null,
-  "compression": "maximum",
-  "artifactName": "${productName} ${version}_${arch}.${ext}",
-  "fileAssociations": [
+  productName: 'Flaru Player',
+  appId: 'com.flaru.flaru',
+  copyright: 'ⓒ 2021-2022 Jooy2',
+  asar: true,
+  extends: null,
+  compression: 'maximum',
+  artifactName: '${productName} ${version}_${arch}.${ext}',
+  fileAssociations: [
     {
-      "ext": "swf",
-      "name": "SWF File",
-      "role": "Viewer"
-    }
+      ext: 'swf',
+      name: 'SWF File',
+      role: 'Viewer',
+    },
   ],
-  "win": {
-    "target": [
+  win: {
+    target: [
       {
-        "target": "zip",
-        "arch": "x64"
+        target: 'zip',
+        arch: 'x64',
       },
       {
-        "target": "nsis",
-        "arch": "x64"
-      }
+        target: 'nsis',
+        arch: 'x64',
+      },
     ],
-    "icon": "./buildAssets/installer/icon.ico"
+    icon: './buildAssets/installer/icon.ico',
   },
-  "nsis": {
-    "oneClick": true
+  nsis: {
+    oneClick: true,
   },
-  "mac": {
-    "identity": null,
-    "hardenedRuntime": true,
-    "gatekeeperAssess": false,
-    "icon": "buildAssets/installer/icon.icns",
-    "type": "distribution",
-    "target": [
+  mac: {
+    identity: null,
+    hardenedRuntime: true,
+    gatekeeperAssess: false,
+    icon: 'buildAssets/installer/icon.icns',
+    type: 'distribution',
+    target: [
       {
-        "target": "dmg",
-        "arch": [
-          "x64",
-          "arm64",
-          "universal"
-        ]
-      }
-    ]
+        target: 'dmg',
+        arch: ['x64', 'arm64', 'universal'],
+      },
+    ],
   },
-  "linux": {
-    "executableName": "flaru",
-    "icon": "buildAssets/installer",
-    "category": "Game",
-    "target": [
+  linux: {
+    executableName: 'flaru',
+    icon: 'buildAssets/installer',
+    category: 'Game',
+    target: [
       {
-        "target": "deb",
-        "arch": "x64"
+        target: 'deb',
+        arch: 'x64',
       },
       {
-        "target": "rpm",
-        "arch": "x64"
-      }
-    ]
+        target: 'rpm',
+        arch: 'x64',
+      },
+    ],
   },
-  "directories": {
-    "buildResources": "./buildAssets/installer/",
-    "output": "./release/${version}"
+  directories: {
+    buildResources: './buildAssets/installer/',
+    output: './release/${version}',
   },
-  "files": [
-    "dist/**/*",
-    "!release/**/*"
-  ]
+  files: ['dist/**/*', '!release/**/*'],
 }

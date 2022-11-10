@@ -1,10 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import {
-  AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography,
-} from '@mui/material';
-import {
-  ArrowBack, BarChart, HelpOutline, Settings,
-} from '@mui/icons-material';
+import { AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography } from '@mui/material';
+import { ArrowBack, BarChart, HelpOutline, Settings } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { connect } from 'react-redux';
@@ -13,13 +9,7 @@ import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
 import * as configActions from '../../store/modules/config';
 import ModalMetadata from '../dialogs/ModalMetadata';
 
-const Header = ({
-  title,
-  withBackButton,
-  withRefresh,
-  config,
-  ConfigActions,
-}) => {
+const Header = ({ title, withBackButton, withRefresh, config, ConfigActions }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -52,28 +42,30 @@ const Header = ({
       `}
     >
       <Toolbar variant="dense">
-        {withBackButton
-        && (
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleGoHome}
-          edge="start"
-          css={css`margin-right: 5px`}
-        >
-          <ArrowBack />
-        </IconButton>
+        {withBackButton && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleGoHome}
+            edge="start"
+            css={css`
+              margin-right: 5px;
+            `}
+          >
+            <ArrowBack />
+          </IconButton>
         )}
-        <Typography css={css`flex-grow: 1`} variant="body1" noWrap>
+        <Typography
+          css={css`
+            flex-grow: 1;
+          `}
+          variant="body1"
+          noWrap
+        >
           {title}
         </Typography>
-        <ButtonGroup
-          variant="text"
-          disableRipple
-          disableElevation
-        >
-          {location.pathname === '/player'
-            && (
+        <ButtonGroup variant="text" disableRipple disableElevation>
+          {location.pathname === '/player' && (
             <Button
               css={[buttonGroupButtonBase]}
               color="inherit"
@@ -81,9 +73,8 @@ const Header = ({
             >
               <BarChart fontSize="small" />
             </Button>
-            )}
-          {!withBackButton
-            && (
+          )}
+          {!withBackButton && (
             <>
               <Button
                 css={[marginRightXs, buttonGroupButtonBase]}
@@ -102,7 +93,7 @@ const Header = ({
                 <Settings fontSize="small" />
               </Button>
             </>
-            )}
+          )}
         </ButtonGroup>
         <ModalMetadata />
       </Toolbar>
@@ -110,11 +101,11 @@ const Header = ({
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ConfigActions: bindActionCreators({ ...configActions }, dispatch),
 });
 
