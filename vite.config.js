@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite';
-import electron from 'vite-plugin-electron';
-import react from '@vitejs/plugin-react';
-import { resolve, join } from 'path';
+import electronPlugin from 'vite-plugin-electron';
+import rendererPlugin from 'vite-plugin-electron-renderer';
+import reactPlugin from '@vitejs/plugin-react';
+import { resolve, dirname } from 'path';
+import { builtinModules } from 'module';
+import { fileURLToPath } from 'url';
 
 export default defineConfig({
   resolve: {
@@ -15,7 +18,7 @@ export default defineConfig({
       '.scss',
     ],
     alias: {
-      '@': join(__dirname, 'src'),
+      '@': resolve(dirname(fileURLToPath(import.meta.url)), 'src'),
     },
   },
   base: './',
@@ -25,20 +28,26 @@ export default defineConfig({
     outDir: resolve('./dist'),
   },
   plugins: [
-    react(),
-    electron({
-      main: {
-        entry: 'index.js',
+    reactPlugin(),
+    // Docs: https://github.com/electron-vite/vite-plugin-electron
+    electronPlugin([
+      {
+        entry: 'src/main/index.js',
+        onstart: (options) => {
+          options.startup(['.', '--no-sandbox']);
+        },
         vite: {
-          root: resolve('./src/main'),
-          publicDir: resolve('./src/main'),
           build: {
-            emptyOutDir: true,
-            outDir: '../../dist/main',
+            outDir: 'dist/main',
+            rollupOptions: {
+              external: ['electron', ...builtinModules],
+            },
           },
         },
       },
-      renderer: {},
+    ]),
+    rendererPlugin({
+      nodeIntegration: true,
     }),
   ],
 });
