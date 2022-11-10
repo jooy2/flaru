@@ -5,6 +5,9 @@ import reactPlugin from '@vitejs/plugin-react';
 import { resolve, dirname } from 'path';
 import { builtinModules } from 'module';
 import { fileURLToPath } from 'url';
+import { rmSync } from 'fs';
+
+rmSync('dist', { recursive: true, force: true });
 
 export default defineConfig({
   resolve: {
