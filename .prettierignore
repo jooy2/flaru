@@ -9,3 +9,4 @@
 .github/
 buildAssets/
 dist/
+src/renderer/public/js/ruffle*
