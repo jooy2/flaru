@@ -19,8 +19,6 @@
     "build:win": "npm run build:pre && electron-builder --windows",
     "build:linux": "npm run build:pre && electron-builder --linux",
     "postinstall": "electron-builder install-app-deps",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
     "format": "prettier .",
     "format:fix": "prettier . --write"
   },
