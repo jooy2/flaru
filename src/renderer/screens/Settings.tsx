@@ -39,7 +39,7 @@ const Settings = ({ config, ConfigActions }) => {
   const { ipcRenderer } = window.require('electron');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const handleRadioChange = async (event) => {
+  const handleRadioChange = async (event): Promise<void> => {
     const { value } = event.target;
     switch (event.target.name) {
       case 'themeCheck':
@@ -57,7 +57,7 @@ const Settings = ({ config, ConfigActions }) => {
     }
   };
 
-  const handleCheckboxChange = async (event) => {
+  const handleCheckboxChange = async (event): Promise<void> => {
     const value = event.target.checked;
     switch (event.target.name) {
       case 'hideHeaderChecked':
@@ -90,7 +90,7 @@ const Settings = ({ config, ConfigActions }) => {
     }
   };
 
-  const handleSelectChange = async (event) => {
+  const handleSelectChange = async (event): Promise<void> => {
     const { value } = event.target;
     switch (event.target.name) {
       case 'language':
@@ -104,7 +104,7 @@ const Settings = ({ config, ConfigActions }) => {
     }
   };
 
-  const handleReset = (ev, clearData) => {
+  const handleReset = (ev, clearData): void => {
     if (ev) ev.preventDefault();
     if (clearData) {
       ipcRenderer.send('resetAppConfig');
@@ -255,7 +255,7 @@ const Settings = ({ config, ConfigActions }) => {
                 aria-label="theme"
                 name="themeCheck"
                 value={themeCheck}
-                defaultChecked="light"
+                defaultValue="light"
                 onChange={handleRadioChange}
               >
                 <FormControlLabel

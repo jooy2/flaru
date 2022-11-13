@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, SetStateAction } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -60,7 +60,7 @@ const Explorer = ({ ConfigActions, config }) => {
     ) {
       setLoading(false);
       setFlashContentError(true);
-      setErrorMessage(t('notice:wrong-file-type'));
+      setErrorMessage(t('notice:wrong-file-type') as SetStateAction<string>);
       return false;
     }
     await runFlash(file?.name, filePath);

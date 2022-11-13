@@ -21,7 +21,7 @@ const Main = ({ ConfigActions }) => {
 
   const handleVersionCheck = async () => true; // TODO version check
 
-  const runFromExplorer = async (filePath) => {
+  const runFromExplorer = async (filePath: string): Promise<void> => {
     await ConfigActions.setConfig({
       flashFileName: filePath.split('\\').pop(),
       flashFilePath: filePath,
@@ -30,7 +30,7 @@ const Main = ({ ConfigActions }) => {
     navigate('/player');
   };
 
-  const getLanguage = () => {
+  const getLanguage = (): string => {
     if (i18n.languages && i18n.languages.length > 0) {
       if (i18n.languages[0] === 'auto') {
         return i18n.languages[1] || 'unknown';
@@ -40,7 +40,7 @@ const Main = ({ ConfigActions }) => {
     return 'unknown';
   };
 
-  const loadOrMove = (filePath) => {
+  const loadOrMove = (filePath: string): void => {
     handleVersionCheck().then(async (result) => {
       if (!result) {
         return;
