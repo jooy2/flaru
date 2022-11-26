@@ -42,6 +42,7 @@ const ModalMetadata = ({ ConfigActions, config }) => {
               {[
                 { name: 'SWF Version', value: config.flashFileSwfVer },
                 { name: 'Total Frame', value: config.flashFileFrame },
+                { name: 'SWF Frame Rate', value: config.flashFileFrameRate },
                 { name: 'SWF Width', value: config.flashFileWidth },
                 { name: 'SWF Height', value: config.flashFileHeight },
                 { name: 'SWF Background Color', value: config.flashFileBackgroundColor },
@@ -51,7 +52,7 @@ const ModalMetadata = ({ ConfigActions, config }) => {
                     component="th"
                     scope="row"
                     css={css`
-                      background: #1c1c1c;
+                      background: #525252;
                       color: white;
                       font-weight: bold;
                     `}

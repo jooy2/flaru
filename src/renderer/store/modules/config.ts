@@ -9,6 +9,7 @@ const initialState = {
   flashFileWidth: 0,
   flashFileHeight: 0,
   flashFileBackgroundColor: '',
+  flashFileFrameRate: 0,
   isDarkTheme: false,
   appConfigTheme: 'light',
   appConfigHideHeader: false,

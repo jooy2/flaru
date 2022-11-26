@@ -61,7 +61,8 @@ const FlashPlayer = ({
           flashFileAs3: metaData?.isActionScript3,
           flashFileWidth: metaData?.width,
           flashFileHeight: metaData?.height,
-          flashFileBackgroundColor: '',
+          flashFileBackgroundColor: metaData?.backgroundColor,
+          flashFileFrameRate: metaData?.frameRate,
         });
         if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
           ipcRenderer.send('resizeWindow', {
