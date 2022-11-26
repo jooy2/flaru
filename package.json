@@ -9,7 +9,7 @@
   "main": "dist/main/index.js",
   "private": true,
   "homepage": "https://github.com/jooy2/flaru",
-  "author": "jooy2 <jootc.help@gmail.com>",
+  "author": "jooy2 <jooy.contact@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
