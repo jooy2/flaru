@@ -3,7 +3,6 @@ import { join } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import * as electronRemote from '@electron/remote/main';
-import { release } from 'os';
 import { promises } from 'fs';
 import { getPlatform } from 'qsu';
 import pkg from '../../package.json';
@@ -32,7 +31,6 @@ global.ENV_IS_DEV = !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';
-global.ENV_OS_VERSION = release();
 
 const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
 const store = new ElectronStore({ schema });

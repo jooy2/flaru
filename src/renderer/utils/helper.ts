@@ -9,8 +9,6 @@ export const goToExtLink = async (ev, link) => {
 
 export const getOS = () => getGlobal('ENV_OS');
 
-export const getOSVersion = () => getGlobal('ENV_OS_VERSION');
-
 export const getVersionName = () => getGlobal('APP_VERSION_NAME');
 
 export const getRuffleVersion = () => getGlobal('APP_RUFFLE_VERSION_DATE');
@@ -29,7 +27,6 @@ export const isDarkMode = (theme) => {
 
 export default {
   getOS,
-  getOSVersion,
   goToExtLink,
   getVersionName,
   isDarkMode,
