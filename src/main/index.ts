@@ -5,34 +5,15 @@ import * as electronLocalShortcut from 'electron-localshortcut';
 import * as electronRemote from '@electron/remote/main';
 import { release } from 'os';
 import { promises } from 'fs';
+import { getPlatform } from 'qsu';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
-const getOS = () => {
-  switch (process.platform) {
-    case 'win32':
-      return 'Windows';
-    case 'linux':
-    case 'aix':
-    case 'sunos':
-    case 'netbsd':
-    case 'openbsd':
-    case 'freebsd':
-    case 'cygwin':
-    case 'android':
-      return 'Linux';
-    case 'darwin':
-      return 'macOS';
-    default:
-      return 'Unknown';
-  }
-};
-
 const fileExists = async (p) => !!(await promises.stat(p).catch(() => false));
 
-const CURRENT_OS = getOS();
+const CURRENT_OS = getPlatform();
 const MAX_RECENT_FILES = 10;
 const DEFAULT_WINDOW_ATTR = {
   minWidth: 100,
@@ -178,10 +159,6 @@ const createWindow = () => {
   }));
 };
 
-const closeApp = () => {
-  app.quit();
-};
-
 const restartApp = () => {
   app.relaunch();
   app.exit();
@@ -206,7 +183,7 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-  closeApp();
+  app.quit();
 });
 
 app.on('activate', () => {
