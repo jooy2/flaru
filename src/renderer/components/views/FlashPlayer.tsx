@@ -26,65 +26,53 @@ const FlashPlayer = ({
   const os = useMemo(() => getOS(), []);
 
   useEffect((): any => {
-    try {
-      const container = player.current;
-      container.innerHTML = '';
+    const container = player.current;
+    container.innerHTML = '';
 
-      let realPath;
-      if (os === 'Linux' || os === 'macOS') {
-        realPath = filePath.indexOf('file:') === -1 ? `file:///${filePath}` : filePath;
-      } else {
-        realPath = filePath.replace('file:///', '');
-      }
-
-      window.RufflePlayer = window.RufflePlayer || {};
-      window.RufflePlayer.config = {
-        autoPlay,
-        polyfills: false,
-        preloader: false,
-        letterbox: config.appConfigLetterbox ? 'on' : 'off',
-        logLevel: 'error',
-        contextMenu: !config.appConfigHideContext,
-        base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(
-          0,
-          realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'),
-        )}`,
-      };
-      const ruffle = window.RufflePlayer.newest();
-      const rPlayer = ruffle.createPlayer();
-      rPlayer.id = 'player';
-      rPlayer.addEventListener('loadedmetadata', async () => {
-        const metaData = rPlayer?.metadata;
-        await ConfigActions.setConfig({
-          flashFileSwfVer: metaData?.swfVersion,
-          flashFileFrame: metaData?.numFrames,
-          flashFileAs3: metaData?.isActionScript3,
-          flashFileWidth: metaData?.width,
-          flashFileHeight: metaData?.height,
-          flashFileBackgroundColor: metaData?.backgroundColor,
-          flashFileFrameRate: metaData?.frameRate,
-        });
-        if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
-          ipcRenderer.send('resizeWindow', {
-            width: metaData.width,
-            height: metaData.height,
-          });
-        }
-      });
-      container.appendChild(rPlayer);
-      rPlayer.load(realPath);
-      rPlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
-    } catch (e) {
-      return null;
+    let realPath;
+    if (os === 'Linux' || os === 'macOS') {
+      realPath = filePath.indexOf('file:') === -1 ? `file:///${filePath}` : filePath;
+    } else {
+      realPath = filePath.replace('file:///', '');
     }
 
-    return () => {
-      window.RufflePlayer = {};
-      if (window?.RufflePlayer?.instance) {
-        window.RufflePlayer.instance.destroy();
-        window.RufflePlayer.instance = null;
-      }
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoPlay,
+      polyfills: false,
+      preloader: false,
+      letterbox: config.appConfigLetterbox ? 'on' : 'off',
+      logLevel: 'error',
+      contextMenu: !config.appConfigHideContext,
+      base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(
+        0,
+        realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'),
+      )}`,
     };
+    const ruffle = window.RufflePlayer.newest();
+    const rPlayer = ruffle.createPlayer();
+    rPlayer.id = 'player';
+    rPlayer.addEventListener('loadedmetadata', async () => {
+      const metaData = rPlayer?.metadata;
+      await ConfigActions.setConfig({
+        flashFileSwfVer: metaData?.swfVersion,
+        flashFileFrame: metaData?.numFrames,
+        flashFileAs3: metaData?.isActionScript3,
+        flashFileWidth: metaData?.width,
+        flashFileHeight: metaData?.height,
+        flashFileBackgroundColor: metaData?.backgroundColor,
+        flashFileFrameRate: metaData?.frameRate,
+      });
+      if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
+        ipcRenderer.send('resizeWindow', {
+          width: metaData.width,
+          height: metaData.height,
+        });
+      }
+    });
+    container.appendChild(rPlayer);
+    rPlayer.load(realPath);
+    rPlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
   }, [url, filePath]);
 
   return (
