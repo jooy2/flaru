@@ -14,7 +14,7 @@ const About = () => {
   const author = useMemo(() => getAuthor(), []);
 
   return (
-    <Layout title={t('about-title')} withBackButton>
+    <Layout title={t('about-title') as string} withBackButton>
       <Grid item xs={12}>
         <Paper css={paperBase}>
           <img draggable="false" alt="logo" src="images/flaru-logo.webp" />

@@ -114,7 +114,7 @@ const Settings = ({ config, ConfigActions }) => {
   };
 
   return (
-    <Layout title={t('menu:settings')} withBackButton>
+    <Layout title={t('menu:settings') as string} withBackButton>
       <Grid
         item
         xs={12}
