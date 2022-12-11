@@ -15,7 +15,7 @@ declare global {
 
 const FlashPlayer = ({
   url = '',
-  autoPlay = true,
+  autoplay = true,
   filePath = '',
   header = true,
   config,
@@ -38,7 +38,7 @@ const FlashPlayer = ({
 
     window.RufflePlayer = window.RufflePlayer || {};
     window.RufflePlayer.config = {
-      autoPlay,
+      autoplay,
       polyfills: false,
       preloader: false,
       letterbox: config.appConfigLetterbox ? 'on' : 'off',
