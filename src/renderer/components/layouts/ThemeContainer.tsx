@@ -1,12 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { useMemo } from 'react';
-import { darkScrollbar } from '@mui/material';
+import { useEffect, useMemo } from 'react';
+import { darkScrollbar, useMediaQuery, CssBaseline } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { css, Global, ThemeProvider } from '@emotion/react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as configActions from '@/renderer/store/modules/config';
 
-const ThemeContainer = ({ children, config }) => {
-  const darkMode = config.isDarkTheme;
+const ThemeContainer = ({ children, config, ConfigActions }) => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const darkMode = useMemo((): boolean => {
+    if (config.appConfigTheme === 'auto') {
+      return prefersDarkMode;
+    }
+    return config.isDarkTheme;
+  }, [config.appConfigTheme, config.isDarkTheme, prefersDarkMode]);
   const muiTheme = useMemo(
     () =>
       createTheme({
@@ -56,6 +64,12 @@ const ThemeContainer = ({ children, config }) => {
     [config.isDarkTheme],
   );
 
+  useEffect(() => {
+    if (config.appConfigTheme === 'auto') {
+      ConfigActions.setConfig({ isDarkTheme: prefersDarkMode });
+    }
+  }, [prefersDarkMode]);
+
   return (
     <MuiThemeProvider theme={muiTheme}>
       <Global
@@ -65,6 +79,7 @@ const ThemeContainer = ({ children, config }) => {
           }
         `}
       />
+      <CssBaseline />
       <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
     </MuiThemeProvider>
   );
@@ -74,4 +89,8 @@ const mapStateToProps = (state) => ({
   config: state.config,
 });
 
-export default connect(mapStateToProps)(ThemeContainer);
+const mapDispatchToProps = (dispatch) => ({
+  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeContainer);
