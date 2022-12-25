@@ -31,6 +31,7 @@ global.ENV_IS_DEV = !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';
+global.WILL_OPEN_FILE_PATH = null;
 
 const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
 const store = new ElectronStore({ schema });
@@ -46,7 +47,7 @@ const openFromExplorer = (argv, argvIndex = 1) => {
     win.webContents.send('receiveNextRenderer', argv[argvIndex]);
     win.webContents.send('receiveOpenFile', argv[argvIndex]);
   } else {
-    win.webContents.send('receiveNextRenderer');
+    win.webContents.send('receiveNextRenderer', global.WILL_OPEN_FILE_PATH);
   }
 };
 
@@ -164,8 +165,11 @@ const restartApp = () => {
 
 app.on('open-file', (event, pathParam) => {
   event.preventDefault();
-  if (!global.ENV_IS_WINDOWS) {
+  if (win?.webContents) {
+    // Requests invoked while the app is not running
     win.webContents.send('receiveOpenFile', pathParam);
+  } else {
+    global.WILL_OPEN_FILE_PATH = pathParam;
   }
 });
 
