@@ -42,11 +42,11 @@ There is no built-in automatic update in the app. It is recommended to download 
 
 Please use the GitHub Release page attached below.
 
-[Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
+- [Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
 
-## 🔧 Technical Specifications
+## 🔧 Project Components
 
-- [ViteJS 3.x](https://vitejs.dev)
+- [ViteJS 4.x](https://vitejs.dev)
 - [TypeScript 4.x](https://www.typescriptlang.org)
 - [Electron 22.x](https://www.electronjs.org)
 - [React 18.x](https://reactjs.org)
@@ -63,7 +63,9 @@ First install the dependency module with the following command: ([NodeJS](https:
 $ npm i
 ```
 
-Next, download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/src/renderer/public/js/ruffle`
+The project sources do not include the Ruffle files. So, before building or testing, you need to get the latest version of **Ruffle self-hosted distribution**.
+
+Download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/src/renderer/public/js/ruffle`
 
 You only need to paste the `.map`, `.js`, `.wasm` files inside the compressed file.
 
@@ -77,9 +79,11 @@ $ npm run dev
 And you can build on multiple platforms with the following command:
 
 ```shell
+# Cross-platform build
+$ npm run build
+
 # Windows (.exe)
 $ npm run build:win
-$ npm run build:win-portable
 
 # macOS (.dmg)
 $ npm run build:mac
