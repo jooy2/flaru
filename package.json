@@ -52,7 +52,7 @@
     "typescript": "^4.9.4",
     "vite": "^4.0.3",
     "vite-plugin-electron": "0.10.2",
-    "vite-plugin-electron-renderer": "^0.11.3",
+    "vite-plugin-electron-renderer": "^0.11.4",
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
