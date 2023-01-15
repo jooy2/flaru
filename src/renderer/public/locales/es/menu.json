@@ -21,6 +21,7 @@
   "letterbox": "Usar formato de pantalla ancha para garantizar que solo se muestren las áreas previstas por el creador",
   "hide-context": "Forzar el menú contextual de desactivación",
   "adjust-original-size": "Cambia automáticamente el tamaño de la ventana para que se ajuste al tamaño original del archivo",
+  "show-player-version-select": "Mostrar cuadro de selección para forzar la versión del jugador",
   "theme-light": "luz",
   "theme-dark": "oscuro",
   "theme-auto": "Detección automática"

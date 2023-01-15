@@ -58,6 +58,7 @@ const Main = ({ ConfigActions }) => {
           appConfigCurrentLanguage: getLanguage(),
           appConfigRestoreWindowBounds: configs.restoreWindowBounds,
           appConfigAdjustOriginalSize: configs.adjustOriginalSize,
+          appConfigShowPlayerVersionSelect: configs.showPlayerVersionSelect,
         });
 
         if (configs.theme === 'auto') {

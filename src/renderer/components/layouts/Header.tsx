@@ -1,10 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { AppBar, Button, ButtonGroup, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  ButtonGroup,
+  IconButton,
+  MenuItem,
+  Select,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { ArrowBack, BarChart, HelpOutline, Settings } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { arrWithNumber } from 'qsu';
 import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
 import * as configActions from '../../store/modules/config';
 import ModalMetadata from '../dialogs/ModalMetadata';
@@ -31,6 +41,10 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
 
   const handleOpenMetadata = async () => {
     await ConfigActions.setConfig({ dialogMetadataOpen: true });
+  };
+
+  const handleFlashEmulatePlayerVersionChange = async (event) => {
+    await ConfigActions.setConfig({ appConfigEmulatePlayerVersion: event.target.value });
   };
 
   return (
@@ -67,13 +81,33 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
         </Typography>
         <ButtonGroup variant="text" disableRipple disableElevation>
           {location.pathname === '/player' && (
-            <Button
-              css={[buttonGroupButtonBase]}
-              color="inherit"
-              onClick={() => handleOpenMetadata()}
-            >
-              <BarChart fontSize="small" />
-            </Button>
+            <>
+              {config.appConfigShowPlayerVersionSelect && (
+                <Select
+                  size="small"
+                  fullWidth
+                  value={config.appConfigEmulatePlayerVersion}
+                  onChange={handleFlashEmulatePlayerVersionChange}
+                  inputProps={{
+                    name: 'playerVersion',
+                    id: 'player-version',
+                  }}
+                >
+                  {arrWithNumber(0, 32).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value === 0 ? 'Auto' : value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+              <Button
+                css={[buttonGroupButtonBase]}
+                color="inherit"
+                onClick={() => handleOpenMetadata()}
+              >
+                <BarChart fontSize="small" />
+              </Button>
+            </>
           )}
           {!withBackButton && (
             <>

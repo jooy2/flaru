@@ -21,6 +21,7 @@
   "letterbox": "Verwenden Sie Letterbox, um sicherzustellen, dass nur die vom Ersteller beabsichtigten Bereiche angezeigt werden",
   "hide-context": "Kontextmenü deaktivieren erzwingen",
   "adjust-original-size": "Passt die Größe des Fensters automatisch an die Originalgröße der Datei an",
+  "show-player-version-select": "Auswahlfeld anzeigen, um Player-Version zu erzwingen",
   "theme-light": "Licht (hell)",
   "theme-dark": "Dunkel (dunkel)",
   "theme-auto": "automatische Erkennung"

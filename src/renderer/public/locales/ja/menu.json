@@ -21,6 +21,7 @@
   "letterbox": "レターボックスを使用してクリエイターに意図した領域のみを表示させる",
   "hide-context": "コンテキストメニューの強制無効化",
   "adjust-original-size": "ファイルの元のサイズに合わせてウィンドウサイズを自動的に調整",
+  "show-player-version-select": "選択ボックスを表示してプレーヤーのバージョンを強制する",
   "theme-light": "ライト",
   "theme-dark": "ダーク",
   "theme-auto": "自動検出"

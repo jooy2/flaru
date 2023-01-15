@@ -30,6 +30,9 @@ const Settings = ({ config, ConfigActions }) => {
   const [hideHeaderChecked, setHideHeaderChecked] = useState(config.appConfigHideHeader);
   const [letterboxChecked, setLetterboxChecked] = useState(config.appConfigLetterbox);
   const [hideContextChecked, setHideContextChecked] = useState(config.appConfigHideContext);
+  const [showPlayerVersionSelectChecked, setShowPlayerVersionSelectChecked] = useState(
+    config.appConfigShowPlayerVersionSelect,
+  );
   const [restoreWindowBoundsChecked, setRestoreBoundsChecked] = useState(
     config.appConfigRestoreWindowBounds,
   );
@@ -84,6 +87,11 @@ const Settings = ({ config, ConfigActions }) => {
         setAdjustOriginalSizeChecked(value);
         ipcRenderer.send('setAppConfig', { adjustOriginalSize: value });
         await ConfigActions.setConfig({ appConfigAdjustOriginalSize: value });
+        break;
+      case 'showPlayerVersionSelectChecked':
+        setShowPlayerVersionSelectChecked(value);
+        ipcRenderer.send('setAppConfig', { showPlayerVersionSelect: value });
+        await ConfigActions.setConfig({ appConfigShowPlayerVersionSelect: value });
         break;
       default:
         break;
@@ -231,6 +239,19 @@ const Settings = ({ config, ConfigActions }) => {
                       />
                     }
                     label={t('menu:adjust-original-size')}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={showPlayerVersionSelectChecked}
+                        onChange={handleCheckboxChange}
+                        name="showPlayerVersionSelectChecked"
+                      />
+                    }
+                    label={t('menu:show-player-version-select')}
                   />
                 </Grid>
                 <Grid item xs={12}>

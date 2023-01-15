@@ -34,4 +34,8 @@ export default {
     type: 'boolean',
     default: false,
   },
+  showPlayerVersionSelect: {
+    type: 'boolean',
+    default: false,
+  },
 } as const;

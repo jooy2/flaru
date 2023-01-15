@@ -21,6 +21,7 @@
   "letterbox": "Use letterbox to ensure that only the area intended by the creator is displayed",
   "hide-context": "Forced disable context menu",
   "adjust-original-size": "Automatically resizes the window to fit the file's original size",
+  "show-player-version-select": "Show select box to force player version",
   "theme-light": "Light",
   "theme-dark": "Dark",
   "theme-auto": "Auto Detect"

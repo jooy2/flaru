@@ -44,6 +44,8 @@ const FlashPlayer = ({
       letterbox: config.appConfigLetterbox ? 'on' : 'off',
       logLevel: 'error',
       contextMenu: !config.appConfigHideContext,
+      playerVersion:
+        config.appConfigEmulatePlayerVersion === 0 ? null : config.appConfigEmulatePlayerVersion,
       base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(
         0,
         realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'),
@@ -73,7 +75,7 @@ const FlashPlayer = ({
     container.appendChild(rPlayer);
     rPlayer.load(realPath);
     rPlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
-  }, [url, filePath]);
+  }, [url, filePath, config.appConfigEmulatePlayerVersion]);
 
   return (
     <div

@@ -19,6 +19,8 @@ const initialState = {
   appConfigCurrentLanguage: 'unknown',
   appConfigRestoreWindowBounds: true,
   appConfigAdjustOriginalSize: false,
+  appConfigEmulatePlayerVersion: 0,
+  appConfigShowPlayerVersionSelect: false,
   recentFiles: [],
   dialogMetadataOpen: false,
 };

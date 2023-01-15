@@ -21,6 +21,7 @@
   "letterbox": "Usando a caixa de correio para garantir que apenas as áreas pretendidas pelo criador sejam exibidas",
   "hide-context": "Forçar Desabilitar Menu de Contexto",
   "adjust-original-size": "Redimensiona automaticamente a janela para caber no tamanho original do arquivo",
+  "show-player-version-select": "Mostrar caixa de seleção para forçar a versão do player",
   "theme-light": "luz",
   "theme-dark": "Sombrio",
   "theme-auto": "detecção automática"

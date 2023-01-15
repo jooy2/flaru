@@ -37,9 +37,9 @@ const Explorer = ({ ConfigActions, config }) => {
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
     await ConfigActions.setConfig({
-      isPlaying: true,
       flashFileName: fileName || 'swf',
       flashFilePath: filePath,
+      appConfigEmulatePlayerVersion: 0,
     });
     ipcRenderer.send('appendRecentFiles', filePath);
     navigate('/player');

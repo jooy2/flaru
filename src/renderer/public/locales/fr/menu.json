@@ -21,6 +21,7 @@
   "letterbox": "Utilisez la boîte aux lettres pour vous assurer que seules les zones prévues par le créateur sont affichées",
   "hide-context": "Forcer la désactivation du menu contextuel",
   "adjust-original-size": "Redimensionne automatiquement la fenêtre pour l'adapter à la taille d'origine du fichier",
+  "show-player-version-select": "Afficher la case de sélection pour forcer la version du joueur",
   "theme-light": "lumière",
   "theme-dark": "foncé",
   "theme-auto": "détection automatique"
