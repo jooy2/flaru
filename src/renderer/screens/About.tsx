@@ -4,6 +4,7 @@ import { Button, Grid, Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Article, Update } from '@mui/icons-material';
+import { css } from '@emotion/react';
 import Layout from '../components/layouts/Layout';
 import { getAuthor, getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
 import { paperBase } from '../utils/styles';
@@ -17,10 +18,20 @@ const About = () => {
     <Layout title={t('about-title') as string} withBackButton>
       <Grid item xs={12}>
         <Paper css={paperBase}>
-          <img draggable="false" alt="logo" src="images/flaru-logo.webp" />
+          <img
+            css={css`
+              max-width: 350px;
+              height: auto;
+            `}
+            draggable="false"
+            alt="logo"
+            src="images/flaru-logo.webp"
+          />
           <Typography component="p" variant="body1">
-            Flaru {getVersionName()} By {author}, Flash Emulator Based on Ruffle (Nightly{' '}
-            {ruffleVersion})
+            Flaru {getVersionName()} By {author}
+          </Typography>
+          <Typography component="p" variant="body1">
+            Flash Emulator Based on Ruffle (Nightly {ruffleVersion})
           </Typography>
           <Typography component="p" variant="body1">
             <Button

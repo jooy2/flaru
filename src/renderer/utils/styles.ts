@@ -27,7 +27,7 @@ export const paperBase = css`
   text-align: center;
   padding: 32px 16px;
   margin-bottom: 16px;
-  max-height: 250px;
+  max-height: 400px;
   overflow-y: auto;
   p {
     font-size: 1.05em;
