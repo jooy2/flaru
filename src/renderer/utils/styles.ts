@@ -14,7 +14,7 @@ export const marginRightXs = css`
 `;
 
 export const headerArea = css`
-  margin-top: 48px;
+  margin-top: 42px;
   flex-shrink: 0;
 `;
 

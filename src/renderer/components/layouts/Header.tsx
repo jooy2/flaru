@@ -36,9 +36,10 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
   return (
     <AppBar
       position="fixed"
+      elevation={1}
       css={css`
         user-select: none;
-        background: ${config.isDarkTheme ? '#171717' : '#2c2c2c'};
+        background: ${config.isDarkTheme ? '#2c2c2c' : '#ffffff'};
       `}
     >
       <Toolbar variant="dense">

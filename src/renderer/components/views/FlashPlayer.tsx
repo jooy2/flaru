@@ -81,7 +81,7 @@ const FlashPlayer = ({
       css={css`
         align-items: stretch;
         width: 100%;
-        height: ${header ? 'calc(100vh - 48px)' : '100vh'};
+        height: ${header ? 'calc(100vh - 42px)' : '100vh'};
         top: 0;
         left: 0;
         right: 0;

@@ -30,7 +30,7 @@ const ThemeContainer = ({ children, config, ConfigActions }) => {
         palette: {
           mode: darkMode ? 'dark' : 'light',
           primary: {
-            main: darkMode ? '#ba7100' : '#d26300',
+            main: darkMode ? '#ff5e47' : '#ff9014',
           },
           secondary: {
             main: darkMode ? '#595959' : '#909090',
@@ -49,6 +49,15 @@ const ThemeContainer = ({ children, config, ConfigActions }) => {
             styleOverrides: {
               root: {
                 textTransform: 'none',
+              },
+            },
+          },
+          MuiToolbar: {
+            styleOverrides: {
+              dense: {
+                height: 42,
+                minHeight: 42,
+                color: darkMode ? '#fff' : '#333',
               },
             },
           },
