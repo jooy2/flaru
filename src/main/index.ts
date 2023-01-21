@@ -216,10 +216,6 @@ ipcMain.on('resetAppConfig', () => {
   restartApp();
 });
 
-ipcMain.on('restart', () => {
-  restartApp();
-});
-
 ipcMain.on('appendRecentFiles', (event, file) => {
   try {
     if (!file || file.length < 1) {

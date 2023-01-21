@@ -112,13 +112,9 @@ const Settings = ({ config, ConfigActions }) => {
     }
   };
 
-  const handleReset = (ev, clearData): void => {
-    if (ev) ev.preventDefault();
-    if (clearData) {
-      ipcRenderer.send('resetAppConfig');
-    } else {
-      ipcRenderer.send('restart');
-    }
+  const handleReset = (ev): void => {
+    ev.preventDefault();
+    ipcRenderer.send('resetAppConfig');
   };
 
   return (
@@ -299,7 +295,7 @@ const Settings = ({ config, ConfigActions }) => {
             <Grid item xs={12} css={marginTopMd}>
               <PanelHeader title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
               <Typography component="div" css={marginTopMd}>
-                <Button variant="contained" size="medium" onClick={(ev) => handleReset(ev, true)}>
+                <Button variant="contained" size="medium" onClick={handleReset}>
                   {t('menu:reset-and-restart')}
                 </Button>
               </Typography>
