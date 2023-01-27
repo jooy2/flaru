@@ -22,9 +22,11 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development vite",
+    "dev": "vite",
+    "dev:debug": "vite -d",
+    "dev:debug:force": "vite -d --force",
     "build": "npm run build:pre && electron-builder -wml",
-    "build:pre": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false GENERATE_SOURCEMAP=false NODE_ENV=production tsc && vite build",
+    "build:pre": "tsc && vite build",
     "build:mac": "npm run build:pre && electron-builder --mac",
     "build:win": "npm run build:pre && electron-builder --windows",
     "build:linux": "npm run build:pre && electron-builder --linux",
@@ -37,7 +39,6 @@
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/parser": "^5.48.1",
     "@vitejs/plugin-react-swc": "^3.0.1",
-    "cross-env": "^7.0.3",
     "electron": "^22.0.2",
     "electron-builder": "^23.6.0",
     "eslint": "^8.32.0",
