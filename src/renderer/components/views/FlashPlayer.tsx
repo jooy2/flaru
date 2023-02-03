@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useMemo, useRef } from 'react';
 import { css } from '@emotion/react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { getOS } from '../../utils/helper';
-import * as configActions from '../../store/modules/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/renderer/store';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import { getOS } from '@/renderer/utils/helper';
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -13,15 +13,10 @@ declare global {
   }
 }
 
-const FlashPlayer = ({
-  url = '',
-  autoplay = true,
-  filePath = '',
-  header = true,
-  config,
-  ConfigActions,
-}) => {
+const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }) => {
   const player: any = useRef();
+  const dispatch = useDispatch();
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const { ipcRenderer } = window.require('electron');
   const os = useMemo(() => getOS(), []);
 
@@ -41,11 +36,13 @@ const FlashPlayer = ({
       autoplay,
       polyfills: false,
       preloader: false,
-      letterbox: config.appConfigLetterbox ? 'on' : 'off',
+      letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
       logLevel: 'error',
-      contextMenu: !config.appConfigHideContext,
+      contextMenu: !stateAppScreen.appConfigHideContext,
       playerVersion:
-        config.appConfigEmulatePlayerVersion === 0 ? null : config.appConfigEmulatePlayerVersion,
+        stateAppScreen.appConfigEmulatePlayerVersion === 0
+          ? null
+          : stateAppScreen.appConfigEmulatePlayerVersion,
       base: `${realPath.indexOf('file:///') === -1 ? 'file:///' : ''}${realPath.substr(
         0,
         realPath.lastIndexOf(os === 'Windows' ? '\\' : '/'),
@@ -56,16 +53,18 @@ const FlashPlayer = ({
     rPlayer.id = 'player';
     rPlayer.addEventListener('loadedmetadata', async () => {
       const metaData = rPlayer?.metadata;
-      await ConfigActions.setConfig({
-        flashFileSwfVer: metaData?.swfVersion,
-        flashFileFrame: metaData?.numFrames,
-        flashFileAs3: metaData?.isActionScript3,
-        flashFileWidth: metaData?.width,
-        flashFileHeight: metaData?.height,
-        flashFileBackgroundColor: metaData?.backgroundColor,
-        flashFileFrameRate: metaData?.frameRate,
-      });
-      if (config.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
+      await dispatch(
+        setConfig({
+          flashFileSwfVer: metaData?.swfVersion,
+          flashFileFrame: metaData?.numFrames,
+          flashFileAs3: metaData?.isActionScript3,
+          flashFileWidth: metaData?.width,
+          flashFileHeight: metaData?.height,
+          flashFileBackgroundColor: metaData?.backgroundColor,
+          flashFileFrameRate: metaData?.frameRate,
+        }),
+      );
+      if (stateAppScreen.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
         ipcRenderer.send('resizeWindow', {
           width: metaData.width,
           height: metaData.height,
@@ -75,7 +74,7 @@ const FlashPlayer = ({
     container.appendChild(rPlayer);
     rPlayer.load(realPath);
     rPlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
-  }, [url, filePath, config.appConfigEmulatePlayerVersion]);
+  }, [url, filePath, stateAppScreen.appConfigEmulatePlayerVersion]);
 
   return (
     <div
@@ -108,12 +107,4 @@ const FlashPlayer = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlashPlayer);
+export default FlashPlayer;

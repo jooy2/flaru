@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { isDarkMode } from './helper';
+import { isDarkMode } from '@/renderer/utils/helper';
 
 export const userSelectNone = css`
   user-select: none;

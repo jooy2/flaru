@@ -1,11 +1,11 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import NotFound from './NotFound';
-import Main from './screens/Main';
-import Explorer from './screens/Explorer';
-import Player from './screens/Player';
-import About from './screens/About';
-import Settings from './screens/Settings';
+import NotFound from '@/renderer/screens/NotFound';
+import Main from '@/renderer/screens/Main';
+import Explorer from '@/renderer/screens/Explorer';
+import Player from '@/renderer/screens/Player';
+import About from '@/renderer/screens/About';
+import Settings from '@/renderer/screens/Settings';
 
 const App = () => (
   <HashRouter>

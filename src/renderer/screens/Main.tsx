@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { CircularProgress, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
-import * as configActions from '../store/modules/config';
-import Layout from '../components/layouts/Layout';
-import { loadingText } from '../utils/styles';
+import Layout from '@/renderer/components/layouts/Layout';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import { loadingText } from '@/renderer/utils/styles';
 
-const Main = ({ ConfigActions }) => {
+const Main = () => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [t, i18n] = useTranslation(['common']);
   const [loadMsg, setLoadMsg] = useState(1);
@@ -22,10 +22,12 @@ const Main = ({ ConfigActions }) => {
   const handleVersionCheck = async () => true; // TODO version check
 
   const runFromExplorer = async (filePath: string): Promise<void> => {
-    await ConfigActions.setConfig({
-      flashFileName: filePath.split('\\').pop(),
-      flashFilePath: filePath,
-    });
+    await dispatch(
+      setConfig({
+        flashFileName: filePath.split('\\').pop(),
+        flashFilePath: filePath,
+      }),
+    );
     ipcRenderer.send('appendRecentFiles', filePath);
     navigate('/player');
   };
@@ -49,28 +51,34 @@ const Main = ({ ConfigActions }) => {
       setLoadMsg(2);
 
       ipcRenderer.on('receiveAppConfig', async (appConfigEvent, configs) => {
-        await ConfigActions.setConfig({
-          appConfigHideHeader: configs.hideHeader,
-          appConfigTheme: configs.theme,
-          appConfigHideContext: configs.hideContext,
-          appConfigLetterbox: configs.letterbox,
-          appConfigLanguage: configs.language,
-          appConfigCurrentLanguage: getLanguage(),
-          appConfigRestoreWindowBounds: configs.restoreWindowBounds,
-          appConfigAdjustOriginalSize: configs.adjustOriginalSize,
-          appConfigShowPlayerVersionSelect: configs.showPlayerVersionSelect,
-        });
+        await dispatch(
+          setConfig({
+            appConfigHideHeader: configs.hideHeader,
+            appConfigTheme: configs.theme,
+            appConfigHideContext: configs.hideContext,
+            appConfigLetterbox: configs.letterbox,
+            appConfigLanguage: configs.language,
+            appConfigCurrentLanguage: getLanguage(),
+            appConfigRestoreWindowBounds: configs.restoreWindowBounds,
+            appConfigAdjustOriginalSize: configs.adjustOriginalSize,
+            appConfigShowPlayerVersionSelect: configs.showPlayerVersionSelect,
+          }),
+        );
 
         if (configs.theme === 'auto') {
-          await ConfigActions.setConfig({
-            appConfigTheme: 'auto',
-            isDarkTheme: prefersDarkMode,
-          });
+          await dispatch(
+            setConfig({
+              appConfigTheme: 'auto',
+              isDarkTheme: prefersDarkMode,
+            }),
+          );
         } else {
-          await ConfigActions.setConfig({
-            appConfigTheme: configs.theme,
-            isDarkTheme: configs.theme !== 'light',
-          });
+          await dispatch(
+            setConfig({
+              appConfigTheme: configs.theme,
+              isDarkTheme: configs.theme !== 'light',
+            }),
+          );
         }
 
         if (configs.language !== 'auto') {
@@ -131,12 +139,4 @@ const Main = ({ ConfigActions }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

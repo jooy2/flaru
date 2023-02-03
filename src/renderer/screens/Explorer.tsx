@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useCallback, useEffect, SetStateAction } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
   Alert,
   Grid,
@@ -21,12 +19,16 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { DeleteForever, FileOpen, PlayCircleOutline } from '@mui/icons-material';
 import { css } from '@emotion/react';
-import * as configActions from '../store/modules/config';
 
-import Layout from '../components/layouts/Layout';
-import { loadingText, paperSm } from '../utils/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/renderer/store';
+import Layout from '@/renderer/components/layouts/Layout';
+import { loadingText, paperSm } from '@/renderer/utils/styles';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 
-const Explorer = ({ ConfigActions, config }) => {
+const Explorer = () => {
+  const dispatch = useDispatch();
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const theme = useTheme();
   const [t] = useTranslation(['common', 'notice', 'menu']);
   const navigate = useNavigate();
@@ -36,11 +38,13 @@ const Explorer = ({ ConfigActions, config }) => {
   const { ipcRenderer } = window.require('electron');
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
-    await ConfigActions.setConfig({
-      flashFileName: fileName || 'swf',
-      flashFilePath: filePath,
-      appConfigEmulatePlayerVersion: 0,
-    });
+    await dispatch(
+      setConfig({
+        flashFileName: fileName || 'swf',
+        flashFilePath: filePath,
+        appConfigEmulatePlayerVersion: 0,
+      }),
+    );
     ipcRenderer.send('appendRecentFiles', filePath);
     navigate('/player');
     return true;
@@ -86,16 +90,20 @@ const Explorer = ({ ConfigActions, config }) => {
 
   const handleRemoveRecentFiles = async () => {
     ipcRenderer.send('removeAllRecentFile');
-    await ConfigActions.setConfig({
-      recentFiles: [],
-    });
+    await dispatch(
+      setConfig({
+        recentFiles: [],
+      }),
+    );
   };
 
   useEffect(() => {
     ipcRenderer.on('receiveRecentFiles', async (event, argument) => {
-      await ConfigActions.setConfig({
-        recentFiles: argument,
-      });
+      await dispatch(
+        setConfig({
+          recentFiles: argument,
+        }),
+      );
     });
 
     ipcRenderer.on('receiveFileExist', async (event, argument) => {
@@ -143,7 +151,9 @@ const Explorer = ({ ConfigActions, config }) => {
                         text-align: center;
                         font-style: italic;
                         border-radius: 15px;
-                        border: ${config.isDarkTheme ? '3px dashed #fff' : '3px dashed #333'};
+                        border: ${stateAppScreen.isDarkTheme
+                          ? '3px dashed #fff'
+                          : '3px dashed #333'};
                         opacity: 0.8;
                         h2 {
                           margin: 10px 0;
@@ -179,18 +189,18 @@ const Explorer = ({ ConfigActions, config }) => {
                     <Grid item>
                       <IconButton
                         onClick={handleRemoveRecentFiles}
-                        disabled={config.recentFiles.length < 1}
+                        disabled={stateAppScreen.recentFiles.length < 1}
                       >
                         <DeleteForever fontSize="small" />
                       </IconButton>
                     </Grid>
                   </Grid>
-                  {config.recentFiles.length < 1 && (
+                  {stateAppScreen.recentFiles.length < 1 && (
                     <Typography component="p" variant="subtitle2">
                       {t('notice:no-recent-files')}
                     </Typography>
                   )}
-                  {config.recentFiles.length > 0 && (
+                  {stateAppScreen.recentFiles.length > 0 && (
                     <Grid container>
                       <Grid item xs={12}>
                         <List
@@ -210,7 +220,7 @@ const Explorer = ({ ConfigActions, config }) => {
                             }
                           `}
                         >
-                          {config.recentFiles.map((val) => (
+                          {stateAppScreen.recentFiles.map((val) => (
                             <ListItem disablePadding key={val}>
                               <ListItemButton
                                 component="a"
@@ -251,12 +261,4 @@ const Explorer = ({ ConfigActions, config }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Explorer);
+export default Explorer;

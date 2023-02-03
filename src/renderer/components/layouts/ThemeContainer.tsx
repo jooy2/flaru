@@ -3,18 +3,20 @@ import { useEffect, useMemo } from 'react';
 import { darkScrollbar, useMediaQuery, CssBaseline } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { css, Global, ThemeProvider } from '@emotion/react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as configActions from '@/renderer/store/modules/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/renderer/store';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 
-const ThemeContainer = ({ children, config, ConfigActions }) => {
+const ThemeContainer = ({ children }) => {
+  const dispatch = useDispatch();
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const darkMode = useMemo((): boolean => {
-    if (config.appConfigTheme === 'auto') {
+    if (stateAppScreen.appConfigTheme === 'auto') {
       return prefersDarkMode;
     }
-    return config.isDarkTheme;
-  }, [config.appConfigTheme, config.isDarkTheme, prefersDarkMode]);
+    return stateAppScreen.isDarkTheme;
+  }, [stateAppScreen.appConfigTheme, stateAppScreen.isDarkTheme, prefersDarkMode]);
   const muiTheme = useMemo(
     () =>
       createTheme({
@@ -70,12 +72,12 @@ const ThemeContainer = ({ children, config, ConfigActions }) => {
           },
         },
       }),
-    [config.isDarkTheme],
+    [stateAppScreen.isDarkTheme],
   );
 
   useEffect(() => {
-    if (config.appConfigTheme === 'auto') {
-      ConfigActions.setConfig({ isDarkTheme: prefersDarkMode });
+    if (stateAppScreen.appConfigTheme === 'auto') {
+      dispatch(setConfig({ isDarkTheme: prefersDarkMode }));
     }
   }, [prefersDarkMode]);
 
@@ -94,12 +96,4 @@ const ThemeContainer = ({ children, config, ConfigActions }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ThemeContainer);
+export default ThemeContainer;

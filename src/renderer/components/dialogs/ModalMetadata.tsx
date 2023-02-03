@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -15,21 +14,24 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { css } from '@emotion/react';
-import * as configActions from '../../store/modules/config';
 
-import { userSelectNone } from '../../utils/styles';
+import { userSelectNone } from '@/renderer/utils/styles';
+import { RootState } from '@/renderer/store';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 
-const ModalMetadata = ({ ConfigActions, config }) => {
+const ModalMetadata = () => {
   const [t] = useTranslation(['common', 'notice', 'menu']);
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
+  const dispatch = useDispatch();
 
   const handleDialogClose = async () => {
-    await ConfigActions.setConfig({ dialogMetadataOpen: false });
+    await dispatch(setConfig({ dialogMetadataOpen: false }));
   };
 
   return (
     <Dialog
       css={userSelectNone}
-      open={config.dialogMetadataOpen}
+      open={stateAppScreen.dialogMetadataOpen}
       onClose={handleDialogClose}
       disableEscapeKeyDown
       aria-labelledby="error-title"
@@ -40,12 +42,12 @@ const ModalMetadata = ({ ConfigActions, config }) => {
           <Table size="small" aria-label="a dense table">
             <TableBody>
               {[
-                { name: 'SWF Version', value: config.flashFileSwfVer },
-                { name: 'Total Frame', value: config.flashFileFrame },
-                { name: 'SWF Frame Rate', value: config.flashFileFrameRate },
-                { name: 'SWF Width', value: config.flashFileWidth },
-                { name: 'SWF Height', value: config.flashFileHeight },
-                { name: 'SWF Background Color', value: config.flashFileBackgroundColor },
+                { name: 'SWF Version', value: stateAppScreen.flashFileSwfVer },
+                { name: 'Total Frame', value: stateAppScreen.flashFileFrame },
+                { name: 'SWF Frame Rate', value: stateAppScreen.flashFileFrameRate },
+                { name: 'SWF Width', value: stateAppScreen.flashFileWidth },
+                { name: 'SWF Height', value: stateAppScreen.flashFileHeight },
+                { name: 'SWF Background Color', value: stateAppScreen.flashFileBackgroundColor },
               ].map((row) => (
                 <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell
@@ -75,12 +77,4 @@ const ModalMetadata = ({ ConfigActions, config }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalMetadata);
+export default ModalMetadata;

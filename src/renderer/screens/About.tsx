@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Article, Update } from '@mui/icons-material';
 import { css } from '@emotion/react';
-import Layout from '../components/layouts/Layout';
-import { getAuthor, getRuffleVersion, getVersionName, goToExtLink } from '../utils/helper';
-import { paperBase } from '../utils/styles';
+import Layout from '@/renderer/components/layouts/Layout';
+import { getAuthor, getRuffleVersion, getVersionName, goToExtLink } from '@/renderer/utils/helper';
+import { paperBase } from '@/renderer/utils/styles';
 
 const About = () => {
   const [t] = useTranslation(['common', 'notice', 'menu']);

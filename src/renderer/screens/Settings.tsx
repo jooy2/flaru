@@ -15,29 +15,31 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
-import Layout from '../components/layouts/Layout';
-import * as configActions from '../store/modules/config';
-import { marginTopMd } from '../utils/styles';
-import PanelHeader from '../components/views/PanelHeader';
+import { RootState } from '@/renderer/store';
+import Layout from '@/renderer/components/layouts/Layout';
+import { marginTopMd } from '@/renderer/utils/styles';
+import PanelHeader from '@/renderer/components/views/PanelHeader';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 
-const Settings = ({ config, ConfigActions }) => {
+const Settings = () => {
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
+  const dispatch = useDispatch();
   const [t, i18n] = useTranslation(['common', 'notice', 'menu']);
-  const [themeCheck, setThemeCheck] = useState(config.appConfigTheme);
-  const [language, setLanguage] = useState(config.appConfigLanguage);
-  const [hideHeaderChecked, setHideHeaderChecked] = useState(config.appConfigHideHeader);
-  const [letterboxChecked, setLetterboxChecked] = useState(config.appConfigLetterbox);
-  const [hideContextChecked, setHideContextChecked] = useState(config.appConfigHideContext);
+  const [themeCheck, setThemeCheck] = useState(stateAppScreen.appConfigTheme);
+  const [language, setLanguage] = useState(stateAppScreen.appConfigLanguage);
+  const [hideHeaderChecked, setHideHeaderChecked] = useState(stateAppScreen.appConfigHideHeader);
+  const [letterboxChecked, setLetterboxChecked] = useState(stateAppScreen.appConfigLetterbox);
+  const [hideContextChecked, setHideContextChecked] = useState(stateAppScreen.appConfigHideContext);
   const [showPlayerVersionSelectChecked, setShowPlayerVersionSelectChecked] = useState(
-    config.appConfigShowPlayerVersionSelect,
+    stateAppScreen.appConfigShowPlayerVersionSelect,
   );
   const [restoreWindowBoundsChecked, setRestoreBoundsChecked] = useState(
-    config.appConfigRestoreWindowBounds,
+    stateAppScreen.appConfigRestoreWindowBounds,
   );
   const [adjustOriginalSizeChecked, setAdjustOriginalSizeChecked] = useState(
-    config.appConfigAdjustOriginalSize,
+    stateAppScreen.appConfigAdjustOriginalSize,
   );
   const { ipcRenderer } = window.require('electron');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -48,11 +50,11 @@ const Settings = ({ config, ConfigActions }) => {
       case 'themeCheck':
         setThemeCheck(value);
         ipcRenderer.send('setAppConfig', { theme: value });
-        await ConfigActions.setConfig({ appConfigTheme: value });
+        await dispatch(setConfig({ appConfigTheme: value }));
         if (value === 'auto') {
-          await ConfigActions.setConfig({ isDarkTheme: prefersDarkMode });
+          await dispatch(setConfig({ isDarkTheme: prefersDarkMode }));
         } else {
-          await ConfigActions.setConfig({ isDarkTheme: value !== 'light' });
+          await dispatch(setConfig({ isDarkTheme: value !== 'light' }));
         }
         break;
       default:
@@ -66,32 +68,32 @@ const Settings = ({ config, ConfigActions }) => {
       case 'hideHeaderChecked':
         setHideHeaderChecked(value);
         ipcRenderer.send('setAppConfig', { hideHeader: value });
-        await ConfigActions.setConfig({ appConfigHideHeader: value });
+        await dispatch(setConfig({ appConfigHideHeader: value }));
         break;
       case 'letterboxChecked':
         setLetterboxChecked(value);
         ipcRenderer.send('setAppConfig', { letterbox: value });
-        await ConfigActions.setConfig({ appConfigLetterbox: value });
+        await dispatch(setConfig({ appConfigLetterbox: value }));
         break;
       case 'hideContextChecked':
         setHideContextChecked(value);
         ipcRenderer.send('setAppConfig', { hideContext: value });
-        await ConfigActions.setConfig({ appConfigHideContext: value });
+        await dispatch(setConfig({ appConfigHideContext: value }));
         break;
       case 'restoreWindowBoundsChecked':
         setRestoreBoundsChecked(value);
         ipcRenderer.send('setAppConfig', { restoreWindowBounds: value });
-        await ConfigActions.setConfig({ appConfigRestoreWindowBounds: value });
+        await dispatch(setConfig({ appConfigRestoreWindowBounds: value }));
         break;
       case 'adjustOriginalSizeChecked':
         setAdjustOriginalSizeChecked(value);
         ipcRenderer.send('setAppConfig', { adjustOriginalSize: value });
-        await ConfigActions.setConfig({ appConfigAdjustOriginalSize: value });
+        await dispatch(setConfig({ appConfigAdjustOriginalSize: value }));
         break;
       case 'showPlayerVersionSelectChecked':
         setShowPlayerVersionSelectChecked(value);
         ipcRenderer.send('setAppConfig', { showPlayerVersionSelect: value });
-        await ConfigActions.setConfig({ appConfigShowPlayerVersionSelect: value });
+        await dispatch(setConfig({ appConfigShowPlayerVersionSelect: value }));
         break;
       default:
         break;
@@ -104,7 +106,7 @@ const Settings = ({ config, ConfigActions }) => {
       case 'language':
         setLanguage(value);
         ipcRenderer.send('setAppConfig', { language: value });
-        await ConfigActions.setConfig({ appConfigLanguage: value });
+        await dispatch(setConfig({ appConfigLanguage: value }));
         await i18n.changeLanguage(value);
         break;
       default:
@@ -127,7 +129,7 @@ const Settings = ({ config, ConfigActions }) => {
           overflow-y: auto;
           span {
             font-size: 0.95em;
-            color: ${config.isDarkTheme ? '#efefef' : '#4f4f4f'};
+            color: ${stateAppScreen.isDarkTheme ? '#efefef' : '#4f4f4f'};
           }
         `}
       >
@@ -154,7 +156,7 @@ const Settings = ({ config, ConfigActions }) => {
               }
               span {
                 font-size: 0.75em;
-                color: ${config.isDarkTheme ? '#efefef' : '#4f4f4f'};
+                color: ${stateAppScreen.isDarkTheme ? '#efefef' : '#4f4f4f'};
               }
             `}
           >
@@ -307,12 +309,4 @@ const Settings = ({ config, ConfigActions }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;

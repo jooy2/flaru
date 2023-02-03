@@ -12,16 +12,18 @@ import {
 import { ArrowBack, BarChart, HelpOutline, Settings } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { arrWithNumber } from 'qsu';
-import { buttonGroupButtonBase, marginRightXs } from '../../utils/styles';
-import * as configActions from '../../store/modules/config';
-import ModalMetadata from '../dialogs/ModalMetadata';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/renderer/store';
+import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import ModalMetadata from '@/renderer/components/dialogs/ModalMetadata';
+import { buttonGroupButtonBase, marginRightXs } from '@/renderer/utils/styles';
 
-const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActions }) => {
+const Header = ({ title, withBackButton, withRefresh = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
 
   const handleGoToLink = (url) => {
     if (url === location.pathname) {
@@ -40,11 +42,11 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
   };
 
   const handleOpenMetadata = async () => {
-    await ConfigActions.setConfig({ dialogMetadataOpen: true });
+    await dispatch(setConfig({ dialogMetadataOpen: true }));
   };
 
   const handleFlashEmulatePlayerVersionChange = async (event) => {
-    await ConfigActions.setConfig({ appConfigEmulatePlayerVersion: event.target.value });
+    await dispatch(setConfig({ appConfigEmulatePlayerVersion: event.target.value }));
   };
 
   return (
@@ -53,7 +55,7 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
       elevation={1}
       css={css`
         user-select: none;
-        background: ${config.isDarkTheme ? '#2c2c2c' : '#ffffff'};
+        background: ${stateAppScreen.isDarkTheme ? '#2c2c2c' : '#ffffff'};
       `}
     >
       <Toolbar variant="dense">
@@ -82,11 +84,11 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
         <ButtonGroup variant="text" disableRipple disableElevation>
           {location.pathname === '/player' && (
             <>
-              {config.appConfigShowPlayerVersionSelect && (
+              {stateAppScreen.appConfigShowPlayerVersionSelect && (
                 <Select
                   size="small"
                   fullWidth
-                  value={config.appConfigEmulatePlayerVersion}
+                  value={stateAppScreen.appConfigEmulatePlayerVersion}
                   onChange={handleFlashEmulatePlayerVersionChange}
                   inputProps={{
                     name: 'playerVersion',
@@ -136,12 +138,4 @@ const Header = ({ title, withBackButton, withRefresh = false, config, ConfigActi
   );
 };
 
-const mapStateToProps = (state) => ({
-  config: state.config,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ConfigActions: bindActionCreators({ ...configActions }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;
