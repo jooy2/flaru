@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/flaru) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) ![Languages](https://img.shields.io/github/languages/count/jooy2/flaru) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru) ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
 
-![Logo Image](readme-screenshot.webp)
+![Logo Image](.github/resources/readme-screenshot.webp)
 
 This is **Unofficial Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
 
