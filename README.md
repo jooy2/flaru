@@ -6,21 +6,17 @@
 
 ![Logo Image](.github/resources/readme-screenshot.webp)
 
-This is **Unofficial Ruffle Flash Player** Based on [Ruffle Flash Emulator](https://ruffle.rs).
+**Flaru** is an unofficial emulator based on [Ruffle Flash Emulator](https://ruffle.rs). Created to provide a friendly interface and enhanced playing experience.
 
-I'm not the official developer of Ruffle. For issues and documentation related to the emulator, please refer to the official Ruffle repository documentation below.
+This is unofficial, so if you are looking for the official desktop Ruffle app, please visit the following link: https://github.com/ruffle-rs/ruffle
 
-**Official Ruffle Desktop Player** is here!: https://github.com/ruffle-rs/ruffle
-
-(\*This is just an emulator and does not contain any games.)
-
-> Flaru for mobile (POC/WIP) is here: https://github.com/jooy2/flaru-mobile
+(This app does not contain any SWF game files.)
 
 </div>
 
 ## ⭐ Features
 
-- ✅ It is a desktop player that not only replaces Adobe Flash Player, but also makes it easy to use Ruffle.
+- ✅ It is a complete alternative to Adobe Flash Player. Run Flash Safely Anywhere
 - ✅ Cross-platform: Windows, macOS, Linux supported!
 - ✅ Multi-language and theme support
 - ✅ Support for running split SWF files
@@ -30,28 +26,21 @@ I'm not the official developer of Ruffle. For issues and documentation related t
 
 ## 📢 Compatibility
 
-**Since the emulator is under development, some content may not run smoothly, and Flash created with ActionScript 3 as of March 2021 is not supported.**
+As the Ruffle emulator is under continuous development, Flash files created with ActionScript 3 are partially supported.
 
-See https://github.com/ruffle-rs/ruffle/issues/1368.
+See: https://github.com/ruffle-rs/ruffle/issues/1368.
 
-This app plots the emulator (built for self-hosted use) in a webview, so there may be a performance difference compared to the official Ruffle Desktop Application.
+Flaru uses an emulator that relies on Chromium's WebView, so you may notice differences in performance or native functionality compared to Ruffle's official Desktop application.
 
-There is no built-in automatic update in the app. It is recommended to download the updated emulator version by referring to the GitHub Release page on a monthly basis.
+- Official desktop emulation optimized for native environments can be found here: https://github.com/ruffle-rs/ruffle/tags
 
 ## 💾 Downloads
 
-Please use the GitHub Release page attached below.
+- [Flaru Downloads page](https://github.com/jooy2/flaru/releases)
 
-- [Flaru Flash Player Release Page](https://github.com/jooy2/flaru/releases)
+Since Flaru does not sign the application, you may receive a security warning upon installation. You can safely ignore the security warning as this app does not use any permissions other than reading system file resources (e.g. loading SWF files).
 
-## 🔧 Project Components
-
-- [ViteJS 4.x](https://vitejs.dev)
-- [TypeScript 4.x](https://www.typescriptlang.org)
-- [Electron 22.x](https://www.electronjs.org)
-- [React 18.x](https://reactjs.org)
-- [Material-UI 5.x](https://mui.com)
-- [Ruffle](https://ruffle.rs)
+Accordingly, version check and automatic update are currently not supported. We recommend upgrading by visiting the GitHub Releases page at regular intervals to check for new versions.
 
 ## 🔨 Build & Run
 
@@ -63,7 +52,7 @@ First install the dependency module with the following command: ([NodeJS](https:
 $ npm i
 ```
 
-The project sources do not include the Ruffle files. So, before building or testing, you need to get the latest version of **Ruffle self-hosted distribution**.
+The project sources do not include the `Ruffle` source files. So, before building or testing, you need to get the latest version of **Ruffle self-hosted distribution**.
 
 Download the latest version of the self-hosted version from the [Ruffle Release Page](https://github.com/ruffle-rs/ruffle/releases), unzip it and paste it in the following path: `/src/renderer/public/js/ruffle`
 
@@ -92,10 +81,21 @@ $ npm run build:mac
 $ npm run build:linux
 ```
 
+### 🔧 Project Components
+
+- [ViteJS](https://vitejs.dev)
+- [TypeScript](https://typescriptlang.org)
+- [Electron](https://electronjs.org)
+- [React](https://reactjs.org)
+- [Material-UI](https://mui.com)
+- [Ruffle](https://ruffle.rs)
+
 ## 📋 License
 
 Copyright © 2021-2023 [Jooy2](https://jooy2.com) <[jooy2.contact@gmail.com](mailto:jooy2.contact@gmail.com)> Released under the MIT license. (Source code excluding Ruffle and external modules)
 
-Please use the build package only for personal testing. **Distribution of packages for production/commercial use is not permitted.**
+For general use, download and use the package file on the GitHub releases page. You do not need to download the entire project.
+
+**Please do not distribute or release this project package externally without permission.**
 
 For detailed license of Ruffle, please refer to the following document: [https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md](https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md)
