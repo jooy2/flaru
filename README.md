@@ -42,6 +42,12 @@ Since Flaru does not sign the application, you may receive a security warning up
 
 Accordingly, version check and automatic update are currently not supported. We recommend upgrading by visiting the GitHub Releases page at regular intervals to check for new versions.
 
+---
+
+If you have a GitHub account, you can easily receive release notifications by email!
+
+![Subscription](.github/resources/watch-release.webp)
+
 ## 🔨 Build & Run
 
 Before building or running, you need to install the module and add the Ruffle script file to the project.
