@@ -2,7 +2,6 @@ import { app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences 
 import { join } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
-import * as electronRemote from '@electron/remote/main';
 import { promises } from 'fs';
 import { getPlatform } from 'qsu';
 import pkg from '../../package.json';
@@ -70,15 +69,16 @@ const createWindow = () => {
     minWidth: DEFAULT_WINDOW_ATTR.minWidth,
     minHeight: DEFAULT_WINDOW_ATTR.minHeight,
     webPreferences: {
-      nodeIntegration: true,
       spellcheck: false,
+      // To allow load file protocol url
       webSecurity: false,
       devTools: global.ENV_IS_DEV,
-      contextIsolation: false,
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: join(__dirname, '../preload/index.js'),
     },
   });
 
-  electronRemote.enable(win.webContents);
   win.setMenuBarVisibility(false);
 
   Menu.setApplicationMenu(
@@ -174,8 +174,6 @@ app.on('open-file', (event, pathParam) => {
 });
 
 app.on('ready', () => {
-  electronRemote.initialize();
-
   protocol.registerFileProtocol('file', (request, callback) => {
     const pathname = decodeURI(request.url.replace('file:///', ''));
     callback(pathname);
@@ -287,3 +285,17 @@ ipcMain.on('removeAllRecentFile', async () => {
   store.set({ recentFiles: [] });
   win.webContents.send('receiveRecentFiles', []);
 });
+
+ipcMain.handle('getGlobalValues', () => ({
+  APP_NAME: global.APP_NAME,
+  APP_VERSION_NAME: global.APP_VERSION_NAME,
+  APP_VERSION_CODE: global.APP_VERSION_CODE,
+  APP_VERSION_DATE: global.APP_VERSION_DATE,
+  APP_AUTHOR: global.APP_AUTHOR,
+  APP_RUFFLE_VERSION_DATE: global.APP_RUFFLE_VERSION_DATE,
+  ENV_IS_DEV: global.ENV_IS_DEV,
+  ENV_OS: global.ENV_OS,
+  ENV_IS_WINDOWS: global.ENV_IS_WINDOWS,
+  ENV_IS_MAC: global.ENV_IS_MAC,
+  WILL_OPEN_FILE_PATH: global.WILL_OPEN_FILE_PATH,
+}));

@@ -1,19 +1,9 @@
-const { shell, getGlobal } = window.require('@electron/remote');
-
-export const goToExtLink = async (ev, link) => {
+export const openExternalLink = async (ev, link) => {
   if (ev) {
     ev.preventDefault();
   }
-  await shell.openExternal(link);
+  await window.mainApi.openExternal(link);
 };
-
-export const getOS = () => getGlobal('ENV_OS');
-
-export const getVersionName = () => getGlobal('APP_VERSION_NAME');
-
-export const getRuffleVersion = () => getGlobal('APP_RUFFLE_VERSION_DATE');
-
-export const getAuthor = () => getGlobal('APP_AUTHOR');
 
 export const isDarkMode = (theme) => {
   if (theme.theme) {
@@ -25,9 +15,11 @@ export const isDarkMode = (theme) => {
   return false;
 };
 
+export const arrWithNumber = (start: number, end: number): number[] =>
+  Array.from({ length: end - start + 1 }, (_, i) => i + start);
+
 export default {
-  getOS,
-  goToExtLink,
-  getVersionName,
+  openExternalLink,
   isDarkMode,
+  arrWithNumber,
 };

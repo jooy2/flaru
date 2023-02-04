@@ -6,13 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { Article, Update } from '@mui/icons-material';
 import { css } from '@emotion/react';
 import Layout from '@/renderer/components/layouts/Layout';
-import { getAuthor, getRuffleVersion, getVersionName, goToExtLink } from '@/renderer/utils/helper';
+import { openExternalLink } from '@/renderer/utils/helper';
 import { paperBase } from '@/renderer/utils/styles';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/renderer/store';
 
 const About = () => {
   const [t] = useTranslation(['common', 'notice', 'menu']);
-  const ruffleVersion = useMemo(() => getRuffleVersion(), []);
-  const author = useMemo(() => getAuthor(), []);
+  const stateAppScreen = useSelector((state: RootState) => state.appScreen);
+  const ruffleVersion = useMemo(() => stateAppScreen.mainGlobalValues.APP_RUFFLE_VERSION_DATE, []);
+  const author = useMemo(() => stateAppScreen.mainGlobalValues.APP_AUTHOR, []);
 
   return (
     <Layout title={t('about-title') as string} withBackButton>
@@ -28,7 +31,7 @@ const About = () => {
             src="images/flaru-logo.webp"
           />
           <Typography component="p" variant="body1">
-            Flaru {getVersionName()} By {author}
+            Flaru {stateAppScreen.mainGlobalValues.APP_VERSION_NAME} By {author}
           </Typography>
           <Typography component="p" variant="body1">
             Flash Emulator Based on Ruffle (Nightly {ruffleVersion})
@@ -37,14 +40,14 @@ const About = () => {
             <Button
               startIcon={<Article />}
               onClick={(ev) =>
-                goToExtLink(ev, 'https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md')
+                openExternalLink(ev, 'https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md')
               }
             >
               Ruffle LICENSE
             </Button>
             <Button
               startIcon={<Update />}
-              onClick={(ev) => goToExtLink(ev, 'https://github.com/jooy2/flaru/releases')}
+              onClick={(ev) => openExternalLink(ev, 'https://github.com/jooy2/flaru/releases')}
             >
               {t('menu:update-check')}
             </Button>

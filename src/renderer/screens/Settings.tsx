@@ -41,7 +41,6 @@ const Settings = () => {
   const [adjustOriginalSizeChecked, setAdjustOriginalSizeChecked] = useState(
     stateAppScreen.appConfigAdjustOriginalSize,
   );
-  const { ipcRenderer } = window.require('electron');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const handleRadioChange = async (event): Promise<void> => {
@@ -49,7 +48,7 @@ const Settings = () => {
     switch (event.target.name) {
       case 'themeCheck':
         setThemeCheck(value);
-        ipcRenderer.send('setAppConfig', { theme: value });
+        window.mainApi.send('setAppConfig', { theme: value });
         await dispatch(setConfig({ appConfigTheme: value }));
         if (value === 'auto') {
           await dispatch(setConfig({ isDarkTheme: prefersDarkMode }));
@@ -67,32 +66,32 @@ const Settings = () => {
     switch (event.target.name) {
       case 'hideHeaderChecked':
         setHideHeaderChecked(value);
-        ipcRenderer.send('setAppConfig', { hideHeader: value });
+        window.mainApi.send('setAppConfig', { hideHeader: value });
         await dispatch(setConfig({ appConfigHideHeader: value }));
         break;
       case 'letterboxChecked':
         setLetterboxChecked(value);
-        ipcRenderer.send('setAppConfig', { letterbox: value });
+        window.mainApi.send('setAppConfig', { letterbox: value });
         await dispatch(setConfig({ appConfigLetterbox: value }));
         break;
       case 'hideContextChecked':
         setHideContextChecked(value);
-        ipcRenderer.send('setAppConfig', { hideContext: value });
+        window.mainApi.send('setAppConfig', { hideContext: value });
         await dispatch(setConfig({ appConfigHideContext: value }));
         break;
       case 'restoreWindowBoundsChecked':
         setRestoreBoundsChecked(value);
-        ipcRenderer.send('setAppConfig', { restoreWindowBounds: value });
+        window.mainApi.send('setAppConfig', { restoreWindowBounds: value });
         await dispatch(setConfig({ appConfigRestoreWindowBounds: value }));
         break;
       case 'adjustOriginalSizeChecked':
         setAdjustOriginalSizeChecked(value);
-        ipcRenderer.send('setAppConfig', { adjustOriginalSize: value });
+        window.mainApi.send('setAppConfig', { adjustOriginalSize: value });
         await dispatch(setConfig({ appConfigAdjustOriginalSize: value }));
         break;
       case 'showPlayerVersionSelectChecked':
         setShowPlayerVersionSelectChecked(value);
-        ipcRenderer.send('setAppConfig', { showPlayerVersionSelect: value });
+        window.mainApi.send('setAppConfig', { showPlayerVersionSelect: value });
         await dispatch(setConfig({ appConfigShowPlayerVersionSelect: value }));
         break;
       default:
@@ -105,7 +104,7 @@ const Settings = () => {
     switch (event.target.name) {
       case 'language':
         setLanguage(value);
-        ipcRenderer.send('setAppConfig', { language: value });
+        window.mainApi.send('setAppConfig', { language: value });
         await dispatch(setConfig({ appConfigLanguage: value }));
         await i18n.changeLanguage(value);
         break;
@@ -116,7 +115,7 @@ const Settings = () => {
 
   const handleReset = (ev): void => {
     ev.preventDefault();
-    ipcRenderer.send('resetAppConfig');
+    window.mainApi.send('resetAppConfig');
   };
 
   return (

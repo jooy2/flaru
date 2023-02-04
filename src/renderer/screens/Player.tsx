@@ -9,13 +9,12 @@ import FlashPlayer from '@/renderer/components/views/FlashPlayer';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 
 const Player = () => {
-  const { ipcRenderer } = window.require('electron');
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    ipcRenderer.on('receiveResumeToExplorer', async () => {
+    window.mainApi.receive('receiveResumeToExplorer', async () => {
       await dispatch(
         setConfig({
           flashFileName: '',
@@ -26,7 +25,7 @@ const Player = () => {
     });
 
     return () => {
-      ipcRenderer.removeAllListeners('receiveResumeToExplorer');
+      window.mainApi.removeListener('receiveResumeToExplorer');
     };
   }, []);
 

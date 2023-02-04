@@ -35,7 +35,6 @@ const Explorer = () => {
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { ipcRenderer } = window.require('electron');
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
     await dispatch(
@@ -45,7 +44,7 @@ const Explorer = () => {
         appConfigEmulatePlayerVersion: 0,
       }),
     );
-    ipcRenderer.send('appendRecentFiles', filePath);
+    window.mainApi.send('appendRecentFiles', filePath);
     navigate('/player');
     return true;
   };
@@ -82,14 +81,14 @@ const Explorer = () => {
   const handleClickRecentFile = async (ev, file) => {
     if (ev) ev.preventDefault();
     if (!file) return;
-    ipcRenderer.send('checkFileExist', {
+    window.mainApi.send('checkFileExist', {
       name: file.split('\\').pop(),
       path: file,
     });
   };
 
   const handleRemoveRecentFiles = async () => {
-    ipcRenderer.send('removeAllRecentFile');
+    window.mainApi.send('removeAllRecentFile');
     await dispatch(
       setConfig({
         recentFiles: [],
@@ -98,7 +97,7 @@ const Explorer = () => {
   };
 
   useEffect(() => {
-    ipcRenderer.on('receiveRecentFiles', async (event, argument) => {
+    window.mainApi.receive('receiveRecentFiles', async (event, argument) => {
       await dispatch(
         setConfig({
           recentFiles: argument,
@@ -106,11 +105,11 @@ const Explorer = () => {
       );
     });
 
-    ipcRenderer.on('receiveFileExist', async (event, argument) => {
+    window.mainApi.receive('receiveFileExist', async (event, argument) => {
       if (argument.exist) {
         await runFlash(argument.name, argument.path);
       } else {
-        ipcRenderer.send('removeRecentFile', {
+        window.mainApi.send('removeRecentFile', {
           path: argument.path,
           title: t('common:dialog-title-info'),
           message: t('notice:not-found-recent-file'),
@@ -118,11 +117,11 @@ const Explorer = () => {
       }
     });
 
-    ipcRenderer.send('getRecentFiles');
+    window.mainApi.send('getRecentFiles');
 
     return () => {
-      ipcRenderer.removeAllListeners('receiveRecentFiles');
-      ipcRenderer.removeAllListeners('receiveFileExist');
+      window.mainApi.removeListener('receiveRecentFiles');
+      window.mainApi.removeListener('receiveFileExist');
     };
   }, []);
 

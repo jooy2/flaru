@@ -45,9 +45,15 @@ export default defineConfig({
           },
         },
       },
+      {
+        entry: ['src/preload/index.ts'],
+        vite: {
+          build: {
+            outDir: 'dist/preload',
+          },
+        },
+      },
     ]),
-    rendererPlugin({
-      nodeIntegration: true,
-    }),
+    rendererPlugin(),
   ],
 });

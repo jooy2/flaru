@@ -4,21 +4,12 @@ import { css } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
-import { getOS } from '@/renderer/utils/helper';
-
-declare global {
-  // eslint-disable-next-line no-unused-vars
-  interface Window {
-    RufflePlayer: any;
-  }
-}
 
 const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }) => {
   const player: any = useRef();
   const dispatch = useDispatch();
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
-  const { ipcRenderer } = window.require('electron');
-  const os = useMemo(() => getOS(), []);
+  const os = useMemo(() => stateAppScreen.mainGlobalValues.ENV_OS, []);
 
   useEffect((): any => {
     const container = player.current;
@@ -65,7 +56,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
         }),
       );
       if (stateAppScreen.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
-        ipcRenderer.send('resizeWindow', {
+        window.mainApi.send('resizeWindow', {
           width: metaData.width,
           height: metaData.height,
         });

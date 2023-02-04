@@ -17,7 +17,6 @@ const Main = () => {
   const [loadMsg, setLoadMsg] = useState(1);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const navigate = useNavigate();
-  const { ipcRenderer } = window.require('electron');
 
   const handleVersionCheck = async () => true; // TODO version check
 
@@ -28,7 +27,7 @@ const Main = () => {
         flashFilePath: filePath,
       }),
     );
-    ipcRenderer.send('appendRecentFiles', filePath);
+    window.mainApi.send('appendRecentFiles', filePath);
     navigate('/player');
   };
 
@@ -50,7 +49,7 @@ const Main = () => {
 
       setLoadMsg(2);
 
-      ipcRenderer.on('receiveAppConfig', async (appConfigEvent, configs) => {
+      window.mainApi.receive('receiveAppConfig', async (appConfigEvent, configs) => {
         await dispatch(
           setConfig({
             appConfigHideHeader: configs.hideHeader,
@@ -85,7 +84,7 @@ const Main = () => {
           await i18n.changeLanguage(configs.language);
         }
 
-        ipcRenderer.on('receiveOpenFile', async (openFileEvent, receivePath) => {
+        window.mainApi.receive('receiveOpenFile', async (openFileEvent, receivePath) => {
           await runFromExplorer(receivePath);
         });
 
@@ -98,26 +97,36 @@ const Main = () => {
         }
       });
 
-      ipcRenderer.send('getAppConfig');
+      window.mainApi.send('getAppConfig');
     });
   };
 
+  const getGlobalValueForMain = async () => {
+    dispatch(
+      setConfig({
+        mainGlobalValues: await window.mainApi.getGlobalValues(),
+      }),
+    );
+  };
+
   useEffect(() => {
-    ipcRenderer.on('receiveNextRenderer', (nextRendererEvent, filePath) => {
-      loadOrMove(filePath);
-    });
+    getGlobalValueForMain().then(() => {
+      window.mainApi.receive('receiveNextRenderer', (nextRendererEvent, filePath) => {
+        loadOrMove(filePath);
+      });
 
-    ipcRenderer.send('mainLoaded');
+      window.mainApi.send('mainLoaded');
 
-    window.addEventListener('mouseup', (event) => {
-      if (event.button === 3 || event.button === 4) {
-        event.preventDefault();
-      }
+      window.addEventListener('mouseup', (event) => {
+        if (event.button === 3 || event.button === 4) {
+          event.preventDefault();
+        }
+      });
     });
 
     return () => {
-      ipcRenderer.removeAllListeners('receiveAppConfig');
-      ipcRenderer.removeAllListeners('receiveNextRenderer');
+      window.mainApi.removeListener('receiveAppConfig');
+      window.mainApi.removeListener('receiveNextRenderer');
     };
   }, []);
 

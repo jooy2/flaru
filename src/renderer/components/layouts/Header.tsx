@@ -12,12 +12,12 @@ import {
 import { ArrowBack, BarChart, HelpOutline, Settings } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { arrWithNumber } from 'qsu';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import ModalMetadata from '@/renderer/components/dialogs/ModalMetadata';
 import { buttonGroupButtonBase, marginRightXs } from '@/renderer/utils/styles';
+import { arrWithNumber } from '@/renderer/utils/helper';
 
 const Header = ({ title, withBackButton, withRefresh = false }) => {
   const navigate = useNavigate();
