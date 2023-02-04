@@ -46,7 +46,7 @@ Accordingly, version check and automatic update are currently not supported. We 
 
 If you have a GitHub account, you can easily receive release notifications by email!
 
-![Subscription](.github/resources/watch-release.webp)
+![Subscription](.github/resources/how-to-watch-releases.webp)
 
 ## 🔨 Build & Run
 
