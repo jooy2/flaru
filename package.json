@@ -1,10 +1,10 @@
 {
   "name": "flaru-player",
   "displayName": "Flaru Player",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "versionCode": 1100,
-  "versionDate": "2022-12-25",
-  "ruffleVersionDate": "2022-12-25",
+  "versionDate": "2023-02-04",
+  "ruffleVersionDate": "2023-02-04",
   "description": "Flaru Flash Player",
   "main": "dist/main/index.js",
   "private": true,
