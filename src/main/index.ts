@@ -1,4 +1,13 @@
-import { app, BrowserWindow, protocol, ipcMain, dialog, Menu, systemPreferences } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  protocol,
+  ipcMain,
+  dialog,
+  Menu,
+  systemPreferences,
+  shell,
+} from 'electron';
 import { join } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
@@ -284,6 +293,10 @@ ipcMain.on('removeRecentFile', async (event, args) => {
 ipcMain.on('removeAllRecentFile', async () => {
   store.set({ recentFiles: [] });
   win.webContents.send('receiveRecentFiles', []);
+});
+
+ipcMain.on('openExternalLink', async (event, url) => {
+  await shell.openExternal(url);
 });
 
 ipcMain.handle('getGlobalValues', () => ({

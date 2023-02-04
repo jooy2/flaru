@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, shell } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
 // Whitelist of valid channels used for IPC communication (Send message from Renderer to Main)
 const mainAvailChannels = [
@@ -13,6 +13,7 @@ const mainAvailChannels = [
   'resizeWindow',
   'removeRecentFile',
   'removeAllRecentFile',
+  'openExternalLink',
 ];
 const rendererAvailChannels = [
   'receiveRecentFiles',
@@ -24,7 +25,6 @@ const rendererAvailChannels = [
 ];
 
 contextBridge.exposeInMainWorld('mainApi', {
-  openExternal: (url) => shell.openExternal(url),
   send: (channel, data) => {
     if (mainAvailChannels.includes(channel)) {
       ipcRenderer.send(channel, data);

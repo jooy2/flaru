@@ -2,7 +2,7 @@ export const openExternalLink = async (ev, link) => {
   if (ev) {
     ev.preventDefault();
   }
-  await window.mainApi.openExternal(link);
+  window.mainApi.send('openExternalLink', link);
 };
 
 export const isDarkMode = (theme) => {
