@@ -2,7 +2,7 @@
   "name": "flaru-player",
   "displayName": "Flaru Player",
   "version": "1.11.0",
-  "versionCode": 1100,
+  "versionCode": 1110,
   "versionDate": "2023-02-04",
   "ruffleVersionDate": "2023-02-04",
   "description": "Flaru Flash Player",
