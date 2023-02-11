@@ -60,7 +60,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.6",
+    "@mui/material": "^5.11.8",
     "@reduxjs/toolkit": "^1.9.2",
     "electron-localshortcut": "^3.2.1",
     "electron-store": "^8.1.0",
