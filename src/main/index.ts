@@ -95,6 +95,10 @@ const createWindow = () => {
       {
         label: global.APP_NAME,
         submenu: [
+          { role: 'hide' },
+          { role: 'hideOthers' },
+          { role: 'unhide' },
+          { type: 'separator' },
           {
             label: `Quit ${global.APP_NAME}`,
             role: 'quit',
@@ -103,7 +107,16 @@ const createWindow = () => {
       },
       {
         label: 'Edit',
-        submenu: [{ role: 'copy' }, { role: 'paste' }],
+        submenu: [
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
+          { role: 'cut' },
+          { role: 'copy' },
+          { role: 'paste' },
+          { role: 'delete' },
+          { role: 'selectAll' },
+        ],
       },
       {
         label: 'View',
@@ -111,7 +124,7 @@ const createWindow = () => {
       },
       {
         label: 'Window',
-        submenu: [{ role: 'minimize' }, { role: 'front' }],
+        submenu: [{ role: 'minimize' }, { type: 'separator' }, { role: 'front' }],
       },
     ]),
   );
