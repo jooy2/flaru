@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiThemeProvider from '@mui/material/styles/ThemeProvider';
 import createTheme from '@mui/material/styles/createTheme';
-import { css, Global, ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
@@ -86,13 +86,6 @@ const ThemeContainer = ({ children }) => {
 
   return (
     <MuiThemeProvider theme={muiTheme}>
-      <Global
-        styles={css`
-          body {
-            margin: 0;
-          }
-        `}
-      />
       <CssBaseline />
       <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
     </MuiThemeProvider>
