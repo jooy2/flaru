@@ -1,7 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useMemo } from 'react';
-import { darkScrollbar, useMediaQuery, CssBaseline } from '@mui/material';
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
+import darkScrollbar from '@mui/material/darkScrollbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiThemeProvider from '@mui/material/styles/ThemeProvider';
+import createTheme from '@mui/material/styles/createTheme';
 import { css, Global, ThemeProvider } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';

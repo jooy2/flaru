@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 const PanelHeader = ({ title, desc }) => (
   <>

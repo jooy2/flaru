@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useMemo } from 'react';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
-import { Article, Update } from '@mui/icons-material';
+import Article from '@mui/icons-material/Article';
+import Update from '@mui/icons-material/Update';
 import { css } from '@emotion/react';
 import Layout from '@/renderer/components/layouts/Layout';
 import { openExternalLink } from '@/renderer/utils/helper';

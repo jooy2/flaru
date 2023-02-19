@@ -1,5 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import { useTranslation } from 'react-i18next';
 
 import { userSelectNone } from '@/renderer/utils/styles';

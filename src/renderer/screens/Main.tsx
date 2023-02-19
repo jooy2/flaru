@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { CircularProgress, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslation } from 'react-i18next';
 
 import { useDispatch } from 'react-redux';
@@ -9,6 +12,7 @@ import { css } from '@emotion/react';
 import Layout from '@/renderer/components/layouts/Layout';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import { loadingText } from '@/renderer/utils/styles';
+import useTheme from '@mui/material/styles/useTheme';
 
 const Main = () => {
   const dispatch = useDispatch();

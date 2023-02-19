@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { Helmet } from 'react-helmet';
 
-import { Container, Grid } from '@mui/material';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import { css } from '@emotion/react';
 import Header from '@/renderer/components/layouts/Header';
 import { headerArea } from '@/renderer/utils/styles';

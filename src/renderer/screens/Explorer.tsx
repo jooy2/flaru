@@ -1,23 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useCallback, useEffect, SetStateAction } from 'react';
-import {
-  Alert,
-  Grid,
-  IconButton,
-  CircularProgress,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  Typography,
-  ListItemButton,
-  useTheme,
-} from '@mui/material';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { DeleteForever, FileOpen, PlayCircleOutline } from '@mui/icons-material';
+import DeleteForever from '@mui/icons-material/DeleteForever';
+import FileOpen from '@mui/icons-material/FileOpen';
+import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import { css } from '@emotion/react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +24,7 @@ import { RootState } from '@/renderer/store';
 import Layout from '@/renderer/components/layouts/Layout';
 import { loadingText, paperSm } from '@/renderer/utils/styles';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import useTheme from '@mui/material/styles/useTheme';
 
 const Explorer = () => {
   const dispatch = useDispatch();
