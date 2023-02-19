@@ -24,5 +24,10 @@
   "show-player-version-select": "플레이어 버전을 강제 지정할 수 있는 선택박스 표시",
   "theme-light": "라이트 (밝게)",
   "theme-dark": "다크 (어둡게)",
-  "theme-auto": "자동 감지"
+  "theme-auto": "자동 감지",
+  "manage-data": "에뮬레이터 저장 데이터 관리",
+  "save": "저장",
+  "reset-localstorage": "데이터 초기화",
+  "cancel": "취소",
+  "ok": "확인"
 }

@@ -13,6 +13,8 @@
   "settings-desc-1": "目的の実行環境を自由に設定します。",
   "settings-title-2": "アプリのテーマ設定",
   "settings-desc-2": "ライトモードとダークモードのどちらでも好きなスタイルを選択できます。",
+  "settings-other-title": "高度",
+  "settings-other-desc": "アプリの動作の詳細設定を選択します。",
   "settings-reset-title": "アプリデータの初期化",
   "settings-reset-desc": "アプリデータを初期値に戻します。 保存した設定とデータが永久に消去されます！",
   "settings-language-title": "言語 / Language",

@@ -24,5 +24,10 @@
   "show-player-version-select": "選択ボックスを表示してプレーヤーのバージョンを強制する",
   "theme-light": "ライト",
   "theme-dark": "ダーク",
-  "theme-auto": "自動検出"
+  "theme-auto": "自動検出",
+  "manage-data": "エミュレータのセーブデータを管理する",
+  "save": "保存",
+  "reset-localstorage": "すべてのデータをリセット",
+  "cancel": "キャンセル",
+  "ok": "OK"
 }

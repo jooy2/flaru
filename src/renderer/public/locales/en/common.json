@@ -13,6 +13,8 @@
   "settings-desc-1": "Feel free to set up your preferred execution environment.",
   "settings-title-2": "App Theme",
   "settings-desc-2": "You can choose between light mode and dark mode.",
+  "settings-other-title": "Advanced",
+  "settings-other-desc": "Choose advanced settings for app behavior.",
   "settings-reset-title": "Reset App Data",
   "settings-reset-desc": "Reset app data to default values. Saved settings and data will be permanently erased!",
   "settings-language-title": "Language",

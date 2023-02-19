@@ -13,6 +13,8 @@
   "settings-desc-1": "Puede establecer el entorno de ejecución deseado.",
   "settings-title-2": "Configuración del tema de la aplicación",
   "settings-desc-2": "Puede elegir el estilo que desee entre el modo claro y el modo oscuro.",
+  "settings-other-title": "avanzado",
+  "settings-other-desc": "Elija configuraciones avanzadas para el comportamiento de la aplicación.",
   "settings-reset-title": "Restablecer los datos de la aplicación",
   "settings-reset-desc": "Devuelve los datos de la aplicación a su valor inicial. ¡Su configuración y datos guardados se borrarán permanentemente!",
   "settings-language-title": "idioma / Language",

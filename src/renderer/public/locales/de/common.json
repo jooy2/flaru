@@ -13,6 +13,8 @@
   "settings-desc-1": "Sie können die gewünschte Ausführungsumgebung frei festlegen.",
   "settings-title-2": "App-Designeinstellungen",
   "settings-desc-2": "Sie können den gewünschten Stil zwischen hellem Modus und dunklem Modus wählen.",
+  "settings-other-title": "fortschrittlich",
+  "settings-other-desc": "Wählen Sie erweiterte Einstellungen für das App-Verhalten.",
   "settings-reset-title": "App-Daten zurücksetzen",
   "settings-reset-desc": "Setzt die App-Daten auf ihren Anfangswert zurück. Ihre gespeicherten Einstellungen und Daten werden dauerhaft gelöscht!",
   "settings-language-title": "Sprache / Language",

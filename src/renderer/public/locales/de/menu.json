@@ -24,5 +24,10 @@
   "show-player-version-select": "Auswahlfeld anzeigen, um Player-Version zu erzwingen",
   "theme-light": "Licht (hell)",
   "theme-dark": "Dunkel (dunkel)",
-  "theme-auto": "automatische Erkennung"
+  "theme-auto": "automatische Erkennung",
+  "manage-data": "Speicherdaten des Emulators verwalten",
+  "save": "Speichern",
+  "reset-localstorage": "Alle Daten zurücksetzen",
+  "cancel": "Stornieren",
+  "ok": "OK"
 }

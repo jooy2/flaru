@@ -3,6 +3,7 @@
   "drag-drop-execute": "Klicken Sie hier oder ziehen Sie Dateien per Drag & Drop zum Starten.",
   "no-recent-files": "Es gibt keine kürzlich ausgeführten Dateien.",
   "not-found-recent-file": "Die Datei in diesem Pfad existiert nicht. Aus Liste entfernen.",
-  "as3-alert-title": "Diese Datei wird noch nicht unterstützt!",
-  "as3-alert-desc": "Verzeihung. Diese Datei wurde mit Action Script 3 (AVM2) erstellt und läuft derzeit nicht. Es wird in naher Zukunft unterstützt und Sie müssen auf ein zukünftiges Update warten."
+  "localstorage-desc": "Alle gespeicherten Daten, die vom Emulator verwendet werden. Es wird nicht empfohlen, Textwerte willkürlich zu ändern, es sei denn, Sie sind ein Experte. Sie können Ihre Daten migrieren, indem Sie entweder den vollständigen Text für die Sicherung kopieren oder alle Ihre bereits gespeicherten Sicherungen hier einfügen.",
+  "invalid-localstorage": "Fehler: Ungültiges Datenformat. Gesicherter Text muss im vollständigen JSON-Datenformat vorliegen.",
+  "confirm": "Bist du dir sicher, dass du weitermachen willst? Die Aktion ist irreversibel."
 }

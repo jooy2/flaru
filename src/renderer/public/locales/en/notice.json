@@ -3,6 +3,7 @@
   "drag-drop-execute": "Click here or drag & drop files to run.",
   "no-recent-files": "There are no recently launched files.",
   "not-found-recent-file": "That file path does not exist. It has been removed from the list.",
-  "as3-alert-title": "This file is not yet supported!",
-  "as3-alert-desc": "Sorry. This file was created with Action Script 3 (AVM2) and is currently not running. It will be supported in the near future and you will have to wait for a future update."
+  "localstorage-desc": "All saved data used by the emulator. Text values are not recommended to be arbitrarily modified unless you are an expert. You can migrate your data by either copying the full text for backup, or by pasting all of your already saved backups here.",
+  "invalid-localstorage": "Error: Invalid data format. The backed up text must be in complete JSON data format.",
+  "confirm": "Are you sure you want to continue? The action is irreversible."
 }

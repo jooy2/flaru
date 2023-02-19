@@ -24,5 +24,10 @@
   "show-player-version-select": "Mostrar caixa de seleção para forçar a versão do player",
   "theme-light": "luz",
   "theme-dark": "Sombrio",
-  "theme-auto": "detecção automática"
+  "theme-auto": "detecção automática",
+  "manage-data": "Gerenciar dados salvos do emulador",
+  "save": "Salvar",
+  "reset-localstorage": "Redefinir todos os dados",
+  "cancel": "Cancelar",
+  "ok": "OK"
 }

@@ -3,6 +3,7 @@
   "drag-drop-execute": "Haga clic aquí o arrastre y suelte archivos para iniciar.",
   "no-recent-files": "No hay archivos ejecutados recientemente.",
   "not-found-recent-file": "El archivo en esa ruta no existe. Quitar de la lista.",
-  "as3-alert-title": "¡Este archivo aún no es compatible!",
-  "as3-alert-desc": "Perdón. Este archivo se creó con Action Script 3 (AVM2) y actualmente no se está ejecutando. Será compatible en un futuro próximo y tendrá que esperar una actualización futura."
+  "localstorage-desc": "Todos los datos guardados utilizados por el emulador. No se recomienda modificar arbitrariamente los valores de texto a menos que sea un experto. Puede migrar sus datos copiando el texto completo para la copia de seguridad o pegando aquí todas las copias de seguridad ya guardadas.",
+  "invalid-localstorage": "Error: formato de datos no válido. El texto respaldado debe estar en formato de datos JSON completo.",
+  "confirm": "Estás seguro de que quieres continuar? La acción es irreversible."
 }

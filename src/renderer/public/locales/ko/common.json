@@ -15,6 +15,8 @@
   "settings-desc-2": "라이트 모드와 다크 모드 중 원하는 스타일을 선택할 수 있습니다.",
   "settings-reset-title": "앱 데이터 초기화",
   "settings-reset-desc": "앱 데이터를 초기 값으로 되돌립니다. 저장된 설정 및 데이터가 영구히 지워집니다!",
+  "settings-other-title": "고급",
+  "settings-other-desc": "앱 동작에 대한 고급 설정을 선택합니다.",
   "settings-language-title": "언어 / Language",
   "settings-language-desc": "앱 표시 언어를 선택합니다."
 }

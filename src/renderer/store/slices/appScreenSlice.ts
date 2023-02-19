@@ -39,6 +39,7 @@ export interface AppScreenState {
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
+  dialogLocalStorageViewOpen: boolean;
 }
 
 const initialState: AppScreenState = {
@@ -77,6 +78,7 @@ const initialState: AppScreenState = {
     WILL_OPEN_FILE_PATH: '',
   },
   dialogMetadataOpen: false,
+  dialogLocalStorageViewOpen: false,
 };
 
 export const appScreenSlice = createSlice({

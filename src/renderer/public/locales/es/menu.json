@@ -24,5 +24,10 @@
   "show-player-version-select": "Mostrar cuadro de selección para forzar la versión del jugador",
   "theme-light": "luz",
   "theme-dark": "oscuro",
-  "theme-auto": "Detección automática"
+  "theme-auto": "Detección automática",
+  "manage-data": "Administrar datos guardados del emulador",
+  "save": "Ahorrar",
+  "reset-localstorage": "Restablecer todos los datos",
+  "cancel": "Cancelar",
+  "ok": "DE ACUERDO"
 }

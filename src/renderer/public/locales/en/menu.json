@@ -24,5 +24,10 @@
   "show-player-version-select": "Show select box to force player version",
   "theme-light": "Light",
   "theme-dark": "Dark",
-  "theme-auto": "Auto Detect"
+  "theme-auto": "Auto Detect",
+  "manage-data": "Manage Emulator Save Data",
+  "save": "Save",
+  "reset-localstorage": "Reset All Data",
+  "cancel": "Cancel",
+  "ok": "OK"
 }

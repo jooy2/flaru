@@ -3,6 +3,7 @@
   "drag-drop-execute": "Cliquez ici ou glissez-déposez les fichiers pour lancer.",
   "no-recent-files": "Il n'y a pas de fichiers récemment exécutés.",
   "not-found-recent-file": "Le fichier dans ce chemin n'existe pas. Retirer de la liste.",
-  "as3-alert-title": "Ce fichier n'est pas encore pris en charge!",
-  "as3-alert-desc": "Pardon. Ce fichier a été créé avec Action Script 3 (AVM2) et n'est actuellement pas en cours d'exécution. Il sera pris en charge dans un avenir proche et vous devrez attendre une future mise à jour."
+  "localstorage-desc": "Toutes les données enregistrées utilisées par l'émulateur. Il n'est pas recommandé de modifier arbitrairement les valeurs de texte, sauf si vous êtes un expert. Vous pouvez migrer vos données soit en copiant le texte intégral pour la sauvegarde, soit en collant toutes vos sauvegardes déjà enregistrées ici.",
+  "invalid-localstorage": "Erreur : format de données non valide. Le texte sauvegardé doit être au format de données JSON complet.",
+  "confirm": "Es-tu sur de vouloir continuer? L'action est irréversible."
 }

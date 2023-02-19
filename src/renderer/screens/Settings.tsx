@@ -22,6 +22,7 @@ import Layout from '@/renderer/components/layouts/Layout';
 import { marginTopMd } from '@/renderer/utils/styles';
 import PanelHeader from '@/renderer/components/views/PanelHeader';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import ModalLocalStorageView from '../components/dialogs/ModalLocalStorageView';
 
 const Settings = () => {
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
@@ -116,6 +117,10 @@ const Settings = () => {
   const handleReset = (ev): void => {
     ev.preventDefault();
     window.mainApi.send('resetAppConfig');
+  };
+
+  const handleOpenLocalStorageViewModal = async (): Promise<void> => {
+    await dispatch(setConfig({ dialogLocalStorageViewOpen: true }));
   };
 
   return (
@@ -293,10 +298,26 @@ const Settings = () => {
                 />
               </RadioGroup>
             </Grid>
+            <Grid item xs={12}>
+              <PanelHeader title={t('settings-other-title')} desc={t('settings-other-desc')} />
+              <Grid container css={marginTopMd}>
+                <Grid item xs={12}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="small"
+                    onClick={() => handleOpenLocalStorageViewModal()}
+                  >
+                    {t('menu:manage-data')}
+                  </Button>
+                  <ModalLocalStorageView />
+                </Grid>
+              </Grid>
+            </Grid>
             <Grid item xs={12} css={marginTopMd}>
               <PanelHeader title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
               <Typography component="div" css={marginTopMd}>
-                <Button variant="contained" size="medium" onClick={handleReset}>
+                <Button variant="contained" size="small" color="secondary" onClick={handleReset}>
                   {t('menu:reset-and-restart')}
                 </Button>
               </Typography>
