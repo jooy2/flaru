@@ -12,13 +12,32 @@ import { join } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import { promises } from 'fs';
-import { getPlatform } from 'qsu';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
 const fileExists = async (p) => !!(await promises.stat(p).catch(() => false));
+
+const getPlatform = (): string => {
+  switch (process.platform) {
+    case 'win32':
+      return 'Windows';
+    case 'darwin':
+      return 'macOS';
+    case 'linux':
+    case 'aix':
+    case 'sunos':
+    case 'netbsd':
+    case 'openbsd':
+    case 'freebsd':
+    case 'cygwin':
+    case 'android':
+      return 'Linux';
+    default:
+      return 'Unknown';
+  }
+};
 
 const CURRENT_OS = getPlatform();
 const MAX_RECENT_FILES = 10;
