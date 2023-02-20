@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Whitelist of valid channels used for IPC communication (Send message from Renderer to Main)
-const mainAvailChannels = [
+const mainAvailChannels: string[] = [
   'mainLoaded',
   'getAppConfig',
   'getRecentFiles',
@@ -15,7 +15,7 @@ const mainAvailChannels = [
   'removeAllRecentFile',
   'openExternalLink',
 ];
-const rendererAvailChannels = [
+const rendererAvailChannels: string[] = [
   'receiveRecentFiles',
   'receiveFileExist',
   'receiveAppConfig',
@@ -25,20 +25,20 @@ const rendererAvailChannels = [
 ];
 
 contextBridge.exposeInMainWorld('mainApi', {
-  send: (channel, data) => {
+  send: (channel: string, ...data: any[]): void => {
     if (mainAvailChannels.includes(channel)) {
-      ipcRenderer.send(channel, data);
+      ipcRenderer.send.apply(null, [channel, ...data]);
     }
   },
-  receive: (channel, cbFunc) => {
+  receive: (channel: string, cbFunc: Function): void => {
     if (rendererAvailChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => cbFunc(event, ...args));
     }
   },
-  removeListener: (event) => {
+  removeListener: (event: string): void => {
     ipcRenderer.removeAllListeners(event);
   },
-  getGlobalValues: async () => {
+  getGlobalValues: async (): Promise<any> => {
     const result = await ipcRenderer.invoke('getGlobalValues');
     return result;
   },
