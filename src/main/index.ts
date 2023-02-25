@@ -193,10 +193,6 @@ const createWindow = () => {
 
     openFromExplorer(argv, 1);
   });
-
-  win.webContents.setWindowOpenHandler(({ url }) => ({
-    action: url.indexOf('ruffle') === -1 ? 'allow' : 'deny',
-  }));
 };
 
 const restartApp = () => {
