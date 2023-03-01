@@ -50,7 +50,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.4",
-    "typescript": "^4.9.4",
+    "typescript": "^4.9.5",
     "vite": "^4.1.4",
     "vite-plugin-electron": "0.11.1",
     "vite-plugin-electron-renderer": "^0.11.4",
