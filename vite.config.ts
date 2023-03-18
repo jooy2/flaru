@@ -8,52 +8,57 @@ import { builtinModules } from 'module';
 import { fileURLToPath } from 'url';
 import { rmSync } from 'fs';
 
-rmSync('dist', { recursive: true, force: true });
+export default defineConfig(() => {
+  rmSync('dist', { recursive: true, force: true });
 
-export default defineConfig({
-  resolve: {
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
-    alias: {
-      '@': resolve(dirname(fileURLToPath(import.meta.url)), 'src'),
+  return {
+    resolve: {
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
+      alias: {
+        '@': resolve(dirname(fileURLToPath(import.meta.url)), 'src'),
+      },
     },
-  },
-  base: './',
-  root: resolve('./src/renderer'),
-  publicDir: resolve('./src/renderer/public'),
-  build: {
-    assetsDir: '', // See: https://github.com/electron-vite/electron-vite-vue/issues/287
-    outDir: resolve('./dist'),
-  },
-  plugins: [
-    reactPlugin(),
-    // Docs: https://github.com/gxmari007/vite-plugin-eslint
-    eslintPlugin(),
-    // Docs: https://github.com/electron-vite/vite-plugin-electron
-    electronPlugin([
-      {
-        entry: ['src/main/index.ts'],
-        onstart: (options) => {
-          options.startup(['.', '--no-sandbox']);
-        },
-        vite: {
-          build: {
-            assetsDir: '.',
-            outDir: 'dist/main',
-            rollupOptions: {
-              external: ['electron', ...builtinModules],
+    base: './',
+    root: resolve('./src/renderer'),
+    publicDir: resolve('./src/renderer/public'),
+    build: {
+      assetsDir: '', // See: https://github.com/electron-vite/electron-vite-vue/issues/287
+      outDir: resolve('./dist'),
+    },
+    plugins: [
+      reactPlugin(),
+      // Docs: https://github.com/gxmari007/vite-plugin-eslint
+      eslintPlugin(),
+      // Docs: https://github.com/electron-vite/vite-plugin-electron
+      electronPlugin([
+        {
+          entry: ['src/main/index.ts'],
+          onstart: (options) => {
+            options.startup();
+          },
+          vite: {
+            build: {
+              assetsDir: '.',
+              outDir: 'dist/main',
+              rollupOptions: {
+                external: ['electron', ...builtinModules],
+              },
             },
           },
         },
-      },
-      {
-        entry: ['src/preload/index.ts'],
-        vite: {
-          build: {
-            outDir: 'dist/preload',
+        {
+          entry: ['src/preload/index.ts'],
+          onstart: (options) => {
+            options.reload();
+          },
+          vite: {
+            build: {
+              outDir: 'dist/preload',
+            },
           },
         },
-      },
-    ]),
-    rendererPlugin(),
-  ],
+      ]),
+      rendererPlugin(),
+    ],
+  };
 });
