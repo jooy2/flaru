@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.15",
     "@reduxjs/toolkit": "^1.9.2",
