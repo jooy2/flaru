@@ -31,6 +31,9 @@ const Settings = () => {
   const [hideHeaderChecked, setHideHeaderChecked] = useState(stateAppScreen.appConfigHideHeader);
   const [letterboxChecked, setLetterboxChecked] = useState(stateAppScreen.appConfigLetterbox);
   const [hideContextChecked, setHideContextChecked] = useState(stateAppScreen.appConfigHideContext);
+  const [showPlayerControllerChecked, setShowPlayerControllerChecked] = useState(
+    stateAppScreen.appConfigShowPlayerController,
+  );
   const [showPlayerVersionSelectChecked, setShowPlayerVersionSelectChecked] = useState(
     stateAppScreen.appConfigShowPlayerVersionSelect,
   );
@@ -92,6 +95,11 @@ const Settings = () => {
         setShowPlayerVersionSelectChecked(value);
         window.mainApi.send('setAppConfig', { showPlayerVersionSelect: value });
         await dispatch(setConfig({ appConfigShowPlayerVersionSelect: value }));
+        break;
+      case 'showPlayerControllerChecked':
+        setShowPlayerControllerChecked(value);
+        window.mainApi.send('setAppConfig', { showPlayerController: value });
+        await dispatch(setConfig({ appConfigShowPlayerController: value }));
         break;
       default:
         break;
@@ -189,6 +197,19 @@ const Settings = () => {
             <Grid item xs={12} css={marginTopMd}>
               <PanelHeader title={t('settings-title-1')} desc={t('settings-desc-1')} />
               <Grid container>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        checked={showPlayerControllerChecked}
+                        onChange={handleCheckboxChange}
+                        name="showPlayerControllerChecked"
+                      />
+                    }
+                    label={t('menu:show-player-controller')}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={

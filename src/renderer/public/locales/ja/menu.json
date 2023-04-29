@@ -29,5 +29,7 @@
   "save": "保存",
   "reset-localstorage": "すべてのデータをリセット",
   "cancel": "キャンセル",
-  "ok": "OK"
+  "ok": "OK",
+  "show-player-controller": "プレーヤーコントローラーの表示",
+  "replay": "再起動"
 }

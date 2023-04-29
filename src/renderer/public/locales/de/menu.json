@@ -29,5 +29,7 @@
   "save": "Speichern",
   "reset-localstorage": "Alle Daten zurücksetzen",
   "cancel": "Stornieren",
-  "ok": "OK"
+  "ok": "OK",
+  "show-player-controller": "Player-Controller anzeigen",
+  "replay": "Neu starten"
 }

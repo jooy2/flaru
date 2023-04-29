@@ -65,6 +65,7 @@ const Main = () => {
             appConfigRestoreWindowBounds: configs.restoreWindowBounds,
             appConfigAdjustOriginalSize: configs.adjustOriginalSize,
             appConfigShowPlayerVersionSelect: configs.showPlayerVersionSelect,
+            appConfigShowPlayerController: configs.showPlayerController,
           }),
         );
 

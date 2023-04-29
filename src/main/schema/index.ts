@@ -38,4 +38,8 @@ export default {
     type: 'boolean',
     default: false,
   },
+  showPlayerController: {
+    type: 'boolean',
+    default: true,
+  },
 } as const;

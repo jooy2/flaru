@@ -29,5 +29,7 @@
   "save": "Save",
   "reset-localstorage": "Reset All Data",
   "cancel": "Cancel",
-  "ok": "OK"
+  "ok": "OK",
+  "show-player-controller": "Show player controller",
+  "replay": "Restart"
 }

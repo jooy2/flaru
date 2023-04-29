@@ -29,5 +29,7 @@
   "save": "Sauvegarder",
   "reset-localstorage": "Réinitialiser toutes les données",
   "cancel": "Annuler",
-  "ok": "OK"
+  "ok": "OK",
+  "show-player-controller": "Afficher le contrôleur du lecteur",
+  "replay": "Redémarrage"
 }

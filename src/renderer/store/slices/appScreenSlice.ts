@@ -25,6 +25,7 @@ export interface AppScreenState {
   flashFileHeight: number;
   flashFileBackgroundColor: string;
   flashFileFrameRate: number;
+  flashVolume: number;
   isDarkTheme: boolean;
   appConfigTheme: string;
   appConfigHideHeader: boolean;
@@ -36,6 +37,7 @@ export interface AppScreenState {
   appConfigAdjustOriginalSize: boolean;
   appConfigEmulatePlayerVersion: number;
   appConfigShowPlayerVersionSelect: boolean;
+  appConfigShowPlayerController: boolean;
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
@@ -52,6 +54,7 @@ const initialState: AppScreenState = {
   flashFileHeight: 0,
   flashFileBackgroundColor: '',
   flashFileFrameRate: 0,
+  flashVolume: 100,
   isDarkTheme: false,
   appConfigTheme: 'light',
   appConfigHideHeader: false,
@@ -63,6 +66,7 @@ const initialState: AppScreenState = {
   appConfigAdjustOriginalSize: false,
   appConfigEmulatePlayerVersion: 0,
   appConfigShowPlayerVersionSelect: false,
+  appConfigShowPlayerController: true,
   recentFiles: [],
   mainGlobalValues: {
     APP_NAME: '',

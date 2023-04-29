@@ -29,5 +29,7 @@
   "save": "저장",
   "reset-localstorage": "데이터 초기화",
   "cancel": "취소",
-  "ok": "확인"
+  "ok": "확인",
+  "show-player-controller": "플레이어 컨트롤러 표시",
+  "replay": "다시 시작"
 }
