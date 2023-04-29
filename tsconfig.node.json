@@ -8,5 +8,5 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["package.json", "src/main/**/*/*.ts", "src/main/**/*/*.d.ts"]
+  "include": ["package.json", "src/main/**/*.ts", "src/main/**/*.d.ts"]
 }

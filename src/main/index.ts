@@ -85,7 +85,7 @@ const getWindowBounds = () => {
   };
 
   if (store.get('restoreWindowBounds')) {
-    return store.get('windowBounds') || defaultBounds;
+    return (store.get('windowBounds') as object) || defaultBounds;
   }
 
   return defaultBounds;
