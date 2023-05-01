@@ -62,6 +62,7 @@ global.WILL_OPEN_FILE_PATH = null;
 
 const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
 const store = new ElectronStore({ schema });
+const userAgent = `Electron ${app.getVersion()}, ${pkg.displayName} ${pkg.version}`;
 let win;
 
 const openFromExplorer = (argv, argvIndex = 1) => {
@@ -155,7 +156,7 @@ const createWindow = () => {
 
   if (global.ENV_IS_DEV) {
     win
-      .loadURL('http://localhost:5173')
+      .loadURL('http://localhost:5173', { userAgent })
       .catch((e) => {
         console.log(e);
       })
@@ -163,7 +164,7 @@ const createWindow = () => {
         win.webContents.openDevTools();
       });
   } else {
-    win.loadFile(join(__dirname, '../index.html')).catch((e) => {
+    win.loadFile(join(__dirname, '../index.html'), { userAgent }).catch((e) => {
       console.log(e);
     });
   }
