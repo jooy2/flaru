@@ -54,7 +54,7 @@ const Explorer = () => {
     const filePath = file?.path;
     const blob = fileType ? fileType.split('/')[1] : null;
     if (
-      (!blob && !/\.(swf|dcr|dxr|dir)/.test(filePath)) ||
+      (!blob && !/\.(swf)/.test(filePath)) ||
       (blob !== 'x-shockwave-flash' &&
         blob !== 'futuresplash' &&
         blob !== 'x-shockwave-flash2-preview' &&
