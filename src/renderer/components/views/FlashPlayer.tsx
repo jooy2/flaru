@@ -82,6 +82,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
       preloader: false,
       letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
       logLevel: 'error',
+      openUrlMode: 'confirm',
       contextMenu: !stateAppScreen.appConfigHideContext,
       playerVersion:
         stateAppScreen.appConfigEmulatePlayerVersion === 0
