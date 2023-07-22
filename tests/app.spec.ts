@@ -11,7 +11,7 @@ function waiting(milliseconds: number) {
   });
 }
 
-function isElementVisible(selector: string, waitingMilliseconds = 100) {
+function isElementVisible(selector: string, waitingMilliseconds = 300) {
   return new Promise((resolve) => {
     setTimeout(async () => {
       expect(await appWindow.isVisible(selector), `Confirm selector '${selector}' is visible`).toBe(
@@ -31,6 +31,7 @@ test.beforeAll(async () => {
   appWindow = await appElectron.firstWindow();
 
   await appWindow.waitForEvent('load');
+  await waiting(3000);
 });
 
 test('Environment check', async () => {
