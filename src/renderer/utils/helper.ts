@@ -1,11 +1,11 @@
-export const openExternalLink = async (ev, link) => {
+export const openExternalLink = (ev, link): void => {
   if (ev) {
     ev.preventDefault();
   }
   window.mainApi.send('openExternalLink', link);
 };
 
-export const isDarkMode = (theme) => {
+export const isDarkMode = (theme): boolean => {
   if (theme.theme) {
     return theme.theme.palette.mode === 'dark';
   }
@@ -18,8 +18,4 @@ export const isDarkMode = (theme) => {
 export const arrWithNumber = (start: number, end: number): number[] =>
   Array.from({ length: end - start + 1 }, (_, i) => i + start);
 
-export default {
-  openExternalLink,
-  isDarkMode,
-  arrWithNumber,
-};
+export default {};

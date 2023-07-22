@@ -6,6 +6,8 @@ const mainAvailChannels: string[] = [
   'getAppConfig',
   'getRecentFiles',
   'getGlobalValues',
+  'getFileNameFromPath',
+  'getDirnameFromPath',
   'setAppConfig',
   'resetAppConfig',
   'appendRecentFiles',
@@ -13,6 +15,7 @@ const mainAvailChannels: string[] = [
   'resizeWindow',
   'removeRecentFile',
   'removeAllRecentFile',
+  'startStaticServer',
   'openExternalLink',
 ];
 const rendererAvailChannels: string[] = [
@@ -40,6 +43,18 @@ contextBridge.exposeInMainWorld('mainApi', {
   },
   getGlobalValues: async (): Promise<any> => {
     const result = await ipcRenderer.invoke('getGlobalValues');
+    return result;
+  },
+  getFileNameFromPath: async (filePath: string, withExtension?: boolean) => {
+    const result = await ipcRenderer.invoke('getFileNameFromPath', filePath, withExtension);
+    return result;
+  },
+  getDirnameFromPath: async (filePath: string, withExtension?: boolean) => {
+    const result = await ipcRenderer.invoke('getDirnameFromPath', filePath, withExtension);
+    return result;
+  },
+  startStaticServer: async (url: string) => {
+    const result = await ipcRenderer.invoke('startStaticServer', url);
     return result;
   },
 });

@@ -5,5 +5,6 @@
   "not-found-recent-file": "That file path does not exist. It has been removed from the list.",
   "localstorage-desc": "All saved data used by the emulator. Text values are not recommended to be arbitrarily modified unless you are an expert. You can migrate your data by either copying the full text for backup, or by pasting all of your already saved backups here.",
   "invalid-localstorage": "Error: Invalid data format. The backed up text must be in complete JSON data format.",
-  "confirm": "Are you sure you want to continue? The action is irreversible."
+  "confirm": "Are you sure you want to continue? The action is irreversible.",
+  "failed-to-load-server": "ERROR: The program failed to start the local hosting service to open the file. TCP port 8080 or one of the ports 3010-3019 on the local system must be available."
 }

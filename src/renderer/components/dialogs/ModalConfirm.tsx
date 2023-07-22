@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { userSelectNone } from '@/renderer/utils/styles';
 
-const ModalConfirm = ({ open = false, onOk, onCancel, onClose }) => {
+const ModalConfirm = ({ open = false, noCancel = false, onOk, onCancel, onClose, content }) => {
   const [t] = useTranslation(['common', 'notice', 'menu']);
 
   const handleDialogClose = async () => {
@@ -25,10 +25,10 @@ const ModalConfirm = ({ open = false, onOk, onCancel, onClose }) => {
       aria-describedby="alert-desc"
     >
       <DialogContent>
-        <DialogContentText id="alert-desc">{t('notice:confirm')}</DialogContentText>
+        <DialogContentText id="alert-desc">{content}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel}>{t('menu:cancel')}</Button>
+        {!noCancel && <Button onClick={onCancel}>{t('menu:cancel')}</Button>}
         <Button variant="contained" color="primary" onClick={onOk}>
           {t('menu:ok')}
         </Button>

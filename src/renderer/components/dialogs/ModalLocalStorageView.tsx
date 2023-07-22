@@ -120,6 +120,7 @@ const ModalLocalStorageView = () => {
         </DialogActions>
       </Dialog>
       <ModalConfirm
+        content={t('notice:confirm')}
         open={openConfirm}
         onClose={() => handleOpenConfirm(false)}
         onCancel={() => handleOpenConfirm(false)}

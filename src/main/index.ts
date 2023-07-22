@@ -8,7 +8,9 @@ import {
   systemPreferences,
   shell,
 } from 'electron';
-import { join } from 'path';
+import http from 'http';
+import handler from 'serve-handler';
+import { join, basename, extname, win32, dirname } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import { promises } from 'fs';
@@ -64,6 +66,7 @@ const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
 const store = new ElectronStore({ schema });
 const userAgent = `Electron ${app.getVersion()}, ${pkg.displayName} ${pkg.version}`;
 let win;
+let staticServer: http.Server | null = null;
 
 const openFromExplorer = (argv, argvIndex = 1) => {
   if (
@@ -201,6 +204,65 @@ const restartApp = () => {
   app.exit();
 };
 
+const closeStaticServerWhenIsRunning = async () => {
+  try {
+    if (staticServer !== null) {
+      await staticServer.close();
+    }
+  } catch {
+    /* do nothing */
+  }
+};
+
+const tryConnectStaticServer = async (port: number, baseUrl: string): Promise<http.Server | null> =>
+  new Promise((resolve) => {
+    const server: http.Server = http.createServer(async (request, response) => {
+      const res = await handler(request, response, {
+        public: baseUrl,
+      });
+      return res;
+    });
+
+    server.once('error', () => {
+      try {
+        server.close();
+      } catch {
+        /* do nothing */
+      }
+      resolve(null);
+    });
+
+    server.listen(port, () => {
+      resolve(server);
+    });
+  });
+
+const startStaticServer = async (baseUrl: string): Promise<number | null> =>
+  new Promise((resolve) => {
+    (async () => {
+      await closeStaticServerWhenIsRunning();
+
+      const availPorts = [8080, 3000, 3010, 3011, 3012, 3013, 3014, 3015, 3016, 3017, 3018, 3019];
+
+      for (let i = 0; i < availPorts.length; i += 1) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const server: http.Server | null = await tryConnectStaticServer(availPorts[i], baseUrl);
+
+          if (server) {
+            staticServer = server;
+            resolve(availPorts[i]);
+            return;
+          }
+        } catch {
+          /* do nothing */
+        }
+      }
+
+      resolve(null);
+    })();
+  });
+
 app.on('open-file', (event, pathParam) => {
   event.preventDefault();
   if (win?.webContents) {
@@ -221,7 +283,9 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-  app.quit();
+  closeStaticServerWhenIsRunning().then(() => {
+    app.quit();
+  });
 });
 
 app.on('activate', () => {
@@ -327,6 +391,33 @@ ipcMain.on('removeAllRecentFile', async () => {
 ipcMain.on('openExternalLink', async (event, url) => {
   await shell.openExternal(url);
 });
+
+ipcMain.handle('startStaticServer', async (event, data) => {
+  const port = await startStaticServer(data);
+  return port;
+});
+
+ipcMain.handle('getFileNameFromPath', (event, filePath: string, withExtension?: boolean) => {
+  if (!filePath) {
+    return '';
+  }
+
+  if (filePath.indexOf('/') === -1 && filePath.indexOf('\\') !== -1) {
+    // Windows path
+    if (withExtension) {
+      return win32.basename(filePath);
+    }
+
+    return win32.basename(filePath, extname(filePath));
+  }
+
+  if (withExtension) {
+    return basename(filePath);
+  }
+  return basename(filePath, extname(filePath));
+});
+
+ipcMain.handle('getDirnameFromPath', (event, filePath: string) => dirname(filePath));
 
 ipcMain.handle('getGlobalValues', () => ({
   APP_NAME: global.APP_NAME,

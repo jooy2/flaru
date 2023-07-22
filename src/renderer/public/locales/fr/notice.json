@@ -4,6 +4,7 @@
   "no-recent-files": "Il n'y a pas de fichiers récemment exécutés.",
   "not-found-recent-file": "Le fichier dans ce chemin n'existe pas. Retirer de la liste.",
   "localstorage-desc": "Toutes les données enregistrées utilisées par l'émulateur. Il n'est pas recommandé de modifier arbitrairement les valeurs de texte, sauf si vous êtes un expert. Vous pouvez migrer vos données soit en copiant le texte intégral pour la sauvegarde, soit en collant toutes vos sauvegardes déjà enregistrées ici.",
-  "invalid-localstorage": "Erreur : format de données non valide. Le texte sauvegardé doit être au format de données JSON complet.",
-  "confirm": "Es-tu sur de vouloir continuer? L'action est irréversible."
+  "invalid-localstorage": "Erreur: format de données non valide. Le texte sauvegardé doit être au format de données JSON complet.",
+  "confirm": "Es-tu sur de vouloir continuer? L'action est irréversible.",
+  "failed-to-load-server": "ERREUR: Le programme n'a pas réussi à démarrer le service d'hébergement local pour ouvrir le fichier. Le port TCP 8080 ou l'un des ports 3010-3019 sur le système local doit être disponible."
 }
