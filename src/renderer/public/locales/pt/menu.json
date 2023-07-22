@@ -31,5 +31,14 @@
   "cancel": "Cancelar",
   "ok": "OK",
   "show-player-controller": "Mostrar controlador do jogador",
-  "replay": "Reiniciar"
+  "replay": "Reiniciar",
+  "renderer-auto": "automático (recomendado)",
+  "renderer-wgpu-webgl": "wgpu-webgl (recomendado)",
+  "renderer-webgl": "webgl (baixa compatibilidade, rápido)",
+  "renderer-canvas": "canvas (lento, usado quando as bordas não são desenhadas corretamente)",
+  "renderer-webgpu": "webgpu (experimental, atualmente indisponível: substituído por wgpu-webgl)",
+  "quality-low": "baixeza",
+  "quality-medium": "comumente",
+  "quality-high": "alto (recomendado)",
+  "quality-best": "o melhor"
 }

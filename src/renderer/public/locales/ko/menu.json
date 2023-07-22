@@ -31,5 +31,14 @@
   "cancel": "취소",
   "ok": "확인",
   "show-player-controller": "플레이어 컨트롤러 표시",
-  "replay": "다시 시작"
+  "replay": "다시 시작",
+  "renderer-auto": "자동 (권장)",
+  "renderer-wgpu-webgl": "wgpu-webgl (권장)",
+  "renderer-webgl": "webgl (호환성 낮음, 속도 빠름)",
+  "renderer-canvas": "canvas (속도 느림, 테두리가 올바르게 그려지지 않을 때 사용)",
+  "renderer-webgpu": "webgpu (실험적, 현재 사용 불가: wgpu-webgl로 대체)",
+  "quality-low": "낮음",
+  "quality-medium": "보통",
+  "quality-high": "높음 (권장)",
+  "quality-best": "최상"
 }

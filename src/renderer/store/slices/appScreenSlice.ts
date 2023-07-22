@@ -38,6 +38,8 @@ export interface AppScreenState {
   appConfigEmulatePlayerVersion: number;
   appConfigShowPlayerVersionSelect: boolean;
   appConfigShowPlayerController: boolean;
+  appConfigPreferredRenderer: string;
+  appConfigQuality: string;
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
@@ -67,6 +69,8 @@ const initialState: AppScreenState = {
   appConfigEmulatePlayerVersion: 0,
   appConfigShowPlayerVersionSelect: false,
   appConfigShowPlayerController: true,
+  appConfigPreferredRenderer: 'auto',
+  appConfigQuality: 'high',
   recentFiles: [],
   mainGlobalValues: {
     APP_NAME: '',

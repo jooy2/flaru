@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import { RootState } from '@/renderer/store';
 import Layout from '@/renderer/components/layouts/Layout';
-import { marginTopMd } from '@/renderer/utils/styles';
+import { marginTopSm } from '@/renderer/utils/styles';
 import PanelHeader from '@/renderer/components/views/PanelHeader';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import ModalLocalStorageView from '../components/dialogs/ModalLocalStorageView';
@@ -27,6 +27,10 @@ const Settings = () => {
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation(['common', 'notice', 'menu']);
   const [themeCheck, setThemeCheck] = useState(stateAppScreen.appConfigTheme);
+  const [preferredRendererCheck, setPreferredRendererCheck] = useState(
+    stateAppScreen.appConfigPreferredRenderer,
+  );
+  const [qualityCheck, setQualityCheck] = useState(stateAppScreen.appConfigQuality);
   const [language, setLanguage] = useState(stateAppScreen.appConfigLanguage);
   const [hideHeaderChecked, setHideHeaderChecked] = useState(stateAppScreen.appConfigHideHeader);
   const [letterboxChecked, setLetterboxChecked] = useState(stateAppScreen.appConfigLetterbox);
@@ -57,6 +61,16 @@ const Settings = () => {
         } else {
           await dispatch(setConfig({ isDarkTheme: value !== 'light' }));
         }
+        break;
+      case 'preferredRendererCheck':
+        setPreferredRendererCheck(value);
+        window.mainApi.send('setAppConfig', { preferredRenderer: value });
+        await dispatch(setConfig({ appConfigPreferredRenderer: value }));
+        break;
+      case 'qualityCheck':
+        setQualityCheck(value);
+        window.mainApi.send('setAppConfig', { quality: value });
+        await dispatch(setConfig({ appConfigQuality: value }));
         break;
       default:
         break;
@@ -168,6 +182,9 @@ const Settings = () => {
                 font-size: 0.75em;
                 color: ${stateAppScreen.isDarkTheme ? '#efefef' : '#4f4f4f'};
               }
+              .MuiInputBase-fullWidth {
+                max-width: 450px;
+              }
             `}
           >
             <Grid item xs={12}>
@@ -194,7 +211,34 @@ const Settings = () => {
                 </Select>
               </Typography>
             </Grid>
-            <Grid item xs={12} css={marginTopMd}>
+            <Grid item xs={12} css={marginTopSm}>
+              <PanelHeader title={t('settings-title-2')} desc={t('settings-desc-2')} />
+              <RadioGroup
+                row
+                aria-label="theme"
+                name="themeCheck"
+                value={themeCheck}
+                defaultValue="light"
+                onChange={handleRadioChange}
+              >
+                <FormControlLabel
+                  value="auto"
+                  control={<Radio size="small" />}
+                  label={t('menu:theme-auto')}
+                />
+                <FormControlLabel
+                  value="light"
+                  control={<Radio size="small" />}
+                  label={t('menu:theme-light')}
+                />
+                <FormControlLabel
+                  value="dark"
+                  control={<Radio size="small" />}
+                  label={t('menu:theme-dark')}
+                />
+              </RadioGroup>
+            </Grid>
+            <Grid item xs={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-1')} desc={t('settings-desc-1')} />
               <Grid container>
                 <Grid item xs={12}>
@@ -290,36 +334,81 @@ const Settings = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} css={marginTopMd}>
-              <PanelHeader title={t('settings-title-2')} desc={t('settings-desc-2')} />
-              <RadioGroup
-                row
-                aria-label="theme"
-                name="themeCheck"
-                value={themeCheck}
-                defaultValue="light"
-                onChange={handleRadioChange}
-              >
-                <FormControlLabel
-                  value="auto"
-                  control={<Radio size="small" />}
-                  label={t('menu:theme-auto')}
-                />
-                <FormControlLabel
-                  value="light"
-                  control={<Radio size="small" />}
-                  label={t('menu:theme-light')}
-                />
-                <FormControlLabel
-                  value="dark"
-                  control={<Radio size="small" />}
-                  label={t('menu:theme-dark')}
-                />
-              </RadioGroup>
+            <Grid item xs={12} css={marginTopSm}>
+              <PanelHeader title={t('settings-title-3')} desc={t('settings-desc-3')} />
+              <Grid item xs={12}>
+                <RadioGroup
+                  aria-label="position"
+                  name="preferredRendererCheck"
+                  value={preferredRendererCheck}
+                  defaultValue="auto"
+                  onChange={handleRadioChange}
+                >
+                  <FormControlLabel
+                    value="auto"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:renderer-auto')}
+                  />
+                  <FormControlLabel
+                    value="wgpu-webgl"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:renderer-wgpu-webgl')}
+                  />
+                  <FormControlLabel
+                    value="webgl"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:renderer-webgl')}
+                  />
+                  <FormControlLabel
+                    value="canvas"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:renderer-canvas')}
+                  />
+                  <FormControlLabel
+                    value="webgpu"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:renderer-webgpu')}
+                  />
+                </RadioGroup>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} css={marginTopSm}>
+              <PanelHeader title={t('settings-title-4')} desc={t('settings-desc-4')} />
+              <Grid item xs={12}>
+                <RadioGroup
+                  row
+                  aria-label="position"
+                  name="qualityCheck"
+                  value={qualityCheck}
+                  defaultValue="high"
+                  onChange={handleRadioChange}
+                >
+                  <FormControlLabel
+                    value="low"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:quality-low')}
+                  />
+                  <FormControlLabel
+                    value="medium"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:quality-medium')}
+                  />
+                  <FormControlLabel
+                    value="high"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:quality-high')}
+                  />
+                  <FormControlLabel
+                    value="best"
+                    control={<Radio size="small" color="primary" />}
+                    label={t('menu:quality-best')}
+                  />
+                </RadioGroup>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <PanelHeader title={t('settings-other-title')} desc={t('settings-other-desc')} />
-              <Grid container css={marginTopMd}>
+              <Grid container css={marginTopSm}>
                 <Grid item xs={12}>
                   <Button
                     color="primary"
@@ -333,9 +422,9 @@ const Settings = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} css={marginTopMd}>
+            <Grid item xs={12} css={marginTopSm}>
               <PanelHeader title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
-              <Typography component="div" css={marginTopMd}>
+              <Typography component="div" css={marginTopSm}>
                 <Button variant="contained" size="small" color="secondary" onClick={handleReset}>
                   {t('menu:reset-and-restart')}
                 </Button>

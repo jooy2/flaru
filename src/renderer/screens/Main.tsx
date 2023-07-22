@@ -66,6 +66,8 @@ const Main = () => {
             appConfigAdjustOriginalSize: configs.adjustOriginalSize,
             appConfigShowPlayerVersionSelect: configs.showPlayerVersionSelect,
             appConfigShowPlayerController: configs.showPlayerController,
+            appConfigPreferredRenderer: configs.preferredRenderer,
+            appConfigQuality: configs.quality,
           }),
         );
 

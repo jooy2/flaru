@@ -31,5 +31,14 @@
   "cancel": "キャンセル",
   "ok": "OK",
   "show-player-controller": "プレーヤーコントローラーの表示",
-  "replay": "再起動"
+  "replay": "再起動",
+  "renderer-auto": "自動(推奨)",
+  "renderer-wgpu-webgl": "wgpu-webgl(推奨)",
+  "renderer-webgl": "webgl（互換性が低い、速度が速い）",
+  "renderer-canvas": "canvas（速度が遅い、境界線が正しく描かれていないときに使用）",
+  "renderer-webgpu": "webgpu（実験的、現在使用不可：wgpu-webglに置き換え）",
+  "quality-low": "低",
+  "quality-medium": "通常",
+  "quality-high": "高い(推奨)",
+  "quality-best": "最高"
 }

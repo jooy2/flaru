@@ -5,6 +5,10 @@ export const userSelectNone = css`
   user-select: none;
 `;
 
+export const marginTopSm = css`
+  margin-top: 8px;
+`;
+
 export const marginTopMd = css`
   margin-top: 16px;
 `;
@@ -46,6 +50,7 @@ export const loadingText = (props) => css`
 
 export default {
   userSelectNone,
+  marginTopSm,
   marginTopMd,
   marginRightXs,
   headerArea,

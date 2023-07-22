@@ -42,4 +42,12 @@ export default {
     type: 'boolean',
     default: true,
   },
+  preferredRenderer: {
+    type: 'string',
+    default: 'auto',
+  },
+  appConfigQuality: {
+    type: 'string',
+    default: 'high',
+  },
 } as const;

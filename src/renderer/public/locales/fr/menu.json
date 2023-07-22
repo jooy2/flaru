@@ -31,5 +31,14 @@
   "cancel": "Annuler",
   "ok": "OK",
   "show-player-controller": "Afficher le contrôleur du lecteur",
-  "replay": "Redémarrage"
+  "replay": "Redémarrage",
+  "renderer-auto": "automatique (recommandé)",
+  "renderer-wgpu-webgl": "wgpu-webgl (recommandé)",
+  "renderer-webgl": "webgl (faible compatibilité, rapide)",
+  "renderer-canvas": "canvas (lent, utilisé lorsque les bordures ne se dessinent pas correctement)",
+  "renderer-webgpu": "webgpu (expérimental, actuellement indisponible : remplacé par wgpu-webgl)",
+  "quality-low": "modicité",
+  "quality-medium": "communément",
+  "quality-high": "élevé (recommandé)",
+  "quality-best": "le meilleur"
 }

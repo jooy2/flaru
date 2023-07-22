@@ -31,5 +31,14 @@
   "cancel": "Stornieren",
   "ok": "OK",
   "show-player-controller": "Player-Controller anzeigen",
-  "replay": "Neu starten"
+  "replay": "Neu starten",
+  "renderer-auto": "automatisch (empfohlen)",
+  "renderer-wgpu-webgl": "wgpu-webgl (empfohlen)",
+  "renderer-webgl": "webgl (geringe Kompatibilität, schnell)",
+  "renderer-canvas": "canvas (langsam, wird verwendet, wenn Ränder nicht richtig gezeichnet werden)",
+  "renderer-webgpu": "webgpu (experimentell, derzeit nicht verfügbar: ersetzt durch wgpu-webgl)",
+  "quality-low": "Niedrigkeit",
+  "quality-medium": "häufig",
+  "quality-high": "hoch (empfohlen)",
+  "quality-best": "der beste"
 }

@@ -57,6 +57,20 @@ const ThemeContainer = ({ children }) => {
               },
             },
           },
+          MuiCheckbox: {
+            styleOverrides: {
+              root: {
+                padding: '3px 3px 3px 8px',
+              },
+            },
+          },
+          MuiRadio: {
+            styleOverrides: {
+              root: {
+                padding: '3px 3px 3px 8px',
+              },
+            },
+          },
           MuiToolbar: {
             styleOverrides: {
               dense: {
