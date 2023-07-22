@@ -30,7 +30,7 @@ test.beforeAll(async () => {
   });
   appWindow = await appElectron.firstWindow();
 
-  await appWindow.waitForEvent('load');
+  await appWindow.waitForEvent('domcontentloaded');
 });
 
 test('Environment check', async () => {
@@ -44,6 +44,6 @@ test('Document element check', async () => {
 });
 
 test.afterAll(async () => {
-  await waiting(3000);
+  await waiting(2000);
   await appElectron.close();
 });
