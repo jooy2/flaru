@@ -99,7 +99,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
       allowScriptAccess: true,
       polyfills: false,
       letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
-      contextMenu: !stateAppScreen.appConfigHideContext,
+      contextMenu: stateAppScreen.appConfigHideContext ? 'off' : 'on',
       logLevel: 'error',
       openUrlMode: 'confirm',
       warnOnUnsupportedContent: false,

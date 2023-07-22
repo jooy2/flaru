@@ -102,7 +102,7 @@ const createWindow = () => {
     minHeight: DEFAULT_WINDOW_ATTR.minHeight,
     webPreferences: {
       spellcheck: false,
-      // To allow load file protocol url
+      // To allow load ruffle content
       webSecurity: false,
       devTools: global.ENV_IS_DEV,
       contextIsolation: true,
