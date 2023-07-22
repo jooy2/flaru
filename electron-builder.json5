@@ -10,7 +10,7 @@
     buildResources: './buildAssets/installer/',
     output: './release/${version}',
   },
-  files: ['dist/**/*', '!release/**/*'],
+  files: ['dist/**/*', '!release/**/*', '!tests/**/*'],
   fileAssociations: [
     {
       ext: 'swf',

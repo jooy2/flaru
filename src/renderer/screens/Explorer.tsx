@@ -142,6 +142,7 @@ const Explorer = () => {
                 <Paper css={paperSm}>
                   <div
                     {...getRootProps({
+                      id: 'uiFileOpen',
                       css: css`
                         cursor: pointer;
                         user-select: none;

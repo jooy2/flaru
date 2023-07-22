@@ -27,13 +27,17 @@
     "dev:debug:force": "vite -d --force",
     "build": "npm run build:pre && electron-builder -wml",
     "build:pre": "tsc && vite build",
+    "build:dir": "npm run build:pre && electron-builder --dir",
     "build:mac": "npm run build:pre && electron-builder --mac",
     "build:win": "npm run build:pre && electron-builder --windows",
     "build:linux": "npm run build:pre && electron-builder --linux",
     "format": "prettier .",
-    "format:fix": "prettier . --write"
+    "format:fix": "prettier . --write",
+    "test": "npm run build:dir && xvfb-maybe -- playwright test",
+    "test:nobuild": "xvfb-maybe -- playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.36.1",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/parser": "^6.1.0",
@@ -49,12 +53,14 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "playwright": "^1.36.1",
     "prettier": "^3.0.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.6",
     "vite-plugin-electron": "^0.12.0",
     "vite-plugin-electron-renderer": "^0.14.5",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "xvfb-maybe": "^0.2.1"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

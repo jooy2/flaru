@@ -56,7 +56,7 @@ global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
 global.APP_AUTHOR = pkg.author;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
-global.ENV_IS_DEV = !app.isPackaged;
+global.ENV_IS_DEV = process.env.E2E === 'yes' ? false : !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';

@@ -44,6 +44,7 @@ const Layout = ({
           {title}
           {withTail ? titleTail : ''}
         </title>
+        <script src="js/ruffle/ruffle.js" />
       </Helmet>
       {header ? <Header title={title} withBackButton={withBackButton} /> : ''}
       <Grid
