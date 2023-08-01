@@ -70,7 +70,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "electron-localshortcut": "^3.2.1",
     "electron-store": "^8.1.0",
-    "i18next": "^23.2.11",
+    "i18next": "^23.4.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.1",
     "react": "^18.2.0",
