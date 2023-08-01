@@ -37,7 +37,7 @@
     "test:nobuild": "xvfb-maybe -- playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.36.1",
+    "@playwright/test": "^1.36.2",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/parser": "^6.1.0",
