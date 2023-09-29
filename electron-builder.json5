@@ -1,7 +1,7 @@
 {
   productName: 'Flaru Player',
   appId: 'com.flaru.flaru',
-  copyright: 'ⓒ 2021-2022 Jooy2',
+  copyright: 'ⓒ 2021-2023 Jooy2 (jooy2.com)',
   asar: true,
   extends: null,
   compression: 'maximum',
