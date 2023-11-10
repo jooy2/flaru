@@ -141,8 +141,8 @@ const Explorer = () => {
               <Grid item xs={12}>
                 <Paper css={paperSm}>
                   <div
+                    data-testid="uiFileOpen"
                     {...getRootProps({
-                      id: 'uiFileOpen',
                       css: css`
                         cursor: pointer;
                         user-select: none;

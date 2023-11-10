@@ -5,18 +5,13 @@ import { test, expect } from '@playwright/test';
 let appWindow: Page;
 let appElectron: ElectronApplication;
 
-function waiting(milliseconds: number) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(true), milliseconds);
-  });
-}
-
-function isElementVisible(selector: string, waitingMilliseconds = 300) {
+function existElementByTestId(selector: string, waitingMilliseconds = 100) {
   return new Promise((resolve) => {
     setTimeout(async () => {
-      expect(await appWindow.isVisible(selector), `Confirm selector '${selector}' is visible`).toBe(
-        true,
-      );
+      await expect(
+        appWindow.getByTestId(selector).first(),
+        `Confirm selector '${selector}' is visible`,
+      ).toBeVisible();
       resolve(true);
     }, waitingMilliseconds);
   });
@@ -40,10 +35,10 @@ test('Environment check', async () => {
 });
 
 test('Document element check', async () => {
-  await isElementVisible('#uiFileOpen');
+  await existElementByTestId('uiFileOpen');
 });
 
 test.afterAll(async () => {
-  await waiting(2000);
+  await appWindow.waitForTimeout(2000);
   await appElectron.close();
 });
