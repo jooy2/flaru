@@ -3,6 +3,7 @@ import electronPlugin from 'vite-plugin-electron';
 import rendererPlugin from 'vite-plugin-electron-renderer';
 import eslintPlugin from 'vite-plugin-eslint';
 import reactPlugin from '@vitejs/plugin-react-swc';
+import millionPlugin from 'million/compiler';
 import { resolve, dirname } from 'path';
 import { builtinModules } from 'module';
 import { fileURLToPath } from 'url';
@@ -26,6 +27,7 @@ export default defineConfig(() => {
       outDir: resolve('./dist'),
     },
     plugins: [
+      millionPlugin.vite({ auto: true }),
       reactPlugin(),
       // Docs: https://github.com/gxmari007/vite-plugin-eslint
       eslintPlugin(),
