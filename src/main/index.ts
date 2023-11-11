@@ -14,6 +14,7 @@ import { join, basename, extname, win32, dirname } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
 import { promises } from 'fs';
+import { platform } from 'os';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
 
@@ -22,7 +23,7 @@ type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 const fileExists = async (p) => !!(await promises.stat(p).catch(() => false));
 
 const getPlatform = (): string => {
-  switch (process.platform) {
+  switch (platform()) {
     case 'win32':
       return 'Windows';
     case 'darwin':
