@@ -23,19 +23,24 @@ jobs:
         os: [windows-latest, macos-latest, ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Install xvfb
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt install -y -q --no-install-recommends xvfb
+
       - name: Setup NodeJS ${{ matrix.node_version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
           cache: npm
           cache-dependency-path: '**/package-lock.json'
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: npm-cache
         with:
           path: |
@@ -43,9 +48,13 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm i
 
-      - name: Test module script
-        run: npm run test
+      - name: Test module script (Windows or macOS)
+        if: runner.os != 'Linux'
+        run: |
+          npm run test
+
+      - name: Test module script (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          npm run test:linux
