@@ -33,7 +33,7 @@ jobs:
           sudo apt install -y -q --no-install-recommends xvfb
 
       - name: Setup NodeJS ${{ matrix.node_version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
           cache: npm
@@ -48,6 +48,10 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm i
 
       - name: Test module script (Windows or macOS)
         if: runner.os != 'Linux'
