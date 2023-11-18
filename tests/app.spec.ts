@@ -21,7 +21,13 @@ test.beforeAll(async () => {
   // Open Electron app from build directory
   appElectron = await electron.launch({
     args: ['dist/main/index.js'],
-    env: { ...process.env, E2E: 'yes' },
+    locale: 'en-US',
+    colorScheme: 'light',
+    env: {
+      ...process.env,
+      E2E: 'yes',
+      NODE_ENV: 'production',
+    },
   });
   appWindow = await appElectron.firstWindow();
 
