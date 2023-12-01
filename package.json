@@ -41,7 +41,7 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/parser": "^6.10.0",
-    "@vitejs/plugin-react-swc": "^3.4.1",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "electron": "^27.0.4",
     "electron-builder": "^24.6.4",
     "eslint": "^8.53.0",
