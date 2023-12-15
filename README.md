@@ -1,5 +1,3 @@
-<div align="center">
-
 ![flaru-logo](src/renderer/public/images/flaru-logo.webp)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
@@ -12,11 +10,7 @@ This application is simply implemented in JavaScript via Electron and is based o
 
 For the official desktop app, please see the following link: https://github.com/ruffle-rs/ruffle/releases
 
-> [!NOTE]
->
-> This application is an emulator and does not contain Flash game files (SWF).
-
-</div>
+> [!NOTE] This application is an emulator and does not contain Flash game files (SWF).
 
 ## ⭐ Features
 
