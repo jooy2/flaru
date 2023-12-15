@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import electronPlugin from 'vite-plugin-electron';
+import { defineConfig, loadEnv } from 'vite';
+import electronPlugin, { ElectronOptions } from 'vite-plugin-electron';
 import rendererPlugin from 'vite-plugin-electron-renderer';
 import eslintPlugin from 'vite-plugin-eslint';
 import reactPlugin from '@vitejs/plugin-react-swc';
@@ -9,8 +9,60 @@ import { builtinModules } from 'module';
 import { fileURLToPath } from 'url';
 import { rmSync } from 'fs';
 
-export default defineConfig(() => {
+const isDevEnv = process.env.NODE_ENV === 'development';
+
+export default defineConfig(({ mode }) => {
+  process.env = {
+    ...(isDevEnv
+      ? {
+          ELECTRON_ENABLE_LOGGING: 'true',
+        }
+      : {}),
+    ...process.env,
+    ...loadEnv(mode, process.cwd()),
+  };
+
   rmSync('dist', { recursive: true, force: true });
+
+  const electronPluginConfigs: ElectronOptions[] = [
+    {
+      entry: 'src/main/index.ts',
+      onstart({ startup }) {
+        startup();
+      },
+      vite: {
+        build: {
+          assetsDir: '.',
+          outDir: 'dist/main',
+          rollupOptions: {
+            external: ['electron', ...builtinModules],
+          },
+        },
+      },
+    },
+    {
+      entry: 'src/preload/index.ts',
+      onstart({ reload }) {
+        reload();
+      },
+      vite: {
+        build: {
+          outDir: 'dist/preload',
+        },
+      },
+    },
+  ];
+
+  if (isDevEnv) {
+    electronPluginConfigs.push({
+      entry: 'src/main/index.dev.ts',
+      vite: {
+        build: {
+          outDir: 'dist/main',
+        },
+      },
+    });
+  }
 
   return {
     resolve: {
@@ -32,34 +84,7 @@ export default defineConfig(() => {
       // Docs: https://github.com/gxmari007/vite-plugin-eslint
       eslintPlugin(),
       // Docs: https://github.com/electron-vite/vite-plugin-electron
-      electronPlugin([
-        {
-          entry: ['src/main/index.ts'],
-          onstart: (options) => {
-            options.startup();
-          },
-          vite: {
-            build: {
-              assetsDir: '.',
-              outDir: 'dist/main',
-              rollupOptions: {
-                external: ['electron', ...builtinModules],
-              },
-            },
-          },
-        },
-        {
-          entry: ['src/preload/index.ts'],
-          onstart: (options) => {
-            options.reload();
-          },
-          vite: {
-            build: {
-              outDir: 'dist/preload',
-            },
-          },
-        },
-      ]),
+      electronPlugin(electronPluginConfigs),
       rendererPlugin(),
     ],
   };
