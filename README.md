@@ -2,15 +2,19 @@
 
 ![flaru-logo](src/renderer/public/images/flaru-logo.webp)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) ![Programming Language Usage](https://img.shields.io/github/languages/top/jooy2/flaru) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) ![Languages](https://img.shields.io/github/languages/count/jooy2/flaru) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru) ![Line Count](https://img.shields.io/tokei/lines/github/jooy2/flaru)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
 
 ![Logo Image](.github/resources/readme-screenshot.webp)
 
 **Flaru** is an unofficial emulator based on [Ruffle Flash Emulator](https://ruffle.rs). Created to provide a friendly interface and enhanced playing experience.
 
-This is unofficial, so if you are looking for the official desktop Ruffle app, please visit the following link: https://github.com/ruffle-rs/ruffle
+This application is simply implemented in JavaScript via Electron and is based on a self-hosted build of Ruffle, so performance may be somewhat lower than the official Ruffle desktop application.
 
-(This app does not contain any SWF game files.)
+For the official desktop app, please see the following link: https://github.com/ruffle-rs/ruffle/releases
+
+> [!NOTE]
+>
+> This application is an emulator and does not contain Flash game files (SWF).
 
 </div>
 
@@ -23,16 +27,6 @@ This is unofficial, so if you are looking for the official desktop Ruffle app, p
 - ✅ Drag-and-drop or one-click execution of SWF files from local PC
 - ✅ Continue playing from the list of recently opened files.
 - ✅ Customize various emulator settings.
-
-## 📢 Compatibility
-
-As the Ruffle emulator is under continuous development, Flash files created with ActionScript 3 are partially supported.
-
-See: https://github.com/ruffle-rs/ruffle/issues/1368.
-
-Flaru uses an emulator that relies on Chromium's WebView, so you may notice differences in performance or native functionality compared to Ruffle's official Desktop application.
-
-- Official desktop emulation optimized for native environments can be found here: https://github.com/ruffle-rs/ruffle/tags
 
 ## 💾 Downloads
 
@@ -74,16 +68,19 @@ $ npm run dev
 And you can build on multiple platforms with the following command:
 
 ```shell
-# Cross-platform build
+# Build current platform only
 $ npm run build
 
-# Windows (.exe)
+# Cross-platform build
+$ npm run build:all
+
+# Build for Windows (.exe)
 $ npm run build:win
 
-# macOS (.dmg)
+# Build for macOS (.dmg)
 $ npm run build:mac
 
-# Linux (.deb, .rpm)
+# Build for Linux (.deb, .rpm)
 $ npm run build:linux
 ```
 
