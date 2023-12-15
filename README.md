@@ -10,7 +10,7 @@ This application is simply implemented in JavaScript via Electron and is based o
 
 For the official desktop app, please see the following link: https://github.com/ruffle-rs/ruffle/releases
 
-> [!NOTE] This application is an emulator and does not contain Flash game files (SWF).
+> [!WARNING] This application is an emulator and does not contain Flash game files (SWF).
 
 ## ⭐ Features
 
