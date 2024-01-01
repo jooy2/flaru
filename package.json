@@ -79,7 +79,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-helmet": "^6.1.0",
-    "react-i18next": "^13.5.0",
+    "react-i18next": "^14.0.0",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.0",
     "serve-handler": "^6.1.5"
