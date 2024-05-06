@@ -67,7 +67,26 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
         return;
       }
 
-      rufflePlayer.load(`http://localhost:${port}/${currentFileName}`);
+      rufflePlayer.load({
+        url: `http://localhost:${port}/${currentFileName}`,
+        autoplay,
+        base: currentFileDirectory,
+        allowScriptAccess: true,
+        letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
+        contextMenu: stateAppScreen.appConfigHideContext ? 'off' : 'on',
+        logLevel: 'error',
+        openUrlMode: 'confirm',
+        preferredRenderer:
+          stateAppScreen.appConfigPreferredRenderer === 'auto'
+            ? null
+            : stateAppScreen.appConfigPreferredRenderer,
+        quality: stateAppScreen.appConfigQuality,
+        warnOnUnsupportedContent: false,
+        playerVersion:
+          stateAppScreen.appConfigEmulatePlayerVersion === 0
+            ? null
+            : stateAppScreen.appConfigEmulatePlayerVersion,
+      });
       rufflePlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
     });
   };
@@ -96,24 +115,9 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
 
     window.RufflePlayer = window.RufflePlayer || {};
     window.RufflePlayer.config = {
-      allowScriptAccess: true,
       polyfills: false,
-      letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
-      contextMenu: stateAppScreen.appConfigHideContext ? 'off' : 'on',
-      logLevel: 'error',
-      openUrlMode: 'confirm',
-      preferredRenderer:
-        stateAppScreen.appConfigPreferredRenderer === 'auto'
-          ? null
-          : stateAppScreen.appConfigPreferredRenderer,
-      quality: stateAppScreen.appConfigQuality,
-      warnOnUnsupportedContent: false,
-      playerVersion:
-        stateAppScreen.appConfigEmulatePlayerVersion === 0
-          ? null
-          : stateAppScreen.appConfigEmulatePlayerVersion,
-      autoplay,
-      base: currentFileDirectory,
+      showSwfDownload: false,
+      splashScreen: false,
     };
 
     if (!rufflePlayer) {
