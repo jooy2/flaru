@@ -49,7 +49,7 @@ const Settings = () => {
   );
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const handleRadioChange = async (event): Promise<void> => {
+  const handleRadioChange = (event): void => {
     const { value } = event.target;
     switch (event.target.name) {
       case 'themeCheck':
@@ -77,8 +77,9 @@ const Settings = () => {
     }
   };
 
-  const handleCheckboxChange = async (event): Promise<void> => {
+  const handleCheckboxChange = (event): void => {
     const value = event.target.checked;
+
     switch (event.target.name) {
       case 'hideHeaderChecked':
         setHideHeaderChecked(value);
@@ -139,7 +140,7 @@ const Settings = () => {
     window.mainApi.send('resetAppConfig');
   };
 
-  const handleOpenLocalStorageViewModal = async (): Promise<void> => {
+  const handleOpenLocalStorageViewModal = (): void => {
     dispatch(setConfig({ dialogLocalStorageViewOpen: true }));
   };
 

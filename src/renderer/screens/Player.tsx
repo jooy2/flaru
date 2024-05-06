@@ -14,7 +14,7 @@ const Player = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    window.mainApi.receive('receiveResumeToExplorer', async () => {
+    window.mainApi.receive('receiveResumeToExplorer', () => {
       dispatch(
         setConfig({
           flashFileName: '',

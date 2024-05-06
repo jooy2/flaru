@@ -35,7 +35,7 @@ const Explorer = () => {
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const runFlash = async (fileName, filePath) => {
+  const runFlash = (fileName: string, filePath: string) => {
     setLoading(true);
     dispatch(
       setConfig({
@@ -66,7 +66,9 @@ const Explorer = () => {
       setErrorMessage(t('notice:wrong-file-type') as SetStateAction<string>);
       return false;
     }
-    await runFlash(file?.name, filePath);
+
+    runFlash(file?.name, filePath);
+
     return true;
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
@@ -87,7 +89,7 @@ const Explorer = () => {
     });
   };
 
-  const handleRemoveRecentFiles = async () => {
+  const handleRemoveRecentFiles = () => {
     window.mainApi.send('removeAllRecentFile');
     dispatch(
       setConfig({
@@ -107,7 +109,7 @@ const Explorer = () => {
 
     window.mainApi.receive('receiveFileExist', async (event, argument) => {
       if (argument.exist) {
-        await runFlash(argument.name, argument.path);
+        runFlash(argument.name, argument.path);
       } else {
         window.mainApi.send('removeRecentFile', {
           path: argument.path,

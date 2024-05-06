@@ -29,7 +29,7 @@ const ModalLocalStorageView = () => {
     [stateAppScreen.appConfigLanguage],
   );
 
-  const handleDialogClose = async () => {
+  const handleDialogClose = () => {
     setData(JSON.stringify(localStorage));
     setError(false);
     dispatch(setConfig({ dialogLocalStorageViewOpen: false }));
@@ -54,7 +54,7 @@ const ModalLocalStorageView = () => {
           localStorage.setItem(key, value.toString());
         }
       });
-      await handleDialogClose();
+      handleDialogClose();
     } catch {
       setError(true);
     }
@@ -69,7 +69,7 @@ const ModalLocalStorageView = () => {
     localStorage.setItem('i18nextLng', i18LngValue);
     setData(JSON.stringify(localStorage));
     handleOpenConfirm(false);
-    await handleDialogClose();
+    handleDialogClose();
   };
 
   return (

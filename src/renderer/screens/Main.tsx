@@ -24,7 +24,7 @@ const Main = () => {
 
   const handleVersionCheck = async () => true; // TODO version check
 
-  const runFromExplorer = async (filePath: string): Promise<void> => {
+  const runFromExplorer = (filePath: string): void => {
     dispatch(
       setConfig({
         flashFileName: filePath.split('\\').pop(),
@@ -91,14 +91,14 @@ const Main = () => {
           await i18n.changeLanguage(configs.language);
         }
 
-        window.mainApi.receive('receiveOpenFile', async (openFileEvent, receivePath) => {
-          await runFromExplorer(receivePath);
+        window.mainApi.receive('receiveOpenFile', (openFileEvent, receivePath) => {
+          runFromExplorer(receivePath);
         });
 
         setLoadMsg(3);
 
         if (filePath) {
-          await runFromExplorer(filePath);
+          runFromExplorer(filePath);
         } else {
           navigate('/explorer');
         }

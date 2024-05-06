@@ -22,7 +22,7 @@ const ModalMetadata = () => {
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const dispatch = useDispatch();
 
-  const handleDialogClose = async () => {
+  const handleDialogClose = () => {
     dispatch(setConfig({ dialogMetadataOpen: false }));
   };
 
