@@ -44,16 +44,16 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
   const handleMute = async () => {
     if (stateAppScreen.flashVolume === 0) {
       rufflePlayer.volume = 1;
-      await dispatch(setConfig({ flashVolume: 100 }));
+      dispatch(setConfig({ flashVolume: 100 }));
     } else {
       rufflePlayer.volume = 0;
-      await dispatch(setConfig({ flashVolume: 0 }));
+      dispatch(setConfig({ flashVolume: 0 }));
     }
   };
 
   const handleVolumeSliderChange = async (event, newValue) => {
     rufflePlayer.volume = newValue / 100;
-    await dispatch(setConfig({ flashVolume: newValue }));
+    dispatch(setConfig({ flashVolume: newValue }));
   };
 
   const handleBack = () => {
@@ -127,7 +127,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
     rufflePlayer.id = 'player';
     rufflePlayer.addEventListener('loadedmetadata', async () => {
       const metaData = rufflePlayer?.metadata;
-      await dispatch(
+      dispatch(
         setConfig({
           flashFileSwfVer: metaData?.swfVersion,
           flashFileFrame: metaData?.numFrames,

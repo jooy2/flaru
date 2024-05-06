@@ -37,7 +37,7 @@ const Explorer = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const runFlash = async (fileName, filePath) => {
     setLoading(true);
-    await dispatch(
+    dispatch(
       setConfig({
         flashFileName: fileName || 'swf',
         flashFilePath: filePath,
@@ -89,7 +89,7 @@ const Explorer = () => {
 
   const handleRemoveRecentFiles = async () => {
     window.mainApi.send('removeAllRecentFile');
-    await dispatch(
+    dispatch(
       setConfig({
         recentFiles: [],
       }),
@@ -98,7 +98,7 @@ const Explorer = () => {
 
   useEffect(() => {
     window.mainApi.receive('receiveRecentFiles', async (event, argument) => {
-      await dispatch(
+      dispatch(
         setConfig({
           recentFiles: argument,
         }),

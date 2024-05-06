@@ -23,7 +23,7 @@ const ModalMetadata = () => {
   const dispatch = useDispatch();
 
   const handleDialogClose = async () => {
-    await dispatch(setConfig({ dialogMetadataOpen: false }));
+    dispatch(setConfig({ dialogMetadataOpen: false }));
   };
 
   return (

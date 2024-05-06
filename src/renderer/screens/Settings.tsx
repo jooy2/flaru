@@ -55,22 +55,22 @@ const Settings = () => {
       case 'themeCheck':
         setThemeCheck(value);
         window.mainApi.send('setAppConfig', { theme: value });
-        await dispatch(setConfig({ appConfigTheme: value }));
+        dispatch(setConfig({ appConfigTheme: value }));
         if (value === 'auto') {
-          await dispatch(setConfig({ isDarkTheme: prefersDarkMode }));
+          dispatch(setConfig({ isDarkTheme: prefersDarkMode }));
         } else {
-          await dispatch(setConfig({ isDarkTheme: value !== 'light' }));
+          dispatch(setConfig({ isDarkTheme: value !== 'light' }));
         }
         break;
       case 'preferredRendererCheck':
         setPreferredRendererCheck(value);
         window.mainApi.send('setAppConfig', { preferredRenderer: value });
-        await dispatch(setConfig({ appConfigPreferredRenderer: value }));
+        dispatch(setConfig({ appConfigPreferredRenderer: value }));
         break;
       case 'qualityCheck':
         setQualityCheck(value);
         window.mainApi.send('setAppConfig', { quality: value });
-        await dispatch(setConfig({ appConfigQuality: value }));
+        dispatch(setConfig({ appConfigQuality: value }));
         break;
       default:
         break;
@@ -83,37 +83,37 @@ const Settings = () => {
       case 'hideHeaderChecked':
         setHideHeaderChecked(value);
         window.mainApi.send('setAppConfig', { hideHeader: value });
-        await dispatch(setConfig({ appConfigHideHeader: value }));
+        dispatch(setConfig({ appConfigHideHeader: value }));
         break;
       case 'letterboxChecked':
         setLetterboxChecked(value);
         window.mainApi.send('setAppConfig', { letterbox: value });
-        await dispatch(setConfig({ appConfigLetterbox: value }));
+        dispatch(setConfig({ appConfigLetterbox: value }));
         break;
       case 'hideContextChecked':
         setHideContextChecked(value);
         window.mainApi.send('setAppConfig', { hideContext: value });
-        await dispatch(setConfig({ appConfigHideContext: value }));
+        dispatch(setConfig({ appConfigHideContext: value }));
         break;
       case 'restoreWindowBoundsChecked':
         setRestoreBoundsChecked(value);
         window.mainApi.send('setAppConfig', { restoreWindowBounds: value });
-        await dispatch(setConfig({ appConfigRestoreWindowBounds: value }));
+        dispatch(setConfig({ appConfigRestoreWindowBounds: value }));
         break;
       case 'adjustOriginalSizeChecked':
         setAdjustOriginalSizeChecked(value);
         window.mainApi.send('setAppConfig', { adjustOriginalSize: value });
-        await dispatch(setConfig({ appConfigAdjustOriginalSize: value }));
+        dispatch(setConfig({ appConfigAdjustOriginalSize: value }));
         break;
       case 'showPlayerVersionSelectChecked':
         setShowPlayerVersionSelectChecked(value);
         window.mainApi.send('setAppConfig', { showPlayerVersionSelect: value });
-        await dispatch(setConfig({ appConfigShowPlayerVersionSelect: value }));
+        dispatch(setConfig({ appConfigShowPlayerVersionSelect: value }));
         break;
       case 'showPlayerControllerChecked':
         setShowPlayerControllerChecked(value);
         window.mainApi.send('setAppConfig', { showPlayerController: value });
-        await dispatch(setConfig({ appConfigShowPlayerController: value }));
+        dispatch(setConfig({ appConfigShowPlayerController: value }));
         break;
       default:
         break;
@@ -126,7 +126,7 @@ const Settings = () => {
       case 'language':
         setLanguage(value);
         window.mainApi.send('setAppConfig', { language: value });
-        await dispatch(setConfig({ appConfigLanguage: value }));
+        dispatch(setConfig({ appConfigLanguage: value }));
         await i18n.changeLanguage(value);
         break;
       default:
@@ -140,7 +140,7 @@ const Settings = () => {
   };
 
   const handleOpenLocalStorageViewModal = async (): Promise<void> => {
-    await dispatch(setConfig({ dialogLocalStorageViewOpen: true }));
+    dispatch(setConfig({ dialogLocalStorageViewOpen: true }));
   };
 
   return (

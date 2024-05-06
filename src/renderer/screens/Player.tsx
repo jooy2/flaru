@@ -15,7 +15,7 @@ const Player = () => {
 
   useEffect(() => {
     window.mainApi.receive('receiveResumeToExplorer', async () => {
-      await dispatch(
+      dispatch(
         setConfig({
           flashFileName: '',
           flashFilePath: '',

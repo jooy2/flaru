@@ -32,7 +32,7 @@ const ModalLocalStorageView = () => {
   const handleDialogClose = async () => {
     setData(JSON.stringify(localStorage));
     setError(false);
-    await dispatch(setConfig({ dialogLocalStorageViewOpen: false }));
+    dispatch(setConfig({ dialogLocalStorageViewOpen: false }));
   };
 
   const handleTextChange = (event) => {

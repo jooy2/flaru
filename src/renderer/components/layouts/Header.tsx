@@ -43,11 +43,11 @@ const Header = ({ title, withBackButton, withRefresh = false }) => {
   };
 
   const handleOpenMetadata = async () => {
-    await dispatch(setConfig({ dialogMetadataOpen: true }));
+    dispatch(setConfig({ dialogMetadataOpen: true }));
   };
 
   const handleFlashEmulatePlayerVersionChange = async (event) => {
-    await dispatch(setConfig({ appConfigEmulatePlayerVersion: event.target.value }));
+    dispatch(setConfig({ appConfigEmulatePlayerVersion: event.target.value }));
   };
 
   return (

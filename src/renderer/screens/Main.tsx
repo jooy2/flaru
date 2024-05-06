@@ -25,7 +25,7 @@ const Main = () => {
   const handleVersionCheck = async () => true; // TODO version check
 
   const runFromExplorer = async (filePath: string): Promise<void> => {
-    await dispatch(
+    dispatch(
       setConfig({
         flashFileName: filePath.split('\\').pop(),
         flashFilePath: filePath,
@@ -54,7 +54,7 @@ const Main = () => {
       setLoadMsg(2);
 
       window.mainApi.receive('receiveAppConfig', async (appConfigEvent, configs) => {
-        await dispatch(
+        dispatch(
           setConfig({
             appConfigHideHeader: configs.hideHeader,
             appConfigTheme: configs.theme,
@@ -72,14 +72,14 @@ const Main = () => {
         );
 
         if (configs.theme === 'auto') {
-          await dispatch(
+          dispatch(
             setConfig({
               appConfigTheme: 'auto',
               isDarkTheme: prefersDarkMode,
             }),
           );
         } else {
-          await dispatch(
+          dispatch(
             setConfig({
               appConfigTheme: configs.theme,
               isDarkTheme: configs.theme !== 'light',
