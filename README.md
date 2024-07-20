@@ -42,7 +42,7 @@ If you have a GitHub account, you can easily receive release notifications by em
 
 Before building or running, you need to install the module and add the Ruffle script file to the project.
 
-First install the dependency module with the following command: ([NodeJS](https://nodejs.org) pre-installed required)
+First install the dependency module with the following command: ([Node.js](https://nodejs.org) pre-installed required)
 
 ```shell
 $ npm i
@@ -93,8 +93,10 @@ $ npm run build:linux
 
 Copyright © 2021-2024 [Jooy2](https://jooy2.com) <[jooy2.contact@gmail.com](mailto:jooy2.contact@gmail.com)> Released under the MIT license. (Source code excluding Ruffle and external modules)
 
-For general use, download and use the package file on the GitHub releases page. You do not need to download the entire project.
+> [!IMPORTANT]
+>
+> **Please do not distribute or release this project package externally without permission.**
 
-**Please do not distribute or release this project package externally without permission.**
+For general use, download and use the package file on the GitHub releases page. You do not need to download the entire project.
 
 For detailed license of Ruffle, please refer to the following document: [https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md](https://github.com/ruffle-rs/ruffle/blob/master/LICENSE.md)
