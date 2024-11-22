@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useMemo } from 'react';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ const About = () => {
 
   return (
     <Layout title={t('about-title') as string} withBackButton>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Paper css={paperBase}>
           <img
             css={css`

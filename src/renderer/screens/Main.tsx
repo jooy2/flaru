@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslation } from 'react-i18next';
@@ -141,8 +141,7 @@ const Main = () => {
   return (
     <Layout center header={false}>
       <Grid
-        item
-        xs={12}
+        size={12}
         css={css`
           text-align: center;
         `}

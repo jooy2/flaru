@@ -2,7 +2,7 @@
 import { useState, useCallback, useEffect, SetStateAction } from 'react';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -130,8 +130,7 @@ const Explorer = () => {
   return (
     <Layout header={!loading} center={loading} title={t('main-title') as string}>
       <Grid
-        item
-        xs={12}
+        size={12}
         css={css`
           max-height: calc(100vh - 68px);
           overflow-y: auto;
@@ -140,7 +139,7 @@ const Explorer = () => {
         <Grid container>
           {!loading && (
             <>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Paper css={paperSm}>
                   <div
                     data-testid="uiFileOpen"
@@ -174,21 +173,21 @@ const Explorer = () => {
                     <input {...getInputProps()} />
                   </div>
                   {flashContentError && (
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                       <Alert severity="error">{errorMessage}</Alert>
                     </Grid>
                   )}
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Paper css={paperSm}>
                   <Grid container justifyContent="space-between">
-                    <Grid item xs={5}>
+                    <Grid size={5}>
                       <Typography component="h2" variant="h6">
                         <strong>{t('common:recent-file-title')}</strong>
                       </Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid>
                       <IconButton
                         onClick={handleRemoveRecentFiles}
                         disabled={stateAppScreen.recentFiles.length < 1}
@@ -204,7 +203,7 @@ const Explorer = () => {
                   )}
                   {stateAppScreen.recentFiles.length > 0 && (
                     <Grid container>
-                      <Grid item xs={12}>
+                      <Grid size={12}>
                         <List
                           component="nav"
                           aria-label="recent files"
@@ -245,8 +244,7 @@ const Explorer = () => {
           )}
           {loading && (
             <Grid
-              item
-              xs={12}
+              size={12}
               css={css`
                 text-align: center;
               `}

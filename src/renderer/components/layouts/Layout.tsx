@@ -2,7 +2,7 @@
 import { Helmet } from 'react-helmet';
 
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { css } from '@emotion/react';
 import Header from '@/renderer/components/layouts/Header';
 import { headerArea } from '@/renderer/utils/styles';
@@ -59,12 +59,12 @@ const Layout = ({
       >
         {container ? (
           <Container>
-            <Grid item xs={12} css={[header ? headerArea : []]}>
+            <Grid size={12} css={[header ? headerArea : []]}>
               {children}
             </Grid>
           </Container>
         ) : (
-          <Grid item xs={12} css={[header ? headerArea : []]}>
+          <Grid size={12} css={[header ? headerArea : []]}>
             {children}
           </Grid>
         )}

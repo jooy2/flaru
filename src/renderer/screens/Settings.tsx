@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
@@ -155,8 +155,7 @@ const Settings = () => {
   return (
     <Layout title={t('menu:settings') as string} withBackButton>
       <Grid
-        item
-        xs={12}
+        size={12}
         css={css`
           max-height: calc(100vh - 68px);
           overflow-y: auto;
@@ -196,7 +195,7 @@ const Settings = () => {
               }
             `}
           >
-            <Grid item xs={12}>
+            <Grid size={12}>
               <PanelHeader
                 title={t('settings-language-title')}
                 desc={t('settings-language-desc')}
@@ -220,7 +219,7 @@ const Settings = () => {
                 </Select>
               </Typography>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-2')} desc={t('settings-desc-2')} />
               <RadioGroup
                 row
@@ -247,10 +246,10 @@ const Settings = () => {
                 />
               </RadioGroup>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-1')} desc={t('settings-desc-1')} />
               <Grid container>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -263,7 +262,7 @@ const Settings = () => {
                     label={t('menu:show-player-controller')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -276,7 +275,7 @@ const Settings = () => {
                     label={t('menu:hide-header')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -289,7 +288,7 @@ const Settings = () => {
                     label={t('menu:letterbox')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -302,7 +301,7 @@ const Settings = () => {
                     label={t('menu:hide-context')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -315,7 +314,7 @@ const Settings = () => {
                     label={t('menu:adjust-original-size')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -328,7 +327,7 @@ const Settings = () => {
                     label={t('menu:show-player-version-select')}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -343,7 +342,7 @@ const Settings = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-3')} desc={t('settings-desc-3')} />
               <RadioGroup
                 aria-label="position"
@@ -379,7 +378,7 @@ const Settings = () => {
                 />
               </RadioGroup>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-4')} desc={t('settings-desc-4')} />
               <RadioGroup
                 row
@@ -411,7 +410,7 @@ const Settings = () => {
                 />
               </RadioGroup>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-5')} desc={t('settings-desc-5')} />
               <RadioGroup
                 row
@@ -433,10 +432,10 @@ const Settings = () => {
                 />
               </RadioGroup>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <PanelHeader title={t('settings-other-title')} desc={t('settings-other-desc')} />
               <Grid container>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <Button
                     color="primary"
                     variant="contained"
@@ -449,7 +448,7 @@ const Settings = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} css={marginTopSm}>
+            <Grid size={12} css={marginTopSm}>
               <PanelHeader title={t('settings-reset-title')} desc={t('settings-reset-desc')} />
               <Typography component="div" css={marginTopSm}>
                 <Button variant="contained" size="small" color="secondary" onClick={handleReset}>

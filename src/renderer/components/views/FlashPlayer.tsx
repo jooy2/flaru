@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Replay from '@mui/icons-material/Replay';
@@ -193,9 +193,9 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
               height: 42px;
             `}
           >
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Grid container alignItems="center">
-                <Grid item>
+                <Grid>
                   <IconButton
                     color="primary"
                     size="small"
@@ -205,7 +205,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
                     {rufflePlayer?.isPlaying ? <Pause /> : <PlayArrow />}
                   </IconButton>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <Tooltip title={t('replay')}>
                     <IconButton
                       size="small"
@@ -217,7 +217,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
                     </IconButton>
                   </Tooltip>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid size={{ xs: 6, md: 4 }}>
                   <Stack spacing={2} direction="row" alignItems="center">
                     <IconButton size="small" aria-label="player-mute" onClick={handleMute}>
                       {stateAppScreen.flashVolume === 0 ? <VolumeOff /> : <VolumeUp />}
