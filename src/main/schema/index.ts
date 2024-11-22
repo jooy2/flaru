@@ -50,4 +50,8 @@ export default {
     type: 'string',
     default: 'high',
   },
+  playerRuntime: {
+    type: 'string',
+    default: 'flashPlayer',
+  },
 } as const;

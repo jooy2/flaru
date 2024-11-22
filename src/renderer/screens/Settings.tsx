@@ -31,6 +31,9 @@ const Settings = () => {
     stateAppScreen.appConfigPreferredRenderer,
   );
   const [qualityCheck, setQualityCheck] = useState(stateAppScreen.appConfigQuality);
+  const [playerRuntimeCheck, setPlayerRuntimeCheck] = useState(
+    stateAppScreen.appConfigPlayerRuntime,
+  );
   const [language, setLanguage] = useState(stateAppScreen.appConfigLanguage);
   const [hideHeaderChecked, setHideHeaderChecked] = useState(stateAppScreen.appConfigHideHeader);
   const [letterboxChecked, setLetterboxChecked] = useState(stateAppScreen.appConfigLetterbox);
@@ -71,6 +74,11 @@ const Settings = () => {
         setQualityCheck(value);
         window.mainApi.send('setAppConfig', { quality: value });
         dispatch(setConfig({ appConfigQuality: value }));
+        break;
+      case 'playerRuntimeCheck':
+        setPlayerRuntimeCheck(value);
+        window.mainApi.send('setAppConfig', { playerRuntime: value });
+        dispatch(setConfig({ appConfigPlayerRuntime: value }));
         break;
       default:
         break;
@@ -337,79 +345,97 @@ const Settings = () => {
             </Grid>
             <Grid item xs={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-3')} desc={t('settings-desc-3')} />
-              <Grid item xs={12}>
-                <RadioGroup
-                  aria-label="position"
-                  name="preferredRendererCheck"
-                  value={preferredRendererCheck}
-                  defaultValue="auto"
-                  onChange={handleRadioChange}
-                >
-                  <FormControlLabel
-                    value="auto"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:renderer-auto')}
-                  />
-                  <FormControlLabel
-                    value="wgpu-webgl"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:renderer-wgpu-webgl')}
-                  />
-                  <FormControlLabel
-                    value="webgl"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:renderer-webgl')}
-                  />
-                  <FormControlLabel
-                    value="canvas"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:renderer-canvas')}
-                  />
-                  <FormControlLabel
-                    value="webgpu"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:renderer-webgpu')}
-                  />
-                </RadioGroup>
-              </Grid>
+              <RadioGroup
+                aria-label="position"
+                name="preferredRendererCheck"
+                value={preferredRendererCheck}
+                defaultValue="auto"
+                onChange={handleRadioChange}
+              >
+                <FormControlLabel
+                  value="auto"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:renderer-auto')}
+                />
+                <FormControlLabel
+                  value="wgpu-webgl"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:renderer-wgpu-webgl')}
+                />
+                <FormControlLabel
+                  value="webgl"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:renderer-webgl')}
+                />
+                <FormControlLabel
+                  value="canvas"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:renderer-canvas')}
+                />
+                <FormControlLabel
+                  value="webgpu"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:renderer-webgpu')}
+                />
+              </RadioGroup>
             </Grid>
             <Grid item xs={12} css={marginTopSm}>
               <PanelHeader title={t('settings-title-4')} desc={t('settings-desc-4')} />
-              <Grid item xs={12}>
-                <RadioGroup
-                  row
-                  aria-label="position"
-                  name="qualityCheck"
-                  value={qualityCheck}
-                  defaultValue="high"
-                  onChange={handleRadioChange}
-                >
-                  <FormControlLabel
-                    value="low"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:quality-low')}
-                  />
-                  <FormControlLabel
-                    value="medium"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:quality-medium')}
-                  />
-                  <FormControlLabel
-                    value="high"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:quality-high')}
-                  />
-                  <FormControlLabel
-                    value="best"
-                    control={<Radio size="small" color="primary" />}
-                    label={t('menu:quality-best')}
-                  />
-                </RadioGroup>
-              </Grid>
+              <RadioGroup
+                row
+                aria-label="position"
+                name="qualityCheck"
+                value={qualityCheck}
+                defaultValue="high"
+                onChange={handleRadioChange}
+              >
+                <FormControlLabel
+                  value="low"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:quality-low')}
+                />
+                <FormControlLabel
+                  value="medium"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:quality-medium')}
+                />
+                <FormControlLabel
+                  value="high"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:quality-high')}
+                />
+                <FormControlLabel
+                  value="best"
+                  control={<Radio size="small" color="primary" />}
+                  label={t('menu:quality-best')}
+                />
+              </RadioGroup>
+            </Grid>
+            <Grid item xs={12} css={marginTopSm}>
+              <PanelHeader title={t('settings-title-5')} desc={t('settings-desc-5')} />
+              <RadioGroup
+                row
+                aria-label="position"
+                name="playerRuntimeCheck"
+                value={playerRuntimeCheck}
+                defaultValue="flashPlayer"
+                onChange={handleRadioChange}
+              >
+                <FormControlLabel
+                  value="flashPlayer"
+                  control={<Radio size="small" color="primary" />}
+                  label="Adobe Flash Player"
+                />
+                <FormControlLabel
+                  value="air"
+                  control={<Radio size="small" color="primary" />}
+                  label="Adobe AIR"
+                />
+              </RadioGroup>
             </Grid>
             <Grid item xs={12}>
               <PanelHeader title={t('settings-other-title')} desc={t('settings-other-desc')} />
-              <Grid container css={marginTopSm}>
+              <Grid container>
                 <Grid item xs={12}>
                   <Button
                     color="primary"

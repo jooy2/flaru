@@ -17,6 +17,8 @@
   "settings-desc-3": "Passen Sie die Grafik-Rendering-Engine des Players an. Für nicht fortgeschrittene Benutzer empfehlen wir die Auswahl „Automatisch“.",
   "settings-title-4": "Spieler: Grafikqualität",
   "settings-desc-4": "Passen Sie die Grafikqualität des Players an. Niedrigere Werte sind schneller, führen aber zu einer geringeren Grafikschärfe. Höhere Werte können die Leistung beeinträchtigen.",
+  "settings-title-5": "Spieler: Laufzeit",
+  "settings-desc-5": "Legen Sie die Laufzeit des Players fest. Wenn es sich nicht um eine spezielle Datei handelt, behalten Sie die Standardeinstellung bei. Die AIR-Laufzeit ist derzeit experimentell.",
   "settings-other-title": "fortschrittlich",
   "settings-other-desc": "Wählen Sie erweiterte Einstellungen für das App-Verhalten.",
   "settings-reset-title": "App-Daten zurücksetzen",

@@ -68,6 +68,7 @@ const Main = () => {
             appConfigShowPlayerController: configs.showPlayerController,
             appConfigPreferredRenderer: configs.preferredRenderer,
             appConfigQuality: configs.quality,
+            appConfigPlayerRuntime: configs.playerRuntime,
           }),
         );
 

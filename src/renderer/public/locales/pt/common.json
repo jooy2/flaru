@@ -17,6 +17,8 @@
   "settings-desc-3": "Personalize o mecanismo de renderização de gráficos do player. Para usuários não avançados, recomendamos selecionar 'Automático'.",
   "settings-title-4": "Jogadores: qualidade gráfica",
   "settings-desc-4": "Ajuste a qualidade gráfica do player. Valores mais baixos são mais rápidos, mas resultam em menor nitidez gráfica. Valores mais altos podem degradar o desempenho.",
+  "settings-title-5": "Jogador: Tempo de execução",
+  "settings-desc-5": "Defina o tempo de execução do player. Se este não for um arquivo especial, mantenha o padrão. O tempo de execução do AIR é atualmente experimental.",
   "settings-other-title": "avançado",
   "settings-other-desc": "Escolha as configurações avançadas para o comportamento do aplicativo.",
   "settings-reset-title": "Redefinir os dados do aplicativo",

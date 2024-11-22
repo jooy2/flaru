@@ -17,6 +17,8 @@
   "settings-desc-3": "Personnalisez le moteur de rendu graphique du lecteur. Pour les utilisateurs non avancés, nous recommandons de sélectionner 'Automatique'.",
   "settings-title-4": "Joueurs: qualité graphique",
   "settings-desc-4": "Ajustez la qualité graphique du lecteur. Les valeurs inférieures sont plus rapides mais entraînent une netteté graphique inférieure. Des valeurs plus élevées peuvent dégrader les performances.",
+  "settings-title-5": "Joueur: Exécution",
+  "settings-desc-5": "Définissez le temps d'exécution du lecteur. S'il ne s'agit pas d'un fichier spécial, conservez la valeur par défaut. Le runtime AIR est actuellement expérimental.",
   "settings-other-title": "Avancée",
   "settings-other-desc": "Choisissez les paramètres avancés pour le comportement de l'application.",
   "settings-reset-title": "Réinitialiser les données de l'application",

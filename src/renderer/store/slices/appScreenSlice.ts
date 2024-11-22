@@ -40,6 +40,7 @@ export interface AppScreenState {
   appConfigShowPlayerController: boolean;
   appConfigPreferredRenderer: string;
   appConfigQuality: string;
+  appConfigPlayerRuntime: string;
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
@@ -71,6 +72,7 @@ const initialState: AppScreenState = {
   appConfigShowPlayerController: true,
   appConfigPreferredRenderer: 'auto',
   appConfigQuality: 'high',
+  appConfigPlayerRuntime: 'flashPlayer',
   recentFiles: [],
   mainGlobalValues: {
     APP_NAME: '',

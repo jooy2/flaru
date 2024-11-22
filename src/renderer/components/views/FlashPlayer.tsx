@@ -81,6 +81,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
             ? null
             : stateAppScreen.appConfigPreferredRenderer,
         quality: stateAppScreen.appConfigQuality,
+        playerRuntime: stateAppScreen.appConfigPlayerRuntime,
         warnOnUnsupportedContent: false,
         playerVersion:
           stateAppScreen.appConfigEmulatePlayerVersion === 0

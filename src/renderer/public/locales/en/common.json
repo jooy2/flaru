@@ -17,6 +17,8 @@
   "settings-desc-3": "Customize the player graphics rendering engine. For non-advanced users, we recommend selecting 'Automatic'.",
   "settings-title-4": "Players: Graphics Quality",
   "settings-desc-4": "Adjust the player graphics quality. Lower values are faster but result in lower graphic sharpness. Higher values may degrade performance.",
+  "settings-title-5": "Player: Runtime",
+  "settings-desc-5": "Sets the player runtime. Leave the default unless you have a special file. The AIR runtime is currently experimental.",
   "settings-other-title": "Advanced",
   "settings-other-desc": "Choose advanced settings for app behavior.",
   "settings-reset-title": "Reset App Data",
