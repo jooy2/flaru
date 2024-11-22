@@ -67,7 +67,7 @@ const FlashPlayer = ({ url = '', autoplay = true, filePath = '', header = true }
         return;
       }
 
-      rufflePlayer.load({
+      rufflePlayer.ruffle().load({
         url: `http://localhost:${port}/${currentFileName}`,
         autoplay,
         base: currentFileDirectory,
