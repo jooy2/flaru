@@ -1,10 +1,10 @@
 {
   "name": "flaru-player",
   "displayName": "Flaru Player",
-  "version": "1.13.5",
-  "versionCode": 1135,
-  "versionDate": "2023-11-11",
-  "ruffleVersionDate": "2023-11-11",
+  "version": "1.14.0",
+  "versionCode": 1140,
+  "versionDate": "2024-11-22",
+  "ruffleVersionDate": "2024-11-22",
   "description": "Flaru SWF Flash Player",
   "main": "dist/main/index.js",
   "private": true,
@@ -19,7 +19,7 @@
     "url": "https://github.com/jooy2/flaru/issues"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "dev": "vite",
