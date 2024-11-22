@@ -51,7 +51,7 @@ const Explorer = () => {
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     const fileType = file?.type;
-    const filePath = file?.path;
+    const filePath = window.mainApi.showFilePath(file);
     const blob = fileType ? fileType.split('/')[1] : null;
     if (
       (!blob && !/\.(swf)/.test(filePath)) ||

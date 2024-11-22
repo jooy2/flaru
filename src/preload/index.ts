@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, webUtils } from 'electron';
 
 // Whitelist of valid channels used for IPC communication (Send message from Renderer to Main)
 const mainAvailChannels: string[] = [
@@ -56,5 +56,8 @@ contextBridge.exposeInMainWorld('mainApi', {
   startStaticServer: async (url: string) => {
     const result = await ipcRenderer.invoke('startStaticServer', url);
     return result;
+  },
+  showFilePath(file: File) {
+    return webUtils.getPathForFile(file);
   },
 });
