@@ -1,10 +1,10 @@
-![flaru-logo](src/renderer/public/images/flaru-logo.webp)
+![app-logo](src/renderer/public/images/app-logo.webp)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flaru/blob/master/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flaru)](https://github.com/jooy2/flaru/tags) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jooy2/flare/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/jooy2/flare)](https://github.com/jooy2/flaru/tags) [![Downloads](https://img.shields.io/github/downloads/jooy2/flaru/total)](https://github.com/jooy2/flaru/releases) [![Followers](https://img.shields.io/github/followers/jooy2?style=social)](https://github.com/jooy2) ![Stars](https://img.shields.io/github/stars/jooy2/flaru?style=social) ![Commit Count](https://img.shields.io/github/commit-activity/y/jooy2/flaru)
 
 ![Logo Image](.github/resources/readme-screenshot.webp)
 
-**Flaru** is an unofficial emulator based on [Ruffle Flash Emulator](https://ruffle.rs). Created to provide a friendly interface and enhanced playing experience.
+**Flare Player** is an unofficial emulator based on [Ruffle Flash Emulator](https://ruffle.rs). Created to provide a friendly interface and enhanced playing experience.
 
 This application is simply implemented in JavaScript via Electron and is based on a self-hosted build of Ruffle, so performance may be somewhat lower than the official Ruffle desktop application.
 
@@ -26,9 +26,9 @@ For the official desktop app, please see the following link: https://github.com/
 
 ## 💾 Downloads
 
-- [Flaru Downloads page](https://github.com/jooy2/flaru/releases)
+- [Flare Downloads page](https://github.com/jooy2/flare/releases)
 
-Since Flaru does not sign the application, you may receive a security warning upon installation. You can safely ignore the security warning as this app does not use any permissions other than reading system file resources (e.g. loading SWF files).
+Since Flare does not sign the application, you may receive a security warning upon installation. You can safely ignore the security warning as this app does not use any permissions other than reading system file resources (e.g. loading SWF files).
 
 Accordingly, version check and automatic update are currently not supported. We recommend upgrading by visiting the GitHub Releases page at regular intervals to check for new versions.
 

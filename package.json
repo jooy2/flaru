@@ -1,22 +1,22 @@
 {
-  "name": "flaru-player",
-  "displayName": "Flaru Player",
+  "name": "flare-player",
+  "displayName": "Flare Player",
   "version": "1.14.0",
   "versionCode": 1140,
   "versionDate": "2024-11-22",
   "ruffleVersionDate": "2024-11-22",
-  "description": "Flaru SWF Flash Player",
+  "description": "Flare SWF Flash Player",
   "main": "dist/main/index.js",
   "private": true,
-  "homepage": "https://github.com/jooy2/flaru",
+  "homepage": "https://github.com/jooy2/flare",
   "author": "jooy2 <jooy2.contact@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jooy2/flaru.git"
+    "url": "https://github.com/jooy2/flare.git"
   },
   "bugs": {
-    "url": "https://github.com/jooy2/flaru/issues"
+    "url": "https://github.com/jooy2/flare/issues"
   },
   "engines": {
     "node": ">=20.0.0"

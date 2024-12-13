@@ -32,10 +32,10 @@ const About = () => {
             `}
             draggable="false"
             alt="logo"
-            src="images/flaru-logo.webp"
+            src="images/app-logo.webp"
           />
           <Typography component="p" variant="body1">
-            Flaru {stateAppScreen.mainGlobalValues.APP_VERSION_NAME} By {author}
+            Flare Player {stateAppScreen.mainGlobalValues.APP_VERSION_NAME} By {author}
           </Typography>
           <Typography component="p" variant="body1">
             Flash Emulator Based on Ruffle (Nightly {ruffleVersion})
@@ -51,7 +51,7 @@ const About = () => {
             </Button>
             <Button
               startIcon={<Update />}
-              onClick={(ev) => openExternalLink(ev, 'https://github.com/jooy2/flaru/releases')}
+              onClick={(ev) => openExternalLink(ev, 'https://github.com/jooy2/flare/releases')}
             >
               {t('menu:update-check')}
             </Button>

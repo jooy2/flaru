@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 
 const Layout = ({
-  title = 'Flaru Player',
-  titleTail = ' - Flaru Flash Player',
+  title = 'Flare Player',
+  titleTail = ' - Flare Flash Player',
   withTail = true,
   header = true,
   container = true,

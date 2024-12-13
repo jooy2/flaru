@@ -1,7 +1,7 @@
 {
-  productName: 'Flaru Player',
-  appId: 'com.flaru.flaru',
-  copyright: 'ⓒ 2021-2024 Jooy2 (jooy2.com)',
+  productName: 'Flare Player',
+  appId: 'com.flare.player',
+  copyright: 'ⓒ 2021-2025 Jooy2 (jooy2.com)',
   asar: true,
   extends: null,
   compression: 'maximum',
@@ -48,7 +48,7 @@
     ],
   },
   linux: {
-    executableName: 'flaru',
+    executableName: 'flare',
     icon: 'buildAssets/installer',
     category: 'Game',
     target: [
