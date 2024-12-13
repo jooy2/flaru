@@ -2,7 +2,7 @@ name: app-test
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - '**'
       - '!*.md'
@@ -10,7 +10,7 @@ on:
       - '!.github/**'
       - '.github/workflows/app-test.yml'
   pull_request:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: ['20', '22']
+        node_version: ['22', '24']
         os: [windows-latest, macos-latest, ubuntu-latest]
 
     steps:
