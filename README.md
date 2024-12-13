@@ -91,7 +91,7 @@ $ npm run build:linux
 
 ## 📋 License
 
-Copyright © 2021-2024 [Jooy2](https://jooy2.com) <[jooy2.contact@gmail.com](mailto:jooy2.contact@gmail.com)> Released under the MIT license. (Source code excluding Ruffle and external modules)
+Copyright © 2021-2025 [Jooy2](https://jooy2.com) <[jooy2.contact@gmail.com](mailto:jooy2.contact@gmail.com)> Released under the MIT license. (Source code excluding Ruffle and external modules)
 
 > [!IMPORTANT]
 >
