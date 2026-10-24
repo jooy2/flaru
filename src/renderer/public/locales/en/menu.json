@@ -50,6 +50,8 @@
   "pause": "Pause",
   "volume": "Volume",
   "mute": "Mute",
+  "virtual-mouse": "Virtual mouse",
+  "mouse-hold": "Keep the button held",
   "renderer-auto": "Auto (recommended)",
   "renderer-wgpu-webgl": "wgpu-webgl (recommended)",
   "renderer-webgl": "webgl (low compatibility, fast)",

@@ -50,6 +50,8 @@
   "pause": "一時停止",
   "volume": "音量",
   "mute": "ミュート",
+  "virtual-mouse": "仮想マウス",
+  "mouse-hold": "ボタンを押したままにする",
   "renderer-auto": "自動(推奨)",
   "renderer-wgpu-webgl": "wgpu-webgl(推奨)",
   "renderer-webgl": "webgl（互換性が低い、速度が速い）",

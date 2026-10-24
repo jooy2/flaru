@@ -411,6 +411,87 @@ test('Volume opens from the speaker button, and unmuting brings its level back',
   await expect(slider).toBeHidden();
 });
 
+test('Virtual mouse clicks the movie where its cursor is and keeps the keyboard on the movie', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  // Matches `SYNTHETIC_POINTER_ID` in `PlayerVirtualMousePad`.
+  const padPointerId = 0x7ffffff0;
+  const stage = appWindow.locator('.app-player__stage');
+  const toggle = appWindow.getByRole('button', { name: 'Virtual mouse' });
+  const pad = appWindow.locator('.virtual-mouse__panel');
+  const leftButton = pad.locator('.virtual-mouse__click').first();
+  const padPresses = () =>
+    appWindow.evaluate(
+      (pointerId) =>
+        (window as any).e2ePadEvents.filter(
+          (event) => event.pointerId === pointerId && event.type === 'pointerdown',
+        ),
+      padPointerId,
+    );
+
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(pad).toBeVisible();
+  await expect(appWindow.locator('.virtual-mouse__cursor')).toBeVisible();
+
+  // A real click on the movie gives it the keyboard and moves the cursor there.
+  await stage.click({ position: { x: 100, y: 80 } });
+
+  await expect.poll(() => appWindow.evaluate(() => document.activeElement?.id)).toBe('player');
+  const expected = await appWindow.evaluate(() => {
+    const player = document.getElementById('player') as any;
+    const canvases = player.shadowRoot.querySelectorAll('canvas');
+    const canvas = canvases[canvases.length - 1];
+    const stageRect = document.querySelector('.app-player__stage')!.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+
+    (window as any).e2ePadEvents = [];
+
+    for (const type of ['pointerdown', 'pointerup']) {
+      canvas.addEventListener(type, (event: PointerEvent) => {
+        (window as any).e2ePadEvents.push({
+          type,
+          pointerId: event.pointerId,
+          button: event.button,
+          x: event.offsetX,
+          y: event.offsetY,
+        });
+      });
+    }
+
+    return { x: stageRect.left + 100 - canvasRect.left, y: stageRect.top + 80 - canvasRect.top };
+  });
+
+  await leftButton.click();
+
+  // A quick press is still held long enough for the movie to see it.
+  await expect
+    .poll(() => appWindow.evaluate(() => (window as any).e2ePadEvents.map((event) => event.type)))
+    .toEqual(['pointerdown', 'pointerup']);
+
+  const [press] = await padPresses();
+
+  expect(press.button).toBe(0);
+  expect(press.x).toBeCloseTo(expected.x, 0);
+  expect(press.y).toBeCloseTo(expected.y, 0);
+  expect(await appWindow.evaluate(() => document.activeElement?.id)).toBe('player');
+
+  // Turbo turns one long press into a run of clicks.
+  await pad.getByRole('button', { name: 'TURBO' }).click();
+  await expect(pad.getByRole('button', { name: 'TURBO' })).toHaveAttribute('aria-pressed', 'true');
+  await leftButton.hover();
+  await appWindow.mouse.down();
+  await appWindow.waitForTimeout(500);
+  await appWindow.mouse.up();
+
+  expect((await padPresses()).length).toBeGreaterThanOrEqual(4);
+
+  await pad.getByRole('button', { name: 'Close' }).click();
+  await expect(pad).toHaveCount(0);
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+});
+
 // What Ruffle loaded the movie on the player screen with.
 const loadedConfig = () =>
   appWindow.evaluate(() => {

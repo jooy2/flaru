@@ -50,6 +50,8 @@
   "pause": "일시정지",
   "volume": "음량",
   "mute": "음소거",
+  "virtual-mouse": "가상 마우스",
+  "mouse-hold": "버튼 누른 상태 유지",
   "renderer-auto": "자동 (권장)",
   "renderer-wgpu-webgl": "wgpu-webgl (권장)",
   "renderer-webgl": "webgl (호환성 낮음, 속도 빠름)",

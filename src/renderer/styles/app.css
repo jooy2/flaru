@@ -338,8 +338,281 @@ body {
   white-space: nowrap;
 }
 
+.app-player__controller-end {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/*
+ * Virtual mouse. Translucent caps let the movie show through, with the borders
+ * and glyphs carrying the shape. The pad always sits over the movie, so its
+ * colours are fixed instead of following the theme.
+ */
+
+.virtual-mouse {
+  --virtual-mouse-panel-fill: rgba(0, 0, 0, 0.42);
+  --virtual-mouse-panel-border: rgba(255, 255, 255, 0.3);
+  --virtual-mouse-fill: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.232),
+    rgba(255, 255, 255, 0.136)
+  );
+  --virtual-mouse-pressed-fill: linear-gradient(
+    to top,
+    rgba(255, 90, 95, 0.22),
+    rgba(255, 90, 95, 0.46)
+  );
+  --virtual-mouse-border: rgba(255, 255, 255, 0.54);
+  --virtual-mouse-pressed-border: rgba(255, 90, 95, 0.8);
+  --virtual-mouse-definition: rgba(0, 0, 0, 0.3);
+  --virtual-mouse-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  --virtual-mouse-pressed-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12), 0 0 10px 0.5px rgba(255, 90, 95, 0.3);
+  --virtual-mouse-glyph: rgba(255, 255, 255, 0.94);
+  --virtual-mouse-pressed-glyph: #ffffff;
+  --virtual-mouse-glyph-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  --virtual-mouse-control-height: 38px;
+
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.virtual-mouse__cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  will-change: transform;
+}
+
+.virtual-mouse__cursor svg {
+  display: block;
+}
+
+.virtual-mouse__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 4px 8px 8px;
+  border: 1px solid var(--virtual-mouse-panel-border);
+  border-radius: 14px;
+  background: var(--virtual-mouse-panel-fill);
+  box-shadow: var(--virtual-mouse-shadow);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.virtual-mouse__glyph {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.virtual-mouse__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 26px;
+  color: var(--virtual-mouse-glyph);
+  filter: drop-shadow(var(--virtual-mouse-glyph-shadow));
+}
+
+.virtual-mouse__grip {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  height: 100%;
+  cursor: move;
+}
+
+.virtual-mouse__close {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.virtual-mouse__stick {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 auto;
+  border: 1px solid var(--virtual-mouse-definition);
+  border-radius: 50%;
+}
+
+/* Two rims: the dark ring of the stick outside, so the well shows up on pale
+   content, and this light one inside, so it doesn't vanish into a black stage. */
+.virtual-mouse__well {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid rgba(255, 255, 255, 0.58);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.06) 45%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.virtual-mouse__knob {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1.5px solid var(--virtual-mouse-border);
+  border-radius: 50%;
+  background: var(--virtual-mouse-fill);
+  box-shadow: var(--virtual-mouse-shadow);
+  color: var(--virtual-mouse-glyph);
+  filter: drop-shadow(var(--virtual-mouse-glyph-shadow));
+  transition: background 110ms ease-out;
+}
+
+.virtual-mouse__knob--active {
+  border: 2px solid var(--virtual-mouse-pressed-border);
+  background: var(--virtual-mouse-pressed-fill);
+  box-shadow: var(--virtual-mouse-pressed-shadow);
+  color: var(--virtual-mouse-pressed-glyph);
+}
+
+.virtual-mouse__clicks {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.virtual-mouse__click {
+  box-sizing: border-box;
+  height: var(--virtual-mouse-control-height);
+  border: 1px solid var(--virtual-mouse-definition);
+  border-radius: 8px;
+}
+
+.virtual-mouse__cap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--virtual-mouse-border);
+  border-radius: 8px;
+  background: var(--virtual-mouse-fill);
+  box-shadow: var(--virtual-mouse-shadow);
+  transform: scale(1);
+  transition:
+    transform 90ms ease-out,
+    background 110ms ease-out;
+}
+
+/* A thin crescent of light along the top gives the cap its relief without a
+   glossy fake-3D sheen. */
+.virtual-mouse__cap::before {
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 7px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 50%);
+  content: '';
+  pointer-events: none;
+}
+
+.virtual-mouse__click--pressed .virtual-mouse__cap {
+  border: 2px solid var(--virtual-mouse-pressed-border);
+  background: var(--virtual-mouse-pressed-fill);
+  box-shadow: var(--virtual-mouse-pressed-shadow);
+  transform: scale(0.92);
+}
+
+.virtual-mouse__click--pressed .virtual-mouse__cap::before {
+  display: none;
+}
+
+.virtual-mouse__cap-label {
+  position: relative;
+  color: var(--virtual-mouse-glyph);
+  font-size: 13.68px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  text-shadow: var(--virtual-mouse-glyph-shadow);
+}
+
+.virtual-mouse__click--pressed .virtual-mouse__cap-label {
+  color: var(--virtual-mouse-pressed-glyph);
+}
+
+.virtual-mouse__toggles {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.virtual-mouse__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  min-width: 0;
+  height: var(--virtual-mouse-control-height);
+  padding: 0 4px;
+  border: 1.5px solid var(--virtual-mouse-border);
+  border-radius: 8px;
+  background: var(--virtual-mouse-fill);
+  box-shadow: var(--virtual-mouse-shadow);
+  color: var(--virtual-mouse-glyph);
+  font: inherit;
+  filter: drop-shadow(var(--virtual-mouse-glyph-shadow));
+  cursor: pointer;
+  transition:
+    background 110ms ease-out,
+    border-color 110ms ease-out;
+}
+
+.virtual-mouse__toggle--active {
+  border: 2px solid var(--virtual-mouse-pressed-border);
+  background: var(--virtual-mouse-pressed-fill);
+  box-shadow: var(--virtual-mouse-pressed-shadow);
+  color: var(--virtual-mouse-pressed-glyph);
+}
+
+.virtual-mouse__toggle-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1;
+}
+
+.virtual-mouse__close:focus-visible,
+.virtual-mouse__toggle:focus-visible {
+  outline: 2px solid var(--virtual-mouse-pressed-glyph);
+  outline-offset: 1px;
+}
+
 .app-metadata .mp-data-list__label {
   font-weight: bold;
+}
+
+.app-player__viewport {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  /* Keeps the virtual mouse's layer local, under the dialogs and popups. */
+  isolation: isolate;
 }
 
 .app-player__stage {

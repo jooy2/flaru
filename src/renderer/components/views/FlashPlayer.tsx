@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import { MPCheckbox, MPIcon, MPIconButton, MPPopover, MPSlider, MPTooltip } from 'material-plus-ui';
-import { Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { Mouse, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ModalConfirm from '@/renderer/components/dialogs/ModalConfirm';
+import PlayerVirtualMousePad from '@/renderer/components/views/PlayerVirtualMousePad';
 
 export default function FlashPlayer({
   url = '',
@@ -27,6 +28,7 @@ export default function FlashPlayer({
   const player: any = useRef(null);
   const [rufflePlayer, setRufflePlayer]: any = useState(null);
   const [openFailedToLoadServerModal, setOpenFailedToLoadServerModal] = useState(false);
+  const [showVirtualMouse, setShowVirtualMouse] = useState(false);
   const dispatch = useDispatch();
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const [currentFileName, setCurrentFileName] = useState('');
@@ -223,12 +225,22 @@ export default function FlashPlayer({
   return (
     <>
       <div className={header ? 'app-player' : 'app-player app-player--full'}>
-        <div
-          id="main"
-          className="app-player__stage"
-          ref={player}
-          onContextMenu={(e) => e.preventDefault()}
-        />
+        {/* The stage is emptied whenever a new player goes in, so the pad sits
+            beside it rather than inside it. */}
+        <div className="app-player__viewport">
+          <div
+            id="main"
+            className="app-player__stage"
+            ref={player}
+            onContextMenu={(e) => e.preventDefault()}
+          />
+          {showVirtualMouse && (
+            <PlayerVirtualMousePad
+              rufflePlayer={rufflePlayer}
+              onClose={() => setShowVirtualMouse(false)}
+            />
+          )}
+        </div>
         {stateAppScreen.appConfigShowPlayerController && (
           <div className="app-player__controller">
             <MPTooltip content={rufflePlayer?.isPlaying ? t('pause') : t('play')}>
@@ -286,6 +298,18 @@ export default function FlashPlayer({
                 />
               </div>
             </MPPopover>
+            <div className="app-player__controller-end">
+              <MPTooltip content={t('virtual-mouse')}>
+                <MPIconButton
+                  variant="text"
+                  color={showVirtualMouse ? 'primary' : 'secondary'}
+                  label={t('virtual-mouse')}
+                  aria-pressed={showVirtualMouse}
+                  onClick={() => setShowVirtualMouse(!showVirtualMouse)}
+                  icon={<MPIcon icon={Mouse} size={18} />}
+                />
+              </MPTooltip>
+            </div>
           </div>
         )}
       </div>

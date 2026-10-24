@@ -50,6 +50,8 @@
   "pause": "Pause",
   "volume": "Volume",
   "mute": "Couper le son",
+  "virtual-mouse": "Souris virtuelle",
+  "mouse-hold": "Maintenir le bouton enfoncé",
   "renderer-auto": "Automatique (recommandé)",
   "renderer-wgpu-webgl": "wgpu-webgl (recommandé)",
   "renderer-webgl": "webgl (faible compatibilité, rapide)",
