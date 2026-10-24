@@ -55,6 +55,10 @@ export default function FlashPlayer({
   // tries the GPU renderers first, which some Ruffle versions do not come back
   // from. So it draws on a canvas, unless a renderer was chosen by hand.
   const autoRenderer = stateAppScreen.mainGlobalValues.ENV_HARDWARE_ACCELERATION ? null : 'canvas';
+  const launchOptions = stateAppScreen.flashLaunchOptions;
+  // Strict mode shuts the movie off from the network, from scripts on the page
+  // and from opening pages.
+  const isStrict = launchOptions?.strictMode === true;
   // Ruffle tells nothing when it pauses or resumes, so the controls are drawn
   // again by hand after each change.
   const [, redrawControls] = useReducer((count: number) => count + 1, 0);
@@ -139,12 +143,13 @@ export default function FlashPlayer({
           url: `http://localhost:${port}/${currentFileName}`,
           autoplay: autoplay ? 'on' : 'off',
           base: currentFileDirectory,
-          allowScriptAccess: true,
+          allowScriptAccess: !isStrict,
+          allowNetworking: isStrict ? 'none' : 'all',
           letterbox: stateAppScreen.appConfigLetterboxMode,
           contextMenu: contextMenuMode,
           backgroundExecutionMode,
           logLevel: toRuffleLogLevel(logLevel),
-          openUrlMode: 'confirm',
+          openUrlMode: isStrict ? 'deny' : 'confirm',
           preferredRenderer:
             stateAppScreen.appConfigPreferredRenderer === 'auto'
               ? autoRenderer
@@ -156,6 +161,8 @@ export default function FlashPlayer({
           maxExecutionDuration: stateAppScreen.appConfigMaxExecutionDuration,
           playerRuntime: stateAppScreen.appConfigPlayerRuntime,
           deviceFontRenderer: stateAppScreen.appConfigDeviceFontRenderer,
+          frameRate: launchOptions?.frameRate || null,
+          parameters: launchOptions?.parameters || {},
           warnOnUnsupportedContent: false,
           playerVersion:
             stateAppScreen.appConfigEmulatePlayerVersion === 0

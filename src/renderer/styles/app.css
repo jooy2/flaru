@@ -184,8 +184,93 @@ body {
   color: var(--app-text-subtle);
 }
 
+/* The drop zone and the recent files, side by side at one fixed height. */
+.app-explorer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.app-explorer__panel {
+  display: flex;
+  flex-direction: column;
+  height: 440px;
+}
+
+/* A card sets its content two boxes deep, and both pass the height on. */
+.app-explorer__panel > div,
+.app-explorer__panel .mp-card__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+/* The drop zone takes whatever height the panel has left. */
+.app-dropzone {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.app-dropzone .mp-file-picker,
+.app-dropzone .mp-file-picker > div,
 .app-dropzone .mp-file-picker__zone {
-  min-height: 160px;
+  flex: 1 1 auto;
+}
+
+.app-recent__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* A narrow window puts the recent files under the drop zone. */
+@media (max-width: 720px) {
+  .app-explorer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-explorer__panel {
+    height: 320px;
+  }
+
+  .app-launch__fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.app-launch {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-launch__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.app-launch__desc {
+  display: block;
+  margin-top: 4px;
+  color: var(--app-text-subtle);
+  word-break: keep-all;
+}
+
+.app-launch__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.app-launch__params {
+  grid-column: 1 / -1;
 }
 
 .app-recent__header {
@@ -194,12 +279,8 @@ body {
   justify-content: space-between;
 }
 
-.app-recent__list .mp-list-item__label {
+.app-recent__list .mp-list-item__description {
   font-size: 0.8em;
-  max-width: 100%;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .app-about__logo {

@@ -888,6 +888,95 @@ test('Clicking the drop zone opens the file dialog for one SWF file', async () =
   await openExplorer();
 });
 
+test('Advanced launch settings reach a file started from the explorer, and not one opened from the system', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const launch = appWindow.getByRole('region', { name: 'Advanced launch settings' });
+  const strictMode = launch.getByRole('checkbox', { name: /^Strict mode/ });
+  const restore = launch.getByRole('button', { name: 'Restore defaults' });
+  const swfPath = join(fixturesDir, 'Launch Movie.swf');
+  const systemPath = join(fixturesDir, 'System Movie.swf');
+  const launchConfig = () =>
+    appWindow.evaluate(() => {
+      const config = (document.getElementById('player') as any)?.loadedConfig;
+
+      return {
+        allowScriptAccess: config?.allowScriptAccess,
+        allowNetworking: config?.allowNetworking,
+        openUrlMode: config?.openUrlMode,
+        frameRate: config?.frameRate,
+        parameters: config?.parameters,
+        playerVersion: config?.playerVersion,
+      };
+    });
+  const applied = {
+    allowScriptAccess: false,
+    allowNetworking: 'none',
+    openUrlMode: 'deny',
+    frameRate: 30,
+    parameters: 'level=3&debug=1',
+    playerVersion: 9,
+  };
+
+  writeFileSync(swfPath, BLANK_SWF);
+  writeFileSync(systemPath, BLANK_SWF);
+  await openExplorer();
+  await expect(restore).toBeDisabled();
+
+  await strictMode.click();
+  await launch.getByRole('combobox', { name: 'Player version' }).click();
+  await appWindow.getByRole('option', { name: '9', exact: true }).click();
+  await launch.getByLabel('Frame rate').fill('30');
+  await launch.getByLabel('Frame rate').press('Enter');
+  await launch.getByRole('textbox', { name: 'Parameters' }).fill('level=3&debug=1');
+  await expect(restore).toBeEnabled();
+
+  // A drop takes the options.
+  await dragFilesOnto([swfPath], appWindow.getByTestId('uiFileOpen'));
+  await expect(appWindow).toHaveTitle('Launch Movie.swf - Flare Flash Player');
+  await expect.poll(launchConfig).toEqual(applied);
+
+  // They stay for the next file the explorer starts, from the recent files too.
+  await openExplorer();
+  await expect(strictMode).toBeChecked();
+  await appWindow.getByRole('button', { name: /^Launch Movie\.swf/ }).click();
+  await expect(appWindow).toHaveTitle('Launch Movie.swf - Flare Flash Player');
+  await expect.poll(launchConfig).toEqual(applied);
+
+  // A file opened from the system plays without them.
+  await playFile(systemPath);
+  await expect(appWindow).toHaveTitle('System Movie.swf - Flare Flash Player');
+  await expect.poll(launchConfig).toEqual({
+    allowScriptAccess: true,
+    allowNetworking: 'all',
+    openUrlMode: 'confirm',
+    frameRate: null,
+    parameters: {},
+    playerVersion: null,
+  });
+
+  await openExplorer();
+  await restore.click();
+  await expect(strictMode).not.toBeChecked();
+  await expect(launch.getByRole('textbox', { name: 'Parameters' })).toHaveValue('');
+  await expect(restore).toBeDisabled();
+});
+
+test('Recent files lead with the file name and can be cleared', async () => {
+  const list = appWindow.getByRole('list', { name: 'Recent Files' });
+
+  await openExplorer();
+  // The file opened from the system last leads the list, its name above its path.
+  await expect(list.getByRole('button').first()).toHaveAccessibleName(
+    `System Movie.swf ${join(fixturesDir, 'System Movie.swf')}`,
+  );
+
+  await appWindow.getByRole('button', { name: 'Clear recent files' }).click();
+  await expect(list).toHaveCount(0);
+  await expect(appWindow.getByText(readMessages('en', 'notice')['no-recent-files'])).toBeVisible();
+  await expect.poll(() => readStoredConfig().recentFiles).toEqual([]);
+});
+
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
   await recordExternalLinks();
   await appWindow.evaluate(() => {

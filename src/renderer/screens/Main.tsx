@@ -22,6 +22,9 @@ export default function Main() {
       setConfig({
         flashFileName: await window.mainApi.getFileNameFromPath(filePath, true),
         flashFilePath: filePath,
+        // A file opened from the system plays without the explorer's options.
+        flashLaunchOptions: null,
+        appConfigEmulatePlayerVersion: 0,
       }),
     );
     window.mainApi.send('appendRecentFiles', filePath);

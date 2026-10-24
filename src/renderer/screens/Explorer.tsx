@@ -16,9 +16,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/renderer/store';
+import store, { RootState } from '@/renderer/store';
 import Layout from '@/renderer/components/layouts/Layout';
+import LaunchOptionsPanel from '@/renderer/components/views/LaunchOptionsPanel';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+import { getBaseName } from '@/renderer/utils/helper';
 
 // The MIME types systems give SWF files, and the extension for a file that comes
 // with none. The dialog filters on this list, and the picker checks every drop
@@ -36,13 +38,18 @@ export default function Explorer() {
   const [loading, setLoading] = useState(false);
   const [flashContentError, setFlashContentError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  // The listeners below outlive the render that added them, so the launch
+  // options are read from the store when a file starts.
   const runFlash = (fileName: string, filePath: string) => {
+    const { launchOptions } = store.getState().appScreen;
+
     setLoading(true);
     dispatch(
       setConfig({
         flashFileName: fileName || 'swf',
         flashFilePath: filePath,
-        appConfigEmulatePlayerVersion: 0,
+        flashLaunchOptions: launchOptions,
+        appConfigEmulatePlayerVersion: launchOptions.playerVersion,
       }),
     );
     window.mainApi.send('appendRecentFiles', filePath);
@@ -129,54 +136,69 @@ export default function Explorer() {
       <div className="app-scroll">
         {!loading && (
           <>
-            <MPCard className="app-panel" variant="elevated" elevation={1} density={0}>
-              <div data-testid="uiFileOpen" className="app-dropzone">
-                <MPFilePicker
-                  accept={FLASH_FILE_ACCEPT}
-                  value={NO_FILES}
-                  showList={false}
-                  title={<strong>{t('notice:drag-drop-execute')}</strong>}
-                  icon={<MPIcon icon={FileUp} size={32} />}
-                  onFilesChange={handleFilesChange}
-                  onReject={handleReject}
-                />
-              </div>
-              {flashContentError && (
-                <MPAlert color="error" variant="tonal">
-                  {errorMessage}
-                </MPAlert>
-              )}
-            </MPCard>
-            <MPCard className="app-panel" variant="elevated" elevation={1} density={0}>
-              <div className="app-recent__header">
-                <h2 className="app-panel__title">
-                  <strong>{t('common:recent-file-title')}</strong>
-                </h2>
-                <MPIconButton
-                  variant="text"
-                  label={t('common:recent-file-title')}
-                  onClick={handleRemoveRecentFiles}
-                  disabled={stateAppScreen.recentFiles.length < 1}
-                  icon={<MPIcon icon={Trash2} size={18} />}
-                />
-              </div>
-              {stateAppScreen.recentFiles.length < 1 && (
-                <MPTypography level="caption">{t('notice:no-recent-files')}</MPTypography>
-              )}
-              {stateAppScreen.recentFiles.length > 0 && (
-                <MPList className="app-recent__list" variant="text" aria-label="recent files">
-                  {stateAppScreen.recentFiles.map((val) => (
-                    <MPListItem
-                      key={val}
-                      startIcon={<MPIcon icon={CirclePlay} size={18} />}
-                      onClick={(e) => handleClickRecentFile(e, val)}
+            {/* The drop zone and the recent files sit side by side at one fixed
+                height, and a long list scrolls inside its own box. */}
+            <div className="app-explorer">
+              <MPCard className="app-explorer__panel" variant="elevated" elevation={1} density={0}>
+                <div data-testid="uiFileOpen" className="app-dropzone">
+                  <MPFilePicker
+                    accept={FLASH_FILE_ACCEPT}
+                    value={NO_FILES}
+                    showList={false}
+                    title={<strong>{t('notice:drag-drop-execute')}</strong>}
+                    icon={<MPIcon icon={FileUp} size={32} />}
+                    onFilesChange={handleFilesChange}
+                    onReject={handleReject}
+                  />
+                </div>
+                {flashContentError && (
+                  <MPAlert color="error" variant="tonal">
+                    {errorMessage}
+                  </MPAlert>
+                )}
+              </MPCard>
+              <MPCard className="app-explorer__panel" variant="elevated" elevation={1} density={0}>
+                <div className="app-recent__header">
+                  <h2 className="app-panel__title" id="recent-files-title">
+                    <strong>{t('common:recent-file-title')}</strong>
+                  </h2>
+                  <MPIconButton
+                    variant="text"
+                    label={t('menu:clear-recent-files')}
+                    onClick={handleRemoveRecentFiles}
+                    disabled={stateAppScreen.recentFiles.length < 1}
+                    icon={<MPIcon icon={Trash2} size={18} />}
+                  />
+                </div>
+                {stateAppScreen.recentFiles.length < 1 && (
+                  <MPTypography level="caption">{t('notice:no-recent-files')}</MPTypography>
+                )}
+                {stateAppScreen.recentFiles.length > 0 && (
+                  <div className="app-recent__scroll">
+                    <MPList
+                      className="app-recent__list"
+                      variant="text"
+                      aria-labelledby="recent-files-title"
                     >
-                      {val}
-                    </MPListItem>
-                  ))}
-                </MPList>
-              )}
-            </MPCard>
+                      {/* The name leads, since the end of a long path is what a
+                          narrow box would cut off. */}
+                      {stateAppScreen.recentFiles.map((val) => (
+                        <MPListItem
+                          key={val}
+                          title={val}
+                          startIcon={<MPIcon icon={CirclePlay} size={18} />}
+                          description={val}
+                          onClick={(e) => handleClickRecentFile(e, val)}
+                        >
+                          {getBaseName(val)}
+                        </MPListItem>
+                      ))}
+                    </MPList>
+                  </div>
+                )}
+              </MPCard>
+            </div>
+            <LaunchOptionsPanel />
           </>
         )}
         {loading && (

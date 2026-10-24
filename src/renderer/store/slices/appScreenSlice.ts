@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { DebugLogLevel } from '@/renderer/utils/ruffleLog';
+import { DEFAULT_LAUNCH_OPTIONS, LaunchOptions } from '@/renderer/utils/launchOptions';
 
 interface GlobalValues {
   APP_NAME: string;
@@ -29,6 +30,9 @@ export interface AppScreenState {
   flashFileHeight: number;
   flashFileBackgroundColor: string;
   flashFileFrameRate: number;
+  // The explorer's launch options of the file playing now, or null for a file
+  // opened from the system, which plays without them.
+  flashLaunchOptions: LaunchOptions | null;
   flashVolume: number;
   // Kept apart from the volume, so unmuting brings back the level the slider was left at.
   flashMuted: boolean;
@@ -56,6 +60,8 @@ export interface AppScreenState {
   appConfigHardwareAcceleration: boolean;
   appConfigDebugLogLevel: DebugLogLevel;
   recentFiles: string[];
+  // What the explorer applies to the next file it starts. Never saved.
+  launchOptions: LaunchOptions;
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
   dialogLocalStorageViewOpen: boolean;
@@ -73,6 +79,7 @@ const initialState: AppScreenState = {
   flashFileHeight: 0,
   flashFileBackgroundColor: '',
   flashFileFrameRate: 0,
+  flashLaunchOptions: null,
   flashVolume: 100,
   flashMuted: false,
   isDarkTheme: false,
@@ -99,6 +106,7 @@ const initialState: AppScreenState = {
   appConfigHardwareAcceleration: true,
   appConfigDebugLogLevel: 'off',
   recentFiles: [],
+  launchOptions: DEFAULT_LAUNCH_OPTIONS,
   mainGlobalValues: {
     APP_NAME: '',
     APP_VERSION_NAME: '',
