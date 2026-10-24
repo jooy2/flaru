@@ -19,7 +19,11 @@ export default function ModalConfirm({
   const [t] = useTranslation(['common', 'notice', 'menu']);
 
   return (
+    // The question is the whole dialog, so it is set larger than the small line
+    // that sits under a title, and it still describes the dialog.
     <MPDialog
+      className="app-confirm"
+      width={440}
       open={open}
       // The escape key used to be disabled outright; a dismissal now has to go
       // through the buttons instead.

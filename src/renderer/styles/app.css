@@ -136,6 +136,13 @@ body {
   margin-bottom: 16px;
 }
 
+.app-confirm p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-mp-on-surface);
+  word-break: keep-all;
+}
+
 .app-about {
   text-align: center;
 }

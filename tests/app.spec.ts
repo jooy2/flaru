@@ -704,6 +704,30 @@ test('Emulation options reach Ruffle when the movie loads again', async () => {
     .toEqual(['showAll', 'on', 'high', 15]);
 });
 
+test('A confirmation reads its question as body text', async () => {
+  await appWindow.getByRole('button', { name: 'Back' }).click();
+  await openSettings('Advanced');
+  await settingsDialog().getByRole('button', { name: 'Manage Emulator Save Data' }).click();
+  await appWindow.getByRole('button', { name: 'Reset All Data' }).click();
+
+  const confirm = appWindow.getByRole('dialog', {
+    description: readMessages('en', 'notice').confirm,
+  });
+
+  await expect(confirm).toBeVisible();
+
+  const fontSize = await confirm
+    .getByText(readMessages('en', 'notice').confirm)
+    .evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+
+  expect(fontSize).toBeGreaterThanOrEqual(15);
+
+  await confirm.getByRole('button', { name: 'Cancel' }).click();
+  await expect(confirm).toBeHidden();
+  await appWindow.getByRole('button', { name: 'Close' }).last().click();
+  await closeSettings();
+});
+
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
   await recordExternalLinks();
   await appWindow.evaluate(() => {
