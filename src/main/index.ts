@@ -41,6 +41,7 @@ const getPlatform = (): string => {
 };
 
 const CURRENT_OS = getPlatform();
+const IS_E2E = process.env.E2E === 'yes';
 const MAX_RECENT_FILES = 10;
 const DEFAULT_WINDOW_ATTR = {
   minWidth: 100,
@@ -49,13 +50,19 @@ const DEFAULT_WINDOW_ATTR = {
   height: 800,
 };
 
+// End-to-end runs get their own settings, recent files and local storage, so a
+// test that changes an option never touches the developer's own app data.
+if (IS_E2E && process.env.E2E_USER_DATA_DIR) {
+  app.setPath('userData', process.env.E2E_USER_DATA_DIR);
+}
+
 global.APP_NAME = pkg.displayName;
 global.APP_VERSION_NAME = pkg.version;
 global.APP_VERSION_CODE = pkg.versionCode;
 global.APP_VERSION_DATE = pkg.versionDate;
 global.APP_AUTHOR = pkg.author;
 global.APP_RUFFLE_VERSION_DATE = pkg.ruffleVersionDate;
-global.ENV_IS_DEV = process.env.E2E === 'yes' ? false : !app.isPackaged;
+global.ENV_IS_DEV = IS_E2E ? false : !app.isPackaged;
 global.ENV_OS = CURRENT_OS;
 global.ENV_IS_WINDOWS = CURRENT_OS === 'Windows';
 global.ENV_IS_MAC = CURRENT_OS === 'macOS';
@@ -99,6 +106,9 @@ const createWindow = () => {
     ...getWindowBounds(),
     minWidth: DEFAULT_WINDOW_ATTR.minWidth,
     minHeight: DEFAULT_WINDOW_ATTR.minHeight,
+    // End-to-end runs drive the window without ever showing it, so a test run
+    // does not take focus from whatever else is open on the machine.
+    show: !IS_E2E,
     webPreferences: {
       spellcheck: false,
       // To allow load ruffle content
@@ -106,6 +116,9 @@ const createWindow = () => {
       devTools: global.ENV_IS_DEV,
       contextIsolation: true,
       nodeIntegration: false,
+      // Chromium treats a hidden window as a background page and slows its
+      // timers and animation frames, which the tests would otherwise wait on.
+      backgroundThrottling: !IS_E2E,
       preload: join(__dirname, '../preload/index.js'),
     },
   });
@@ -272,6 +285,12 @@ app.on('open-file', (event, pathParam) => {
 });
 
 app.on('ready', () => {
+  if (IS_E2E && global.ENV_IS_MAC) {
+    // With the window hidden, the Dock icon is the only part of the app that
+    // would still appear on screen.
+    app.dock?.hide();
+  }
+
   protocol.registerFileProtocol('file', (request, callback) => {
     const pathname = decodeURI(request.url.replace('file:///', ''));
     callback(pathname);
