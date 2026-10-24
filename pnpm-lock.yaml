@@ -67,7 +67,7 @@ importers:
         version: 17.13.0
       i18next:
         specifier: ^26.5.7
-        version: 26.5.7(typescript@6.0.3)
+        version: 26.5.8(typescript@6.0.3)
       i18next-browser-languagedetector:
         specifier: ^8.2.2
         version: 8.2.2
@@ -100,7 +100,7 @@ importers:
         version: 19.3.1(react@19.3.1)
       react-i18next:
         specifier: ^17.1.5
-        version: 17.1.5(i18next@26.5.7(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
+        version: 17.1.6(i18next@26.5.8(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       react-redux:
         specifier: ^9.3.0
         version: 9.3.0(@types/react@19.3.0)(react@19.3.1)(redux@5.0.1)
@@ -121,7 +121,7 @@ importers:
         version: 8.3.5(@types/node@26.6.5)(jiti@2.7.0)
       vite-plugin-electron:
         specifier: ^1.1.2
-        version: 1.1.2(vite-plugin-electron-renderer@1.0.0)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
+        version: 1.1.2(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
       vite-plugin-eslint:
         specifier: ^1.8.1
         version: 1.8.1(eslint@9.39.5(jiti@2.7.0))(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
@@ -1484,8 +1484,8 @@ packages:
     resolution: {integrity: sha512-0uXq24ZAVFwbA0MGija0AZYBcs8iA+wbC//UiDyZwPC3/wZfyD20LgGxvjMOqf9o3/pDJ05ZLIlB4U3+AdA9AQ==}
     engines: {node: '>=18'}
 
-  i18next@26.5.7:
-    resolution: {integrity: sha512-mY9cECbKtiOqpcB8d8ijNsiPZQoTFULehBlWXZzzURpTm9aLbE2c3T2FKdGZhdEjlTvXUGd0TvCisL06YafO0Q==}
+  i18next@26.5.8:
+    resolution: {integrity: sha512-EQx2RyhwINMekbykhZpAJQ2ILeJqnYOpRjWEkSVv45pR8yeVbb0thr2zxQ+dOo365OIb7h06BKPtt16WE8Wliw==}
     peerDependencies:
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
@@ -2202,8 +2202,8 @@ packages:
     peerDependencies:
       react: ^19.3.1
 
-  react-i18next@17.1.5:
-    resolution: {integrity: sha512-dRSwnd2pACasvcZXR+uP+60vW61CJKw9ZUM12B4ZucrY9SEIIsLBWgpo8UneOUXQcUtvjQmHMeOJ03Vursl1Ag==}
+  react-i18next@17.1.6:
+    resolution: {integrity: sha512-Chrt5sVco051WgQST6RA3/BePVNC6fBf9BtXhKts0i7vpGVziqyLb5IrmdNtsEYE5vJ0mEDkJHWF1Gie40khXA==}
     peerDependencies:
       i18next: '>= 26.2.0'
       react: '>= 16.8.0'
@@ -2653,9 +2653,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  vite-plugin-electron-renderer@1.0.0:
-    resolution: {integrity: sha512-/9CBdUqnCgwWXn61v5PErWnR5q3Bfne2oI52uHzgJnKnlaoNgEKvxOzS0/XssDXWMK3ElStM2+J/Ko4Q63XhMA==}
 
   vite-plugin-electron@1.1.2:
     resolution: {integrity: sha512-EAHs3zhK+33FhdasevCRVMMOFIHT+MDg5EcD47CCwxDcJ1REYqb7EeR0RHOjCKS7P2ip/q1ISzzMpK3H+p8uTA==}
@@ -4487,7 +4484,7 @@ snapshots:
 
   i18next-http-backend@4.0.5: {}
 
-  i18next@26.5.7(typescript@6.0.3):
+  i18next@26.5.8(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
 
@@ -5137,11 +5134,11 @@ snapshots:
       react: 19.3.1
       scheduler: 0.28.0
 
-  react-i18next@17.1.5(i18next@26.5.7(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3):
+  react-i18next@17.1.6(i18next@26.5.8(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3):
     dependencies:
       '@babel/runtime': 7.29.10
       html-parse-stringify: 4.0.1
-      i18next: 26.5.7(typescript@6.0.3)
+      i18next: 26.5.8(typescript@6.0.3)
       react: 19.3.1
       use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
@@ -5665,15 +5662,10 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite-plugin-electron-renderer@1.0.0:
-    optional: true
-
-  vite-plugin-electron@1.1.2(vite-plugin-electron-renderer@1.0.0)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)):
+  vite-plugin-electron@1.1.2(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)):
     dependencies:
       local-pkg: 1.2.1
       vite: 8.3.5(@types/node@26.6.5)(jiti@2.7.0)
-    optionalDependencies:
-      vite-plugin-electron-renderer: 1.0.0
 
   vite-plugin-eslint@1.8.1(eslint@9.39.5(jiti@2.7.0))(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)):
     dependencies:

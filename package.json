@@ -1,10 +1,10 @@
 {
   "name": "flare-player",
   "displayName": "Flare Player",
-  "version": "1.15.0",
-  "versionCode": 1150,
-  "versionDate": "2025-03-15",
-  "ruffleVersionDate": "2025-03-15",
+  "version": "1.16.0",
+  "versionCode": 1160,
+  "versionDate": "2026-10-24",
+  "ruffleVersionDate": "2026-10-24",
   "description": "Flare SWF Flash Player",
   "main": "dist/main/index.js",
   "desktopName": "flare.desktop",
@@ -20,7 +20,7 @@
     "url": "https://github.com/jooy2/flare/issues"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=26"
   },
   "scripts": {
     "dev": "vite",
