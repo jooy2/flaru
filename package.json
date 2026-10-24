@@ -73,6 +73,7 @@
     "i18next-http-backend": "^4.0.5",
     "lucide-react": "^1.61.0",
     "material-plus-ui": "^1.11.0",
+    "qsu": "^1.100.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-dropzone": "^20.1.4",

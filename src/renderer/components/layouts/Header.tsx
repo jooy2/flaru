@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { MPHeader, MPIcon, MPIconButton, MPSelect, MPTypography } from 'material-plus-ui';
 import { ArrowLeft, BarChart3, CircleHelp, Settings } from 'lucide-react';
+import { arrRange } from 'qsu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
@@ -8,7 +9,6 @@ import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import ModalAbout from '@/renderer/components/dialogs/ModalAbout';
 import ModalMetadata from '@/renderer/components/dialogs/ModalMetadata';
 import ModalSettings from '@/renderer/components/dialogs/ModalSettings';
-import { arrWithNumber } from '@/renderer/utils/helper';
 
 export default function Header({
   title,
@@ -22,8 +22,7 @@ export default function Header({
   const dispatch = useDispatch();
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const playerVersionItems = useMemo(
-    () =>
-      arrWithNumber(0, 32).map((value) => ({ value, label: value === 0 ? 'Auto' : `${value}` })),
+    () => arrRange(0, 32).map((value) => ({ value, label: value === 0 ? 'Auto' : `${value}` })),
     [],
   );
 

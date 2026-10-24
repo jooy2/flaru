@@ -10,17 +10,15 @@ import {
 } from 'electron';
 import http from 'http';
 import handler from 'serve-handler';
-import { join, basename, extname, win32, dirname } from 'path';
+import { join, dirname } from 'path';
 import ElectronStore from 'electron-store';
 import * as electronLocalShortcut from 'electron-localshortcut';
-import { promises } from 'fs';
 import { platform } from 'os';
+import { getFileName, isExistingPath } from 'qsu/node';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
-
-const fileExists = async (p) => !!(await promises.stat(p).catch(() => false));
 
 const getPlatform = (): string => {
   switch (platform()) {
@@ -347,7 +345,7 @@ ipcMain.on('checkFileExist', async (event, args) => {
   win.webContents.send('receiveFileExist', {
     name: args.name,
     path: args.path,
-    exist: await fileExists(args.path),
+    exist: await isExistingPath(args.path),
   });
 });
 
@@ -397,25 +395,9 @@ ipcMain.handle('startStaticServer', async (event, data) => {
   return port;
 });
 
-ipcMain.handle('getFileNameFromPath', (event, filePath: string, withExtension?: boolean) => {
-  if (!filePath) {
-    return '';
-  }
-
-  if (filePath.indexOf('/') === -1 && filePath.indexOf('\\') !== -1) {
-    // Windows path
-    if (withExtension) {
-      return win32.basename(filePath);
-    }
-
-    return win32.basename(filePath, extname(filePath));
-  }
-
-  if (withExtension) {
-    return basename(filePath);
-  }
-  return basename(filePath, extname(filePath));
-});
+ipcMain.handle('getFileNameFromPath', (event, filePath: string, withExtension?: boolean) =>
+  filePath ? getFileName(filePath, withExtension) : '',
+);
 
 ipcMain.handle('getDirnameFromPath', (event, filePath: string) => dirname(filePath));
 
