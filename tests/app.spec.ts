@@ -75,13 +75,20 @@ const windowRoute = () =>
   );
 
 // Starts the app again with the same app data and `args` on its command line,
-// as a file manager does, and resolves with its exit code.
+// as a file manager does, and resolves with its exit code. On Linux it turns
+// off the Chromium sandbox, as Playwright does for the first instance: an
+// unpackaged Electron cannot set it up there, and aborts.
 const launchAgain = (args: string[]) =>
   new Promise<number | null>((resolve, reject) => {
-    const child = spawn(electronPath as unknown as string, ['dist/main/index.js', ...args], {
-      env: { ...process.env, E2E: 'yes', E2E_USER_DATA_DIR: userDataDir, NODE_ENV: 'production' },
-      stdio: 'ignore',
-    });
+    const sandboxArgs = process.platform === 'linux' ? ['--no-sandbox'] : [];
+    const child = spawn(
+      electronPath as unknown as string,
+      ['dist/main/index.js', ...sandboxArgs, ...args],
+      {
+        env: { ...process.env, E2E: 'yes', E2E_USER_DATA_DIR: userDataDir, NODE_ENV: 'production' },
+        stdio: 'ignore',
+      },
+    );
 
     child.once('error', reject);
     child.once('exit', resolve);
