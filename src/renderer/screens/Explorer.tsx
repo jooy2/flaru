@@ -1,16 +1,17 @@
-import { useState, useCallback, useEffect, SetStateAction } from 'react';
+import { useState, useEffect } from 'react';
 import {
   MPAlert,
   MPCard,
+  MPFilePicker,
   MPIcon,
   MPIconButton,
   MPList,
   MPListItem,
   MPProgressCircular,
   MPTypography,
+  type MPFileRejection,
 } from 'material-plus-ui';
 import { CirclePlay, FileUp, Trash2 } from 'lucide-react';
-import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +19,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import Layout from '@/renderer/components/layouts/Layout';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+
+// The MIME types systems give SWF files, and the extension for a file that comes
+// with none. The dialog filters on this list, and the picker checks every drop
+// against it.
+const FLASH_FILE_ACCEPT = 'application/x-shockwave-flash,application/vnd.adobe.flash.movie,.swf';
+// The picker never holds on to a file: each one goes straight to the player, and
+// an empty selection lets the same file be chosen again.
+const NO_FILES: File[] = [];
 
 export default function Explorer() {
   const dispatch = useDispatch();
@@ -40,37 +49,33 @@ export default function Explorer() {
     navigate('/player');
     return true;
   };
-  const onDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const fileType = file?.type;
-    const filePath = window.mainApi.showFilePath(file);
-    const blob = fileType ? fileType.split('/')[1] : null;
-    if (
-      (!blob && !/\.(swf)/.test(filePath)) ||
-      (blob !== 'x-shockwave-flash' &&
-        blob !== 'futuresplash' &&
-        blob !== 'x-shockwave-flash2-preview' &&
-        blob !== 'vnd.adobe.flash.movie' &&
-        blob !== 'vnd.adobe.flash-movie')
-    ) {
-      setLoading(false);
-      setFlashContentError(true);
-      setErrorMessage(t('notice:wrong-file-type') as SetStateAction<string>);
-      return false;
+  const showWrongFileType = () => {
+    setLoading(false);
+    setFlashContentError(true);
+    setErrorMessage(t('notice:wrong-file-type'));
+  };
+
+  // A drop or a dialog pick. The picker keeps one file and has already checked
+  // its type, so only a file with no path on disk is left to turn away.
+  const handleFilesChange = (files: File[]) => {
+    const file = files[0];
+    const filePath = file ? window.mainApi.showFilePath(file) : '';
+
+    if (!filePath) {
+      showWrongFileType();
+      return;
     }
 
-    runFlash(file?.name, filePath);
+    runFlash(file.name, filePath);
+  };
 
-    return true;
-  }, []);
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'application/x-shockwave-flash': ['.swf'],
-    },
-    multiple: false,
-    onDrop,
-    useFsAccessApi: false,
-  });
+  // A file of another type is refused. Further files dropped with a movie are
+  // refused as well, while the first one still plays.
+  const handleReject = (rejections: MPFileRejection[]) => {
+    if (rejections.some((rejection) => rejection.reason === 'type')) {
+      showWrongFileType();
+    }
+  };
 
   const handleClickRecentFile = async (ev, file) => {
     if (ev) ev.preventDefault();
@@ -125,12 +130,16 @@ export default function Explorer() {
         {!loading && (
           <>
             <MPCard className="app-panel" variant="elevated" elevation={1} density={0}>
-              <div data-testid="uiFileOpen" {...getRootProps({ className: 'app-dropzone' })}>
-                <h2 className="app-dropzone__title">
-                  <strong>{t('notice:drag-drop-execute')}</strong>
-                </h2>
-                <MPIcon icon={FileUp} size={32} center />
-                <input {...getInputProps()} />
+              <div data-testid="uiFileOpen" className="app-dropzone">
+                <MPFilePicker
+                  accept={FLASH_FILE_ACCEPT}
+                  value={NO_FILES}
+                  showList={false}
+                  title={<strong>{t('notice:drag-drop-execute')}</strong>}
+                  icon={<MPIcon icon={FileUp} size={32} />}
+                  onFilesChange={handleFilesChange}
+                  onReject={handleReject}
+                />
               </div>
               {flashContentError && (
                 <MPAlert color="error" variant="tonal">

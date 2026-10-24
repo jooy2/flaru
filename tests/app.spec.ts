@@ -4,7 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import electronPath from 'electron';
-import { ElectronApplication, Page, _electron as electron, expect, test } from '@playwright/test';
+import {
+  ElectronApplication,
+  Locator,
+  Page,
+  _electron as electron,
+  expect,
+  test,
+} from '@playwright/test';
 
 // The smallest movie Ruffle will play: an uncompressed SWF 10 header with a
 // 550x400 stage at 24 fps and one frame, then SetBackgroundColor (white),
@@ -98,6 +105,35 @@ const recordExternalLinks = () =>
   });
 
 const openedExternally = () => appElectron.evaluate(() => (globalThis as any).openedExternally);
+
+// Drags files from outside the window onto the middle of `target`, with the
+// trusted input events an operating system drag produces, so the dropped files
+// carry their real paths.
+const dragFilesOnto = async (paths: string[], target: Locator) => {
+  const cdp = await appWindow.context().newCDPSession(appWindow);
+  const box = await target.boundingBox();
+
+  if (!box) {
+    throw new Error('Drop target is not on screen');
+  }
+
+  const point = { x: Math.round(box.x + box.width / 2), y: Math.round(box.y + box.height / 2) };
+  const data = { items: [], files: paths, dragOperationsMask: 1 };
+
+  for (const type of ['dragEnter', 'dragOver', 'drop'] as const) {
+    await cdp.send('Input.dispatchDragEvent', { type, ...point, data });
+  }
+
+  await cdp.detach();
+};
+
+const openExplorer = async () => {
+  if ((await windowRoute()) !== '/explorer') {
+    await appWindow.getByRole('button', { name: 'Back' }).click();
+  }
+
+  await expect(appWindow.getByTestId('uiFileOpen')).toBeVisible();
+};
 
 // What the settings file holds, written as soon as a setting changes.
 const readStoredConfig = () => JSON.parse(readFileSync(join(userDataDir, 'config.json'), 'utf8'));
@@ -786,6 +822,70 @@ test('A confirmation reads its question as body text', async () => {
   await expect(confirm).toBeHidden();
   await appWindow.getByRole('button', { name: 'Close' }).last().click();
   await closeSettings();
+});
+
+test('Dropping a SWF file from outside plays it and remembers its path', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const swfPath = join(fixturesDir, 'Dropped Movie.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+  await openExplorer();
+  await dragFilesOnto([swfPath], appWindow.getByTestId('uiFileOpen'));
+
+  await expect(appWindow.locator('.app-player__stage')).toBeVisible();
+  await expect(appWindow).toHaveTitle('Dropped Movie.swf - Flare Flash Player');
+
+  // The recent files list shows the path Electron resolved for the dropped file.
+  await openExplorer();
+  await expect(appWindow.getByRole('button', { name: swfPath })).toBeVisible();
+});
+
+test('Dropping several SWF files plays the first one', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const first = join(fixturesDir, 'First.swf');
+  const second = join(fixturesDir, 'Second.swf');
+
+  writeFileSync(first, BLANK_SWF);
+  writeFileSync(second, BLANK_SWF);
+  await openExplorer();
+  await dragFilesOnto([first, second], appWindow.getByTestId('uiFileOpen'));
+
+  await expect(appWindow).toHaveTitle('First.swf - Flare Flash Player');
+  await openExplorer();
+});
+
+test('Dropping a file of another type shows the format error', async () => {
+  const textPath = join(fixturesDir, 'notes.txt');
+
+  writeFileSync(textPath, 'not a movie');
+  await openExplorer();
+  await dragFilesOnto([textPath], appWindow.getByTestId('uiFileOpen'));
+
+  await expect(appWindow.getByText(readMessages('en', 'notice')['wrong-file-type'])).toBeVisible();
+  await expect(appWindow.getByTestId('uiFileOpen')).toBeVisible();
+});
+
+test('Clicking the drop zone opens the file dialog for one SWF file', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const swfPath = join(fixturesDir, 'Chosen Movie.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+
+  // Playwright answers the dialog itself, so no system dialog appears.
+  const fileChooserPromise = appWindow.waitForEvent('filechooser');
+
+  await appWindow.getByTestId('uiFileOpen').getByRole('button').first().click();
+
+  const fileChooser = await fileChooserPromise;
+
+  expect(fileChooser.isMultiple()).toBe(false);
+  await fileChooser.setFiles(swfPath);
+
+  await expect(appWindow).toHaveTitle('Chosen Movie.swf - Flare Flash Player');
+  await openExplorer();
 });
 
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
