@@ -75,6 +75,11 @@
     executableName: 'flare',
     icon: 'buildAssets/installer',
     category: 'Game',
+    synopsis: 'SWF Flash Player based on Ruffle',
+    // The type shared-mime-info gives `.swf` files, and its older alias, so file
+    // managers offer the app for them without the package defining a type of
+    // its own.
+    mimeTypes: ['application/vnd.adobe.flash.movie', 'application/x-shockwave-flash'],
     target: [
       {
         target: 'deb',
@@ -84,6 +89,25 @@
         target: 'rpm',
         arch: ['x64', 'arm64'],
       },
+      {
+        target: 'AppImage',
+        arch: ['x64', 'arm64'],
+      },
     ],
+  },
+  // Each Linux package is named the way its own system names packages, with no
+  // spaces and with that system's architecture names, such as `amd64` for deb
+  // and `x86_64` for rpm.
+  deb: {
+    artifactName: '${name}_${version}_${arch}.${ext}',
+  },
+  rpm: {
+    artifactName: '${name}-${version}.${arch}.${ext}',
+    // Every Electron app ships the same Electron binaries, and their build-id
+    // links in `/usr/lib/.build-id` would make two such packages conflict.
+    fpm: ['--rpm-rpmbuild-define=_build_id_links none'],
+  },
+  appImage: {
+    artifactName: '${name}-${version}-${arch}.${ext}',
   },
 }
