@@ -98,7 +98,7 @@ const readStoredConfig = () => JSON.parse(readFileSync(join(userDataDir, 'config
 const settingsDialog = () => appWindow.getByRole('dialog', { name: 'Settings' });
 
 const openSettings = async (group = 'General') => {
-  await appWindow.getByRole('button', { name: 'settings' }).click();
+  await appWindow.getByRole('button', { name: 'Settings' }).click();
   await settingsDialog().getByRole('button', { name: group, exact: true }).click();
 };
 
@@ -172,10 +172,25 @@ test('Document element check', async () => {
   await expect(appWindow.getByTestId('uiFileOpen').first()).toBeVisible();
 });
 
+test('Header buttons are named in the app language, and the about dialog opens from one', async () => {
+  const menu = readMessages('en', 'menu');
+
+  await expect(appWindow.getByRole('button', { name: menu.settings })).toBeVisible();
+  await appWindow.getByRole('button', { name: menu['app-info'] }).click();
+
+  const dialog = appWindow.getByRole('dialog', {
+    name: readMessages('en', 'common')['about-title'],
+  });
+
+  await expect(dialog).toBeVisible();
+  await appWindow.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+});
+
 test('Settings dialog groups its options in a list beside them', async () => {
   const dialog = settingsDialog();
 
-  await appWindow.getByRole('button', { name: 'settings' }).click();
+  await appWindow.getByRole('button', { name: 'Settings' }).click();
 
   await expect(dialog.getByText(readMessages('en', 'common')['settings-info'])).toBeVisible();
   await expect(dialog.getByRole('navigation', { name: 'Settings' }).getByRole('button')).toHaveText(

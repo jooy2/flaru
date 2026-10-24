@@ -1,11 +1,42 @@
-import { useMemo } from 'react';
-import { MPHeader, MPIcon, MPIconButton, MPSelect, MPTypography } from 'material-plus-ui';
-import { ArrowLeft, BarChart3, CircleHelp, Settings } from 'lucide-react';
+import { ReactElement, useMemo } from 'react';
+import {
+  MPHeader,
+  MPIcon,
+  MPIconButton,
+  MPSelect,
+  MPTooltip,
+  MPTypography,
+  MPVisuallyHidden,
+} from 'material-plus-ui';
+import { ArrowLeft, BarChart3, CircleHelp, LucideIcon, Settings } from 'lucide-react';
 import { arrRange } from 'qsu';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
+
+// An icon alone names nothing, so each button carries its name and shows it in
+// a tooltip.
+const HeaderButton = ({
+  label,
+  icon,
+  onClick,
+}: {
+  label: string;
+  icon: LucideIcon;
+  onClick: () => void;
+}): ReactElement => (
+  <MPTooltip content={label}>
+    <MPIconButton
+      variant="text"
+      size="xs"
+      label={label}
+      onClick={onClick}
+      icon={<MPIcon icon={icon} size={18} />}
+    />
+  </MPTooltip>
+);
 
 export default function Header({
   title,
@@ -14,6 +45,7 @@ export default function Header({
   title: string;
   withBackButton: boolean;
 }) {
+  const [t] = useTranslation(['menu']);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -23,8 +55,7 @@ export default function Header({
     [],
   );
 
-  const handleGoHome = (e) => {
-    if (e) e.preventDefault();
+  const handleGoHome = () => {
     if (location.pathname === '/') {
       window.location.reload();
     } else {
@@ -59,13 +90,7 @@ export default function Header({
       brand={
         <>
           {withBackButton && (
-            <MPIconButton
-              variant="text"
-              size="xs"
-              label="back"
-              onClick={handleGoHome}
-              icon={<MPIcon icon={ArrowLeft} size={18} />}
-            />
+            <HeaderButton label={t('back')} icon={ArrowLeft} onClick={handleGoHome} />
           )}
           <MPTypography className="app-header__title" level="body">
             {title}
@@ -77,40 +102,27 @@ export default function Header({
           {location.pathname === '/player' && (
             <>
               {stateAppScreen.appConfigShowPlayerVersionSelect && (
-                <MPSelect
-                  size="xs"
-                  name="playerVersion"
-                  id="player-version"
-                  items={playerVersionItems}
-                  value={stateAppScreen.appConfigEmulatePlayerVersion}
-                  onValueChange={handleFlashEmulatePlayerVersionChange}
-                />
+                <>
+                  <label htmlFor="player-version">
+                    <MPVisuallyHidden>{t('player-version')}</MPVisuallyHidden>
+                  </label>
+                  <MPSelect
+                    size="xs"
+                    name="playerVersion"
+                    id="player-version"
+                    items={playerVersionItems}
+                    value={stateAppScreen.appConfigEmulatePlayerVersion}
+                    onValueChange={handleFlashEmulatePlayerVersionChange}
+                  />
+                </>
               )}
-              <MPIconButton
-                variant="text"
-                size="xs"
-                label="metadata"
-                onClick={() => handleOpenMetadata()}
-                icon={<MPIcon icon={BarChart3} size={18} />}
-              />
+              <HeaderButton label={t('file-info')} icon={BarChart3} onClick={handleOpenMetadata} />
             </>
           )}
           {!withBackButton && (
             <>
-              <MPIconButton
-                variant="text"
-                size="xs"
-                label="about"
-                onClick={handleOpenAbout}
-                icon={<MPIcon icon={CircleHelp} size={18} />}
-              />
-              <MPIconButton
-                variant="text"
-                size="xs"
-                label="settings"
-                onClick={handleOpenSettings}
-                icon={<MPIcon icon={Settings} size={18} />}
-              />
+              <HeaderButton label={t('app-info')} icon={CircleHelp} onClick={handleOpenAbout} />
+              <HeaderButton label={t('settings')} icon={Settings} onClick={handleOpenSettings} />
             </>
           )}
         </div>

@@ -55,7 +55,7 @@ test('A letterbox that was turned off becomes the never mode', async () => {
   expect(config).not.toHaveProperty('appConfigQuality');
   expect(config.quality).toBe('high');
 
-  await appWindow.getByRole('button', { name: 'settings' }).click();
+  await appWindow.getByRole('button', { name: 'Settings' }).click();
 
   const dialog = appWindow.getByRole('dialog', { name: 'Settings' });
 
@@ -71,7 +71,7 @@ test('A letterbox that was turned off becomes the never mode', async () => {
 test('The app starts without hardware acceleration when it is turned off', async () => {
   expect(await appElectron.evaluate(({ app }) => app.isHardwareAccelerationEnabled())).toBe(false);
 
-  await appWindow.getByRole('button', { name: 'settings' }).click();
+  await appWindow.getByRole('button', { name: 'Settings' }).click();
 
   const dialog = appWindow.getByRole('dialog', { name: 'Settings' });
 
