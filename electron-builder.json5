@@ -44,17 +44,19 @@
     target: [
       {
         target: 'zip',
-        arch: 'x64',
+        arch: ['x64', 'arm64'],
       },
       {
         target: 'nsis',
-        arch: 'x64',
+        arch: ['x64', 'arm64'],
       },
     ],
     icon: './buildAssets/installer/icon.ico',
   },
   nsis: {
     oneClick: true,
+    // One installer for each architecture, rather than one that carries both.
+    buildUniversalInstaller: false,
   },
   mac: {
     identity: null,
@@ -76,11 +78,11 @@
     target: [
       {
         target: 'deb',
-        arch: 'x64',
+        arch: ['x64', 'arm64'],
       },
       {
         target: 'rpm',
-        arch: 'x64',
+        arch: ['x64', 'arm64'],
       },
     ],
   },
