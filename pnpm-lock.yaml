@@ -77,6 +77,9 @@ importers:
       jiti:
         specifier: ^2.7.0
         version: 2.7.0
+      lognal:
+        specifier: ^1.0.0
+        version: 1.0.0(react@19.3.1)
       lucide-react:
         specifier: ^1.61.0
         version: 1.61.0(@types/react@19.3.0)(react@19.3.1)
@@ -1840,6 +1843,15 @@ packages:
 
   lodash@4.18.1:
     resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
+
+  lognal@1.0.0:
+    resolution: {integrity: sha512-Xo4/j3QVOghtSsINfaE+psBNMhz7ZeCJqh9WE9xJ2JgewSmSSJCf1yEpkRcfTLCeoNRKmnj3iFQRsuHCmZKkew==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      react: '>=18.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -4815,6 +4827,10 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   lodash@4.18.1: {}
+
+  lognal@1.0.0(react@19.3.1):
+    optionalDependencies:
+      react: 19.3.1
 
   loose-envify@1.4.0:
     dependencies:

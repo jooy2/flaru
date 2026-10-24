@@ -21,10 +21,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
 import ModalLocalStorageView from '@/renderer/components/dialogs/ModalLocalStorageView';
+import { DEBUG_LOG_LEVELS, DebugLogLevel } from '@/renderer/utils/ruffleLog';
 
 const LANGUAGES = ['auto', 'ko', 'en', 'es', 'pt', 'de', 'fr', 'ja'];
 // In seconds. The first is the limit Flash Player and Ruffle use by default.
 const SCRIPT_TIME_LIMITS = [15, 30, 60, 120];
+// Ruffle's level names are kept as Ruffle writes them.
+const DEBUG_LOG_LABELS: Record<Exclude<DebugLogLevel, 'off'>, string> = {
+  error: 'Error',
+  warn: 'Warn',
+  info: 'Info',
+  debug: 'Debug',
+  trace: 'Trace',
+};
 const GROUPS = [
   { value: 'general', label: 'settings-general', Icon: SlidersHorizontal },
   { value: 'emulation', label: 'settings-emulation', Icon: Gamepad2 },
@@ -137,6 +146,7 @@ export default function ModalSettings() {
   const [hardwareAccelerationChecked, setHardwareAccelerationChecked] = useState(
     stateAppScreen.appConfigHardwareAcceleration,
   );
+  const [debugLogLevel, setDebugLogLevel] = useState(stateAppScreen.appConfigDebugLogLevel);
   const prefersDarkMode = useMPMediaQuery('(prefers-color-scheme: dark)');
   const secondsFormat = new Intl.NumberFormat(i18n.language, {
     style: 'unit',
@@ -278,6 +288,12 @@ export default function ModalSettings() {
     setMaxExecutionDuration(next);
     window.mainApi.send('setAppConfig', { maxExecutionDuration: next });
     dispatch(setConfig({ appConfigMaxExecutionDuration: next }));
+  };
+
+  const handleDebugLogLevelChange = (value: DebugLogLevel): void => {
+    setDebugLogLevel(value);
+    window.mainApi.send('setAppConfig', { debugLogLevel: value });
+    dispatch(setConfig({ appConfigDebugLogLevel: value }));
   };
 
   const handleAutoLaunchChange = async (checked: boolean): Promise<void> => {
@@ -604,6 +620,27 @@ export default function ModalSettings() {
             onRestart={handleRestart}
           />
         )}
+      </SettingSection>
+      <SettingSection
+        titleId={`${idPrefix}-debug-log`}
+        title={t('settings-debug-log-title')}
+        desc={t('settings-debug-log-desc')}
+      >
+        <MPSegmentedButton
+          aria-label={t('settings-debug-log-title')}
+          showCheck={false}
+          items={DEBUG_LOG_LEVELS.map((level) => ({
+            value: level,
+            label: level === 'off' ? t('menu:debug-log-off') : DEBUG_LOG_LABELS[level],
+          }))}
+          value={[debugLogLevel]}
+          onValueChange={(value) => {
+            // A tap on the chosen level would leave none chosen.
+            if (value.length > 0) {
+              handleDebugLogLevelChange(value[0] as DebugLogLevel);
+            }
+          }}
+        />
       </SettingSection>
       <SettingSection
         titleId={`${idPrefix}-advanced`}

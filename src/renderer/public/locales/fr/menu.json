@@ -39,6 +39,8 @@
   "theme-dark": "Sombre",
   "theme-auto": "Détection automatique",
   "hardware-acceleration": "Utiliser l'accélération matérielle",
+  "debug-log": "Journal de débogage",
+  "debug-log-off": "Désactivé",
   "manage-data": "Gérer les données de sauvegarde de l'émulateur",
   "save": "Sauvegarder",
   "reset-localstorage": "Réinitialiser toutes les données",

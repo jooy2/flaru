@@ -69,6 +69,7 @@ export default function Main() {
             appConfigPauseInBackground: configs.pauseInBackground,
             appConfigMaxExecutionDuration: configs.maxExecutionDuration,
             appConfigHardwareAcceleration: configs.hardwareAcceleration,
+            appConfigDebugLogLevel: configs.debugLogLevel,
             flashVolume: configs.playerVolume,
             flashMuted: configs.playerMuted,
           }),

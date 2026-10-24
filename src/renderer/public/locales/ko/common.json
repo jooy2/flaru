@@ -39,6 +39,8 @@
   "settings-desc-7": "플레이어 런타임을 설정합니다. 특수한 파일이 아닌 경우 기본값을 유지하세요. AIR 런타임은 현재 실험적입니다.",
   "settings-acceleration-title": "하드웨어 가속",
   "settings-acceleration-desc": "그래픽 처리 장치(GPU)로 앱과 플래시 콘텐츠를 그립니다. 화면이 깨지거나 깜박이는 등 그래픽 문제가 있을 때만 꺼 보세요. 끄면 재생이 느려질 수 있고, 변경 사항은 앱을 다시 시작하면 적용됩니다.",
+  "settings-debug-log-title": "게임 플레이 디버그 로그",
+  "settings-debug-log-desc": "내 컴퓨터의 파일을 실행하는 동안 Ruffle이 남기는 로그를 게임 옆에 표시합니다. 파일이 제대로 실행되지 않는 원인을 찾을 때 쓸 수 있습니다. 각 단계는 앞 단계의 로그도 함께 기록하며, 변경 사항은 다음에 파일을 실행할 때 적용됩니다.",
   "restart-required": "변경사항을 적용하려면 앱을 재시작해야 합니다!",
   "settings-other-title": "고급",
   "settings-other-desc": "앱 동작에 대한 고급 설정을 선택합니다.",

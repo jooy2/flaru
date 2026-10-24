@@ -39,6 +39,8 @@
   "theme-dark": "Dunkel",
   "theme-auto": "Automatische Erkennung",
   "hardware-acceleration": "Hardwarebeschleunigung verwenden",
+  "debug-log": "Debug-Protokoll",
+  "debug-log-off": "Aus",
   "manage-data": "Speicherdaten des Emulators verwalten",
   "save": "Speichern",
   "reset-localstorage": "Alle Daten zurücksetzen",

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { DebugLogLevel } from '@/renderer/utils/ruffleLog';
 
 interface GlobalValues {
   APP_NAME: string;
@@ -53,6 +54,7 @@ export interface AppScreenState {
   appConfigPauseInBackground: boolean;
   appConfigMaxExecutionDuration: number;
   appConfigHardwareAcceleration: boolean;
+  appConfigDebugLogLevel: DebugLogLevel;
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
@@ -95,6 +97,7 @@ const initialState: AppScreenState = {
   appConfigPauseInBackground: false,
   appConfigMaxExecutionDuration: 15,
   appConfigHardwareAcceleration: true,
+  appConfigDebugLogLevel: 'off',
   recentFiles: [],
   mainGlobalValues: {
     APP_NAME: '',

@@ -39,6 +39,8 @@
   "settings-desc-7": "Sets the player runtime. Leave the default unless you have a special file. The AIR runtime is currently experimental.",
   "settings-acceleration-title": "Hardware acceleration",
   "settings-acceleration-desc": "Draws the app and Flash content with the graphics processor (GPU). Turn it off only if you see graphics problems such as a broken or flickering screen. Playback may be slower without it, and the change takes effect after the app restarts.",
+  "settings-debug-log-title": "Gameplay debug log",
+  "settings-debug-log-desc": "Shows the log Ruffle writes beside the game while a file on this computer plays, to help find out why a file does not work. Each level also records the ones before it, and a change applies the next time a file starts.",
   "restart-required": "You must restart the app for the changes to take effect!",
   "settings-other-title": "Advanced",
   "settings-other-desc": "Choose advanced settings for app behavior.",

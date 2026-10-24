@@ -6,11 +6,23 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
-import { MPCheckbox, MPIcon, MPIconButton, MPPopover, MPSlider, MPTooltip } from 'material-plus-ui';
+import {
+  MPCheckbox,
+  MPIcon,
+  MPIconButton,
+  MPPane,
+  MPPanes,
+  MPPopover,
+  MPSlider,
+  MPTooltip,
+} from 'material-plus-ui';
 import { Mouse, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ModalConfirm from '@/renderer/components/dialogs/ModalConfirm';
+import PlayerLogPanel from '@/renderer/components/views/PlayerLogPanel';
 import PlayerVirtualMousePad from '@/renderer/components/views/PlayerVirtualMousePad';
+import useRuffleLog from '@/renderer/hooks/useRuffleLog';
+import { toRuffleLogLevel } from '@/renderer/utils/ruffleLog';
 
 export default function FlashPlayer({
   url = '',
@@ -46,6 +58,7 @@ export default function FlashPlayer({
   // Ruffle tells nothing when it pauses or resumes, so the controls are drawn
   // again by hand after each change.
   const [, redrawControls] = useReducer((count: number) => count + 1, 0);
+  const ruffleLog = useRuffleLog();
   // Whether the game was paused for a dialog, so closing it resumes only a game
   // that was running when it opened.
   const pausedForDialogRef = useRef(false);
@@ -110,6 +123,10 @@ export default function FlashPlayer({
   };
 
   const loadFlash = () => {
+    // Ruffle takes the log level as the movie loads, so the log starts here.
+    const logLevel = stateAppScreen.appConfigDebugLogLevel;
+
+    ruffleLog.start(logLevel);
     window.mainApi.startStaticServer(currentFileDirectory).then((port) => {
       if (!port) {
         setOpenFailedToLoadServerModal(true);
@@ -126,7 +143,7 @@ export default function FlashPlayer({
           letterbox: stateAppScreen.appConfigLetterboxMode,
           contextMenu: contextMenuMode,
           backgroundExecutionMode,
-          logLevel: 'error',
+          logLevel: toRuffleLogLevel(logLevel),
           openUrlMode: 'confirm',
           preferredRenderer:
             stateAppScreen.appConfigPreferredRenderer === 'auto'
@@ -251,95 +268,104 @@ export default function FlashPlayer({
 
   return (
     <>
-      <div className={header ? 'app-player' : 'app-player app-player--full'}>
-        {/* The stage is emptied whenever a new player goes in, so the pad sits
-            beside it rather than inside it. */}
-        <div className="app-player__viewport">
-          <div
-            id="main"
-            className="app-player__stage"
-            ref={player}
-            onContextMenu={(e) => e.preventDefault()}
-          />
-          {showVirtualMouse && (
-            <PlayerVirtualMousePad
-              rufflePlayer={rufflePlayer}
-              onClose={() => setShowVirtualMouse(false)}
+      {/* The split is there with the log closed too, so the movie's pane stays
+          the same element when a replay opens the log beside it. */}
+      <MPPanes className={header ? 'app-player' : 'app-player app-player--full'}>
+        <MPPane className="app-player__movie" minSize="160px">
+          {/* The stage is emptied whenever a new player goes in, so the pad sits
+              beside it rather than inside it. */}
+          <div className="app-player__viewport">
+            <div
+              id="main"
+              className="app-player__stage"
+              ref={player}
+              onContextMenu={(e) => e.preventDefault()}
             />
-          )}
-        </div>
-        {stateAppScreen.appConfigShowPlayerController && (
-          <div className="app-player__controller">
-            <MPTooltip content={rufflePlayer?.isPlaying ? t('pause') : t('play')}>
-              <MPIconButton
-                variant="text"
-                color="primary"
-                label={rufflePlayer?.isPlaying ? t('pause') : t('play')}
-                onClick={handlePauseOrPlay}
-                icon={<MPIcon icon={rufflePlayer?.isPlaying ? Pause : Play} size={18} />}
+            {showVirtualMouse && (
+              <PlayerVirtualMousePad
+                rufflePlayer={rufflePlayer}
+                onClose={() => setShowVirtualMouse(false)}
               />
-            </MPTooltip>
-            <MPTooltip content={t('replay')}>
-              <MPIconButton
-                variant="text"
-                label={t('replay')}
-                onClick={loadFlash}
-                icon={<MPIcon icon={RotateCcw} size={18} />}
-              />
-            </MPTooltip>
-            {/* The volume opens beside the button rather than taking a share of
-                the bar. It opens upwards, over the bottom of the movie, so it
-                reads as the player's own. The slider keeps its level while
-                muted, which is what unmuting goes back to. */}
-            <MPPopover
-              side="top"
-              align="start"
-              sideOffset={10}
-              width={340}
-              trigger={
+            )}
+          </div>
+          {stateAppScreen.appConfigShowPlayerController && (
+            <div className="app-player__controller">
+              <MPTooltip content={rufflePlayer?.isPlaying ? t('pause') : t('play')}>
                 <MPIconButton
                   variant="text"
-                  label={t('volume')}
-                  icon={<MPIcon icon={isSilent ? VolumeX : Volume2} size={18} />}
-                />
-              }
-            >
-              <div className="app-player__volume">
-                {/* The slider fills its parent, which in a popup sized to its
-                    content resolves to nothing. This box gives the row, and so
-                    the popup, its width. */}
-                <div className="app-player__volume-slider">
-                  <MPSlider
-                    aria-label={t('volume')}
-                    value={stateAppScreen.flashVolume}
-                    disabled={stateAppScreen.flashMuted}
-                    onValueChange={handleVolumeSliderChange}
-                    onValueCommitted={handleVolumeSliderCommit}
-                  />
-                </div>
-                <MPCheckbox
-                  className="app-player__mute"
-                  checked={stateAppScreen.flashMuted}
-                  onCheckedChange={handleMuteChange}
-                  label={t('mute')}
-                />
-              </div>
-            </MPPopover>
-            <div className="app-player__controller-end">
-              <MPTooltip content={t('virtual-mouse')}>
-                <MPIconButton
-                  variant="text"
-                  color={showVirtualMouse ? 'primary' : 'secondary'}
-                  label={t('virtual-mouse')}
-                  aria-pressed={showVirtualMouse}
-                  onClick={() => setShowVirtualMouse(!showVirtualMouse)}
-                  icon={<MPIcon icon={Mouse} size={18} />}
+                  color="primary"
+                  label={rufflePlayer?.isPlaying ? t('pause') : t('play')}
+                  onClick={handlePauseOrPlay}
+                  icon={<MPIcon icon={rufflePlayer?.isPlaying ? Pause : Play} size={18} />}
                 />
               </MPTooltip>
+              <MPTooltip content={t('replay')}>
+                <MPIconButton
+                  variant="text"
+                  label={t('replay')}
+                  onClick={loadFlash}
+                  icon={<MPIcon icon={RotateCcw} size={18} />}
+                />
+              </MPTooltip>
+              {/* The volume opens beside the button rather than taking a share of
+                  the bar. It opens upwards, over the bottom of the movie, so it
+                  reads as the player's own. The slider keeps its level while
+                  muted, which is what unmuting goes back to. */}
+              <MPPopover
+                side="top"
+                align="start"
+                sideOffset={10}
+                width={340}
+                trigger={
+                  <MPIconButton
+                    variant="text"
+                    label={t('volume')}
+                    icon={<MPIcon icon={isSilent ? VolumeX : Volume2} size={18} />}
+                  />
+                }
+              >
+                <div className="app-player__volume">
+                  {/* The slider fills its parent, which in a popup sized to its
+                      content resolves to nothing. This box gives the row, and so
+                      the popup, its width. */}
+                  <div className="app-player__volume-slider">
+                    <MPSlider
+                      aria-label={t('volume')}
+                      value={stateAppScreen.flashVolume}
+                      disabled={stateAppScreen.flashMuted}
+                      onValueChange={handleVolumeSliderChange}
+                      onValueCommitted={handleVolumeSliderCommit}
+                    />
+                  </div>
+                  <MPCheckbox
+                    className="app-player__mute"
+                    checked={stateAppScreen.flashMuted}
+                    onCheckedChange={handleMuteChange}
+                    label={t('mute')}
+                  />
+                </div>
+              </MPPopover>
+              <div className="app-player__controller-end">
+                <MPTooltip content={t('virtual-mouse')}>
+                  <MPIconButton
+                    variant="text"
+                    color={showVirtualMouse ? 'primary' : 'secondary'}
+                    label={t('virtual-mouse')}
+                    aria-pressed={showVirtualMouse}
+                    onClick={() => setShowVirtualMouse(!showVirtualMouse)}
+                    icon={<MPIcon icon={Mouse} size={18} />}
+                  />
+                </MPTooltip>
+              </div>
             </div>
-          </div>
+          )}
+        </MPPane>
+        {ruffleLog.level !== 'off' && (
+          <MPPane className="app-player__log" defaultSize="36%" minSize="220px">
+            <PlayerLogPanel store={ruffleLog.store} />
+          </MPPane>
         )}
-      </div>
+      </MPPanes>
       <ModalConfirm
         noCancel
         content={t('notice:failed-to-load-server')}

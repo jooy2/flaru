@@ -39,6 +39,8 @@
   "settings-desc-7": "Legen Sie die Laufzeitumgebung des Players fest. Wenn es sich nicht um eine spezielle Datei handelt, behalten Sie die Standardeinstellung bei. Die AIR-Laufzeitumgebung ist derzeit experimentell.",
   "settings-acceleration-title": "Hardwarebeschleunigung",
   "settings-acceleration-desc": "Zeichnet die App und Flash-Inhalte mit dem Grafikprozessor (GPU). Schalten Sie sie nur aus, wenn Grafikprobleme wie ein fehlerhaftes oder flackerndes Bild auftreten. Ohne sie kann die Wiedergabe langsamer sein, und die Änderung wird nach einem Neustart der App wirksam.",
+  "settings-debug-log-title": "Debug-Protokoll beim Spielen",
+  "settings-debug-log-desc": "Zeigt neben dem Spiel das Protokoll, das Ruffle beim Abspielen einer Datei von diesem Computer schreibt, um herauszufinden, warum eine Datei nicht funktioniert. Jede Stufe erfasst auch die Stufen davor, und eine Änderung gilt ab dem nächsten Start einer Datei.",
   "restart-required": "Sie müssen die App neu starten, damit die Änderungen wirksam werden!",
   "settings-other-title": "Erweitert",
   "settings-other-desc": "Wählen Sie erweiterte Einstellungen für das App-Verhalten.",

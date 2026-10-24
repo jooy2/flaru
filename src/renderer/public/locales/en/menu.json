@@ -39,6 +39,8 @@
   "theme-dark": "Dark",
   "theme-auto": "Automatic Detection",
   "hardware-acceleration": "Use hardware acceleration",
+  "debug-log": "Debug log",
+  "debug-log-off": "Off",
   "manage-data": "Manage Emulator Save Data",
   "save": "Save",
   "reset-localstorage": "Reset All Data",

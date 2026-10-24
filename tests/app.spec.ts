@@ -14,6 +14,13 @@ const BLANK_SWF = Buffer.from(
   'hex',
 );
 
+// The blank movie with a DoAction tag before its frame that pushes the text
+// "lognal-e2e" and traces it, so Ruffle has a line of its own to log.
+const TRACE_SWF = Buffer.from(
+  '4657530a310000007800055f00000fa000001801004302ffffff1103960c00006c6f676e616c2d65326500260040000000',
+  'hex',
+);
+
 // The blank movie, with a DoAction tag that runs
 // `getURL(url, target)` in the long tag form, since an address does not fit
 // the short one.
@@ -702,6 +709,59 @@ test('Emulation options reach Ruffle when the movie loads again', async () => {
       return [config.scale, config.letterboxMode, config.quality, config.maxExecutionDuration];
     })
     .toEqual(['showAll', 'on', 'high', 15]);
+});
+
+test('The debug log shows what Ruffle writes beside the game and leaves the app out', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const common = readMessages('en', 'common');
+  const menu = readMessages('en', 'menu');
+  const dialog = settingsDialog();
+  const levels = dialog.getByRole('group', { name: common['settings-debug-log-title'] });
+  const log = appWindow.getByRole('region', { name: menu['debug-log'] });
+  const entries = log.getByRole('list', { name: 'Visible log entries' });
+  const swfPath = join(fixturesDir, 'Trace Movie.swf');
+  const loadedLogLevel = () =>
+    appWindow.evaluate(() => (document.getElementById('player') as any)?.loadedConfig?.logLevel);
+  const setLevel = async (name: string) => {
+    await openSettings('Advanced');
+    await levels.getByRole('button', { name, exact: true }).click();
+    await closeSettings();
+  };
+
+  // The log stays closed until a level is chosen.
+  await expect(appWindow.locator('.app-player__stage')).toBeVisible();
+  await expect(log).toHaveCount(0);
+
+  await setLevel('Info');
+  await expect.poll(() => readStoredConfig().debugLogLevel).toBe('info');
+
+  writeFileSync(swfPath, TRACE_SWF);
+  await playFile(swfPath);
+
+  await expect(log).toBeVisible();
+  await expect.poll(loadedLogLevel).toBe('info');
+  await expect(entries).toContainText('lognal-e2e');
+
+  // A script served from Ruffle's folder stands in for Ruffle, so its line marks
+  // the point by which the app's message would have arrived.
+  await appWindow.evaluate(() => {
+    console.error('app-message-e2e');
+    (0, eval)("console.log('core-message-e2e')\n//# sourceURL=http://localhost/js/ruffle/e2e.js");
+  });
+
+  await expect(entries).toContainText('core-message-e2e');
+  await expect(entries).not.toContainText('app-message-e2e');
+
+  // Turned off, the log closes when the movie starts again, and the movie keeps
+  // its place on the screen.
+  await setLevel(menu['debug-log-off']);
+  await appWindow.getByRole('button', { name: 'Restart' }).click();
+
+  await expect(log).toHaveCount(0);
+  await expect.poll(loadedLogLevel).toBe('error');
+  await expect(appWindow.locator('.app-player__stage #player')).toBeVisible();
+  await expect.poll(movieWidth).toBe(550);
 });
 
 test('A confirmation reads its question as body text', async () => {

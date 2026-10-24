@@ -92,6 +92,13 @@ export default {
     type: 'boolean',
     default: false,
   },
+  // How much of Ruffle's log the player shows beside the movie: `off`, or one of
+  // Ruffle's levels from `error` to `trace`.
+  debugLogLevel: {
+    type: 'string',
+    enum: ['off', 'error', 'warn', 'info', 'debug', 'trace'],
+    default: 'off',
+  },
   // Read before the app is ready, so a change takes effect at the next start.
   hardwareAcceleration: {
     type: 'boolean',

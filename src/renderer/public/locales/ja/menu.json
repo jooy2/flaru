@@ -39,6 +39,8 @@
   "theme-dark": "ダーク(暗く)",
   "theme-auto": "自動検出",
   "hardware-acceleration": "ハードウェアアクセラレーションを使用",
+  "debug-log": "デバッグログ",
+  "debug-log-off": "オフ",
   "manage-data": "エミュレータのセーブデータを管理する",
   "save": "保存",
   "reset-localstorage": "すべてのデータをリセット",

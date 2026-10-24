@@ -39,6 +39,8 @@
   "settings-desc-7": "Defina o tempo de execução do player. Se este não for um arquivo especial, mantenha o padrão. O tempo de execução do AIR é atualmente experimental.",
   "settings-acceleration-title": "Aceleração de hardware",
   "settings-acceleration-desc": "Desenha o aplicativo e o conteúdo Flash com o processador gráfico (GPU). Desative apenas se houver problemas gráficos, como tela corrompida ou piscando. Sem ela, a reprodução pode ficar mais lenta, e a alteração é aplicada ao reiniciar o aplicativo.",
+  "settings-debug-log-title": "Registro de depuração do jogo",
+  "settings-debug-log-desc": "Mostra ao lado do jogo o registro que o Ruffle escreve enquanto um arquivo deste computador é reproduzido, para ajudar a descobrir por que um arquivo não funciona. Cada nível também registra os anteriores, e a alteração vale a partir da próxima vez que um arquivo for aberto.",
   "restart-required": "Você precisará reiniciar o aplicativo para que as alterações tenham efeito!",
   "settings-other-title": "Avançado",
   "settings-other-desc": "Escolha as configurações avançadas para o comportamento do aplicativo.",

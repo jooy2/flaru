@@ -39,6 +39,8 @@
   "settings-desc-7": "Configure el entorno de ejecución del reproductor. Mantenga el valor predeterminado salvo que se trate de un archivo especial. El entorno de ejecución de AIR es experimental por ahora.",
   "settings-acceleration-title": "Aceleración por hardware",
   "settings-acceleration-desc": "Dibuja la aplicación y el contenido Flash con el procesador gráfico (GPU). Desactívela solo si ve problemas gráficos, como una pantalla dañada o que parpadea. Sin ella, la reproducción puede ser más lenta, y el cambio se aplica al reiniciar la aplicación.",
+  "settings-debug-log-title": "Registro de depuración del juego",
+  "settings-debug-log-desc": "Muestra junto al juego el registro que escribe Ruffle mientras se reproduce un archivo de este equipo, para ayudar a averiguar por qué un archivo no funciona. Cada nivel registra también los anteriores, y los cambios se aplican la próxima vez que se abra un archivo.",
   "restart-required": "¡Debe reiniciar la aplicación para que los cambios surtan efecto!",
   "settings-other-title": "Avanzado",
   "settings-other-desc": "Elija configuraciones avanzadas para el comportamiento de la aplicación.",

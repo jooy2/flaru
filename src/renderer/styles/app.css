@@ -309,15 +309,35 @@ body {
   }
 }
 
-/* The movie above its controller, filling the window under the header. */
+/* The movie above its controller, filling the window under the header, with
+   the debug log beside it when one is open. */
 .app-player {
-  display: flex;
-  flex-direction: column;
   height: calc(100vh - 42px);
 }
 
 .app-player--full {
   height: 100vh;
+}
+
+.app-player__movie {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-player__log {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* The pane is the frame, so the viewer drops its own rounded corners. */
+.app-player-log {
+  --lognal-radius: 0;
+
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .app-player__controller {

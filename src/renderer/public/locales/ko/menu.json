@@ -39,6 +39,8 @@
   "theme-dark": "다크 (어둡게)",
   "theme-auto": "자동 감지",
   "hardware-acceleration": "하드웨어 가속 사용",
+  "debug-log": "디버그 로그",
+  "debug-log-off": "끄기",
   "manage-data": "에뮬레이터 저장 데이터 관리",
   "save": "저장",
   "reset-localstorage": "데이터 초기화",

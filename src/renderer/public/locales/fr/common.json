@@ -39,6 +39,8 @@
   "settings-desc-7": "Définissez l'environnement d'exécution du lecteur. S'il ne s'agit pas d'un fichier spécial, conservez la valeur par défaut. L'environnement d'exécution AIR est actuellement expérimental.",
   "settings-acceleration-title": "Accélération matérielle",
   "settings-acceleration-desc": "Dessine l'application et le contenu Flash avec le processeur graphique (GPU). Ne la désactivez qu'en cas de problèmes graphiques, comme un écran corrompu ou qui scintille. Sans elle, la lecture peut être plus lente, et la modification s'applique au redémarrage de l'application.",
+  "settings-debug-log-title": "Journal de débogage du jeu",
+  "settings-debug-log-desc": "Affiche à côté du jeu le journal écrit par Ruffle pendant la lecture d'un fichier de cet ordinateur, pour aider à comprendre pourquoi un fichier ne fonctionne pas. Chaque niveau enregistre aussi les niveaux précédents, et le changement s'applique à la prochaine ouverture d'un fichier.",
   "restart-required": "Vous devez redémarrer l'application pour que les modifications prennent effet!",
   "settings-other-title": "Avancé",
   "settings-other-desc": "Choisissez les paramètres avancés pour le comportement de l'application.",
