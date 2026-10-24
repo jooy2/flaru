@@ -42,7 +42,7 @@ If you have a GitHub account, you can easily receive release notifications by em
 
 Before building or running, you need to install the module and add the Ruffle script file to the project.
 
-First install the dependency module with the following command: ([Node.js](https://nodejs.org) pre-installed required)
+First install the dependency module with the following command: ([Node.js](https://nodejs.org) 22.12 or later pre-installed required)
 
 ```shell
 $ npm i
@@ -70,15 +70,17 @@ $ npm run build
 # Cross-platform build
 $ npm run build:all
 
-# Build for Windows (.exe)
+# Build for Windows (.exe, .zip)
 $ npm run build:win
 
 # Build for macOS (.dmg)
 $ npm run build:mac
 
-# Build for Linux (.deb, .rpm)
+# Build for Linux (.deb, .rpm, .AppImage)
 $ npm run build:linux
 ```
+
+Each platform is built for both x64 and arm64, so Windows on Arm and Apple Silicon get packages of their own. The `.rpm` package needs `rpmbuild` on the build machine.
 
 ### 🔧 Project Components
 
