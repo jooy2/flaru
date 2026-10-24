@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
 import electronPlugin, { ElectronOptions } from 'vite-plugin-electron';
-import rendererPlugin from 'vite-plugin-electron-renderer';
 import eslintPlugin from 'vite-plugin-eslint';
 import reactPlugin from '@vitejs/plugin-react-swc';
 import { resolve, dirname } from 'path';
@@ -87,7 +86,6 @@ export default defineConfig(({ mode }) => {
       eslintPlugin(),
       // Docs: https://github.com/electron-vite/vite-plugin-electron
       electronPlugin(electronPluginConfigs),
-      rendererPlugin(),
     ],
   };
 });
