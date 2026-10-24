@@ -80,6 +80,18 @@ export default {
     type: 'number',
     default: 15,
   },
+  // The level the volume slider was left at, kept while muted so unmuting goes
+  // back to it.
+  playerVolume: {
+    type: 'number',
+    minimum: 0,
+    maximum: 100,
+    default: 100,
+  },
+  playerMuted: {
+    type: 'boolean',
+    default: false,
+  },
   // Read before the app is ready, so a change takes effect at the next start.
   hardwareAcceleration: {
     type: 'boolean',

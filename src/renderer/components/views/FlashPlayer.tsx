@@ -1,12 +1,12 @@
 // The Ruffle player is a custom element created by the Ruffle runtime and driven
 // imperatively, so it is mutated in place instead of being replaced through state.
 /* eslint-disable react-hooks/immutability, react-hooks/set-state-in-effect */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
-import { MPIcon, MPIconButton, MPSlider, MPTooltip } from 'material-plus-ui';
+import { MPCheckbox, MPIcon, MPIconButton, MPPopover, MPSlider, MPTooltip } from 'material-plus-ui';
 import { Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ModalConfirm from '@/renderer/components/dialogs/ModalConfirm';
@@ -36,6 +36,10 @@ export default function FlashPlayer({
   const adjustOriginalSizeRef = useRef(stateAppScreen.appConfigAdjustOriginalSize);
   const contextMenuMode = stateAppScreen.appConfigHideContext ? 'off' : 'on';
   const backgroundExecutionMode = stateAppScreen.appConfigPauseInBackground ? 'none' : 'mainThread';
+  const isSilent = stateAppScreen.flashMuted || stateAppScreen.flashVolume === 0;
+  // Ruffle tells nothing when it pauses or resumes, so the controls are drawn
+  // again by hand after each change.
+  const [, redrawControls] = useReducer((count: number) => count + 1, 0);
 
   const resizeWindowToMovie = (metaData) => {
     if (metaData?.width && metaData?.height) {
@@ -56,22 +60,35 @@ export default function FlashPlayer({
     } else {
       rufflePlayer.play();
     }
+
+    redrawControls();
   };
 
-  const handleMute = () => {
-    if (stateAppScreen.flashVolume === 0) {
-      rufflePlayer.volume = 1;
-      dispatch(setConfig({ flashVolume: 100 }));
-    } else {
-      rufflePlayer.volume = 0;
-      dispatch(setConfig({ flashVolume: 0 }));
+  const handleMuteChange = (muted: boolean) => {
+    if (!rufflePlayer) {
+      return;
     }
+
+    rufflePlayer.volume = muted ? 0 : stateAppScreen.flashVolume / 100;
+    dispatch(setConfig({ flashMuted: muted }));
+    window.mainApi.send('setAppConfig', { playerMuted: muted });
   };
 
-  const handleVolumeSliderChange = (newValue) => {
-    const volume = Array.isArray(newValue) ? newValue[0] : newValue;
+  const handleVolumeSliderChange = (value: number | readonly number[]) => {
+    if (!rufflePlayer) {
+      return;
+    }
+
+    const volume = Array.isArray(value) ? value[0] : value;
+
     rufflePlayer.volume = volume / 100;
     dispatch(setConfig({ flashVolume: volume }));
+  };
+
+  // A drag changes the value many times a second, and each save writes the
+  // settings file, so the level is saved once, when the slider lets go.
+  const handleVolumeSliderCommit = (value: number | readonly number[]) => {
+    window.mainApi.send('setAppConfig', { playerVolume: Array.isArray(value) ? value[0] : value });
   };
 
   const handleBack = () => {
@@ -85,33 +102,40 @@ export default function FlashPlayer({
         return;
       }
 
-      rufflePlayer.ruffle().load({
-        url: `http://localhost:${port}/${currentFileName}`,
-        autoplay: autoplay ? 'on' : 'off',
-        base: currentFileDirectory,
-        allowScriptAccess: true,
-        letterbox: stateAppScreen.appConfigLetterboxMode,
-        contextMenu: contextMenuMode,
-        backgroundExecutionMode,
-        logLevel: 'error',
-        openUrlMode: 'confirm',
-        preferredRenderer:
-          stateAppScreen.appConfigPreferredRenderer === 'auto'
-            ? null
-            : stateAppScreen.appConfigPreferredRenderer,
-        quality: stateAppScreen.appConfigQuality,
-        scale: stateAppScreen.appConfigScale,
-        forceScale: stateAppScreen.appConfigForceScale,
-        allowFullscreen: stateAppScreen.appConfigAllowFullscreen,
-        maxExecutionDuration: stateAppScreen.appConfigMaxExecutionDuration,
-        playerRuntime: stateAppScreen.appConfigPlayerRuntime,
-        deviceFontRenderer: stateAppScreen.appConfigDeviceFontRenderer,
-        warnOnUnsupportedContent: false,
-        playerVersion:
-          stateAppScreen.appConfigEmulatePlayerVersion === 0
-            ? null
-            : stateAppScreen.appConfigEmulatePlayerVersion,
-      });
+      rufflePlayer
+        .ruffle()
+        .load({
+          url: `http://localhost:${port}/${currentFileName}`,
+          autoplay: autoplay ? 'on' : 'off',
+          base: currentFileDirectory,
+          allowScriptAccess: true,
+          letterbox: stateAppScreen.appConfigLetterboxMode,
+          contextMenu: contextMenuMode,
+          backgroundExecutionMode,
+          logLevel: 'error',
+          openUrlMode: 'confirm',
+          preferredRenderer:
+            stateAppScreen.appConfigPreferredRenderer === 'auto'
+              ? null
+              : stateAppScreen.appConfigPreferredRenderer,
+          quality: stateAppScreen.appConfigQuality,
+          scale: stateAppScreen.appConfigScale,
+          forceScale: stateAppScreen.appConfigForceScale,
+          allowFullscreen: stateAppScreen.appConfigAllowFullscreen,
+          maxExecutionDuration: stateAppScreen.appConfigMaxExecutionDuration,
+          playerRuntime: stateAppScreen.appConfigPlayerRuntime,
+          deviceFontRenderer: stateAppScreen.appConfigDeviceFontRenderer,
+          warnOnUnsupportedContent: false,
+          playerVersion:
+            stateAppScreen.appConfigEmulatePlayerVersion === 0
+              ? null
+              : stateAppScreen.appConfigEmulatePlayerVersion,
+        })
+        .then(() => {
+          rufflePlayer.volume = stateAppScreen.flashMuted ? 0 : stateAppScreen.flashVolume / 100;
+          redrawControls();
+        })
+        .catch(() => null);
       rufflePlayer.addEventListener('oncontextmenu', (e) => e.preventDefault());
     });
   };
@@ -194,49 +218,70 @@ export default function FlashPlayer({
 
   return (
     <>
-      <div style={{ height: header ? 'calc(100vh - 40px)' : '100vh' }}>
+      <div className={header ? 'app-player' : 'app-player app-player--full'}>
         <div
           id="main"
           className="app-player__stage"
-          style={{
-            height: `calc(100% - ${stateAppScreen.appConfigShowPlayerController ? 42 : 0}px)`,
-          }}
           ref={player}
           onContextMenu={(e) => e.preventDefault()}
         />
         {stateAppScreen.appConfigShowPlayerController && (
           <div className="app-player__controller">
-            <MPIconButton
-              variant="text"
-              color="primary"
-              label="player-pause-and-play"
-              onClick={handlePauseOrPlay}
-              icon={<MPIcon icon={rufflePlayer?.isPlaying ? Pause : Play} size={18} />}
-            />
+            <MPTooltip content={rufflePlayer?.isPlaying ? t('pause') : t('play')}>
+              <MPIconButton
+                variant="text"
+                color="primary"
+                label={rufflePlayer?.isPlaying ? t('pause') : t('play')}
+                onClick={handlePauseOrPlay}
+                icon={<MPIcon icon={rufflePlayer?.isPlaying ? Pause : Play} size={18} />}
+              />
+            </MPTooltip>
             <MPTooltip content={t('replay')}>
               <MPIconButton
                 variant="text"
-                label="player-replay"
+                label={t('replay')}
                 onClick={loadFlash}
                 icon={<MPIcon icon={RotateCcw} size={18} />}
               />
             </MPTooltip>
-            <div className="app-player__volume">
-              <MPIconButton
-                variant="text"
-                label="player-mute"
-                onClick={handleMute}
-                icon={
-                  <MPIcon icon={stateAppScreen.flashVolume === 0 ? VolumeX : Volume2} size={18} />
-                }
-              />
-              <MPSlider
-                className="app-player__volume-slider"
-                aria-label="player-volume"
-                value={stateAppScreen.flashVolume}
-                onValueChange={handleVolumeSliderChange}
-              />
-            </div>
+            {/* The volume opens beside the button rather than taking a share of
+                the bar. It opens upwards, over the bottom of the movie, so it
+                reads as the player's own. The slider keeps its level while
+                muted, which is what unmuting goes back to. */}
+            <MPPopover
+              side="top"
+              align="start"
+              sideOffset={10}
+              width={340}
+              trigger={
+                <MPIconButton
+                  variant="text"
+                  label={t('volume')}
+                  icon={<MPIcon icon={isSilent ? VolumeX : Volume2} size={18} />}
+                />
+              }
+            >
+              <div className="app-player__volume">
+                {/* The slider fills its parent, which in a popup sized to its
+                    content resolves to nothing. This box gives the row, and so
+                    the popup, its width. */}
+                <div className="app-player__volume-slider">
+                  <MPSlider
+                    aria-label={t('volume')}
+                    value={stateAppScreen.flashVolume}
+                    disabled={stateAppScreen.flashMuted}
+                    onValueChange={handleVolumeSliderChange}
+                    onValueCommitted={handleVolumeSliderCommit}
+                  />
+                </div>
+                <MPCheckbox
+                  className="app-player__mute"
+                  checked={stateAppScreen.flashMuted}
+                  onCheckedChange={handleMuteChange}
+                  label={t('mute')}
+                />
+              </div>
+            </MPPopover>
           </div>
         )}
       </div>

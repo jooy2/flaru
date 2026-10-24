@@ -29,6 +29,8 @@ export interface AppScreenState {
   flashFileBackgroundColor: string;
   flashFileFrameRate: number;
   flashVolume: number;
+  // Kept apart from the volume, so unmuting brings back the level the slider was left at.
+  flashMuted: boolean;
   isDarkTheme: boolean;
   appConfigTheme: string;
   appConfigHideHeader: boolean;
@@ -70,6 +72,7 @@ const initialState: AppScreenState = {
   flashFileBackgroundColor: '',
   flashFileFrameRate: 0,
   flashVolume: 100,
+  flashMuted: false,
   isDarkTheme: false,
   appConfigTheme: 'light',
   appConfigHideHeader: false,

@@ -340,6 +340,77 @@ test('Hardware acceleration leads the advanced options and asks for a restart', 
   await closeSettings();
 });
 
+test('Player plays a SWF file and reports its metadata', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const swfPath = join(fixturesDir, 'Blank Movie.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+  await playFile(swfPath);
+
+  await expect(appWindow).toHaveTitle('Blank Movie.swf - Flare Flash Player');
+  await expect(appWindow.getByRole('button', { name: 'Restart' })).toBeVisible();
+  await expect(appWindow.getByRole('button', { name: 'Volume' })).toBeVisible();
+  // Ruffle ignores an option it does not know by name, so this checks the
+  // autoplay option reached it.
+  await expect
+    .poll(() =>
+      appWindow.evaluate(() => (document.getElementById('player') as any)?.loadedConfig?.autoplay),
+    )
+    .toBe('on');
+  await expect(appWindow.getByRole('button', { name: 'Pause' })).toBeVisible();
+
+  await appWindow.getByRole('button', { name: 'Pause' }).click();
+  await expect(appWindow.getByRole('button', { name: 'Play' })).toBeVisible();
+  await appWindow.getByRole('button', { name: 'Play' }).click();
+  await expect(appWindow.getByRole('button', { name: 'Pause' })).toBeVisible();
+
+  await appWindow.getByRole('button', { name: 'File information' }).click();
+
+  const info = appWindow.getByRole('dialog');
+
+  await expect(info.getByText('550', { exact: true })).toBeVisible();
+  await expect(info.getByText('400', { exact: true })).toBeVisible();
+  await info.getByRole('button', { name: 'Close' }).click();
+  await expect(info).toBeHidden();
+});
+
+test('Volume opens from the speaker button, and unmuting brings its level back', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const slider = appWindow.getByRole('slider', { name: 'Volume' });
+  const mute = appWindow.getByRole('checkbox', { name: 'Mute' });
+  const movieVolume = () =>
+    appWindow.evaluate(() => (document.getElementById('player') as any)?.volume);
+
+  await appWindow.getByRole('button', { name: 'Volume' }).click();
+  await expect(slider).toHaveValue('100');
+
+  await slider.focus();
+  await appWindow.keyboard.press('PageDown');
+  await expect(slider).toHaveValue('90');
+  await expect.poll(movieVolume).toBeCloseTo(0.9);
+  await expect.poll(() => readStoredConfig().playerVolume).toBe(90);
+
+  // The slider keeps its level while muted, and unmuting goes back to it.
+  await mute.click();
+  await expect.poll(movieVolume).toBe(0);
+  await expect(slider).toBeDisabled();
+  await expect(slider).toHaveValue('90');
+  await expect.poll(() => readStoredConfig().playerMuted).toBe(true);
+
+  await mute.click();
+  await expect.poll(movieVolume).toBeCloseTo(0.9);
+  await expect(slider).toBeEnabled();
+  await expect.poll(() => readStoredConfig().playerMuted).toBe(false);
+
+  await slider.focus();
+  await appWindow.keyboard.press('PageUp');
+  await expect(slider).toHaveValue('100');
+  await appWindow.keyboard.press('Escape');
+  await expect(slider).toBeHidden();
+});
+
 // What Ruffle loaded the movie on the player screen with.
 const loadedConfig = () =>
   appWindow.evaluate(() => {
@@ -473,7 +544,7 @@ test('Emulation options reach Ruffle when the movie loads again', async () => {
     .toEqual(['exactFit', true, 'fullscreen', '16x16', 'canvas', true, 60]);
 
   await closeSettings();
-  await appWindow.getByRole('button', { name: 'player-replay' }).click();
+  await appWindow.getByRole('button', { name: 'Restart' }).click();
 
   await expect.poll(loadedConfig).toMatchObject({
     scale: 'exactFit',

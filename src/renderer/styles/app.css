@@ -302,8 +302,20 @@ body {
   }
 }
 
+/* The movie above its controller, filling the window under the header. */
+.app-player {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 42px);
+}
+
+.app-player--full {
+  height: 100vh;
+}
+
 .app-player__controller {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 4px;
   height: 42px;
@@ -313,12 +325,17 @@ body {
 .app-player__volume {
   display: flex;
   align-items: center;
-  gap: 8px;
-  width: 180px;
+  gap: 16px;
 }
 
 .app-player__volume-slider {
-  flex-grow: 1;
+  flex-shrink: 0;
+  width: 144px;
+}
+
+.app-player__mute {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-metadata .mp-data-list__label {
@@ -326,7 +343,8 @@ body {
 }
 
 .app-player__stage {
-  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
   background: #000000;
   color: #ffffff;

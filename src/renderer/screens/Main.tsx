@@ -69,6 +69,8 @@ export default function Main() {
             appConfigPauseInBackground: configs.pauseInBackground,
             appConfigMaxExecutionDuration: configs.maxExecutionDuration,
             appConfigHardwareAcceleration: configs.hardwareAcceleration,
+            flashVolume: configs.playerVolume,
+            flashMuted: configs.playerMuted,
           }),
         );
 
