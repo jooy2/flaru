@@ -7,19 +7,64 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@base-ui/react':
         specifier: ^1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@eslint/js':
+        specifier: ^9.39.5
+        version: 9.39.5
+      '@playwright/test':
+        specifier: ^1.64.1
+        version: 1.64.1
       '@reduxjs/toolkit':
         specifier: ^2.13.0
         version: 2.13.0(react-redux@9.3.0(@types/react@19.3.0)(react@19.3.1)(redux@5.0.1))(react@19.3.1)
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.3.0)
+      '@vitejs/plugin-react':
+        specifier: ^6.1.2
+        version: 6.1.2(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
+      electron:
+        specifier: ^45.0.0
+        version: 45.0.0
+      electron-builder:
+        specifier: ^26.18.0
+        version: 26.18.0(electron-builder-squirrel-windows@26.18.0)
+      electron-extension-installer:
+        specifier: ^2.0.3
+        version: 2.0.3(electron@45.0.0)
       electron-localshortcut:
         specifier: ^3.2.1
         version: 3.2.1
       electron-store:
         specifier: ^12.0.0
         version: 12.0.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5(jiti@2.7.0)
+      eslint-config-prettier:
+        specifier: ^10.1.8
+        version: 10.1.8(eslint@9.39.5(jiti@2.7.0))
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@9.39.5(jiti@2.7.0))
+      eslint-plugin-n:
+        specifier: ^18.5.0
+        version: 18.5.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)
+      eslint-plugin-react:
+        specifier: ^7.37.5
+        version: 7.37.5(eslint@9.39.5(jiti@2.7.0))
+      eslint-plugin-react-hooks:
+        specifier: ^7.1.1
+        version: 7.1.1(eslint@9.39.5(jiti@2.7.0))
+      globals:
+        specifier: ^17.13.0
+        version: 17.13.0
       i18next:
         specifier: ^26.5.7
         version: 26.5.7(typescript@6.0.3)
@@ -29,12 +74,18 @@ importers:
       i18next-http-backend:
         specifier: ^4.0.5
         version: 4.0.5
+      jiti:
+        specifier: ^2.7.0
+        version: 2.7.0
       lucide-react:
         specifier: ^1.61.0
         version: 1.61.0(@types/react@19.3.0)(react@19.3.1)
       material-plus-ui:
         specifier: ^1.11.0
         version: 1.11.0(@base-ui/react@1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)
+      prettier:
+        specifier: ^3.9.10
+        version: 3.9.10
       qsu:
         specifier: ^1.100.0
         version: 1.100.0
@@ -59,58 +110,6 @@ importers:
       serve-handler:
         specifier: ^6.1.7
         version: 6.1.7
-    devDependencies:
-      '@eslint/js':
-        specifier: ^9.39.5
-        version: 9.39.5
-      '@playwright/test':
-        specifier: ^1.64.1
-        version: 1.64.1
-      '@types/react':
-        specifier: ^19.3.0
-        version: 19.3.0
-      '@types/react-dom':
-        specifier: ^19.3.0
-        version: 19.3.0(@types/react@19.3.0)
-      '@vitejs/plugin-react':
-        specifier: ^6.1.2
-        version: 6.1.2(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
-      electron:
-        specifier: ^45.0.0
-        version: 45.0.0
-      electron-builder:
-        specifier: ^26.18.0
-        version: 26.18.0(electron-builder-squirrel-windows@26.18.0)
-      electron-extension-installer:
-        specifier: ^2.0.3
-        version: 2.0.3(electron@45.0.0)
-      eslint:
-        specifier: ^9.39.5
-        version: 9.39.5(jiti@2.7.0)
-      eslint-config-prettier:
-        specifier: ^10.1.8
-        version: 10.1.8(eslint@9.39.5(jiti@2.7.0))
-      eslint-plugin-jsx-a11y:
-        specifier: ^6.10.2
-        version: 6.10.2(eslint@9.39.5(jiti@2.7.0))
-      eslint-plugin-n:
-        specifier: ^18.5.0
-        version: 18.5.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)
-      eslint-plugin-react:
-        specifier: ^7.37.5
-        version: 7.37.5(eslint@9.39.5(jiti@2.7.0))
-      eslint-plugin-react-hooks:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@9.39.5(jiti@2.7.0))
-      globals:
-        specifier: ^17.13.0
-        version: 17.13.0
-      jiti:
-        specifier: ^2.7.0
-        version: 2.7.0
-      prettier:
-        specifier: ^3.9.10
-        version: 3.9.10
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
