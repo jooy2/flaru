@@ -119,12 +119,8 @@ export default function Header({
               <HeaderButton label={t('file-info')} icon={BarChart3} onClick={handleOpenMetadata} />
             </>
           )}
-          {!withBackButton && (
-            <>
-              <HeaderButton label={t('app-info')} icon={CircleHelp} onClick={handleOpenAbout} />
-              <HeaderButton label={t('settings')} icon={Settings} onClick={handleOpenSettings} />
-            </>
-          )}
+          <HeaderButton label={t('app-info')} icon={CircleHelp} onClick={handleOpenAbout} />
+          <HeaderButton label={t('settings')} icon={Settings} onClick={handleOpenSettings} />
         </div>
       }
     />

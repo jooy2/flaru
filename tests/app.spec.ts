@@ -340,6 +340,174 @@ test('Hardware acceleration leads the advanced options and asks for a restart', 
   await closeSettings();
 });
 
+// What Ruffle loaded the movie on the player screen with.
+const loadedConfig = () =>
+  appWindow.evaluate(() => {
+    const config = (document.getElementById('player') as any)?.loadedConfig;
+
+    return {
+      scale: config?.scale,
+      forceScale: config?.forceScale,
+      letterbox: config?.letterbox,
+      quality: config?.quality,
+      allowFullscreen: config?.allowFullscreen,
+      maxExecutionDuration: config?.maxExecutionDuration,
+      backgroundExecutionMode: config?.backgroundExecutionMode,
+      contextMenu: config?.contextMenu,
+      deviceFontRenderer: config?.deviceFontRenderer,
+    };
+  });
+
+const movieWidth = () =>
+  appWindow.evaluate(() => (document.querySelector('#player') as any)?.metadata?.width);
+
+test('View settings changed during play apply to the running movie', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const menu = readMessages('en', 'menu');
+  const common = readMessages('en', 'common');
+  const dialog = settingsDialog();
+  const option = (key: string) => dialog.getByRole('checkbox', { name: menu[key] });
+  const windowSize = () =>
+    appElectron.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].getSize());
+  const swfPath = join(fixturesDir, 'View Movie.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+  await playFile(swfPath);
+  // Width and height come from the movie itself, so they prove Ruffle read it.
+  await expect.poll(movieWidth).toBe(550);
+
+  const sizeBefore = await windowSize();
+
+  await openSettings('Emulation');
+
+  // Most options reach the playing movie only after a restart, and the dialog
+  // names the button that does it.
+  await expect(
+    dialog.getByText(common['settings-info-playing'].replace('{{restart}}', menu.replay)),
+  ).toBeVisible();
+
+  // The open dialog hides the rest of the page from the accessibility tree, so
+  // the parts behind it are found by their class.
+  await option('show-player-controller').click();
+  await expect(appWindow.locator('.app-player__controller')).toHaveCount(0);
+  await option('show-player-controller').click();
+  await expect(appWindow.locator('.app-player__controller')).toHaveCount(1);
+
+  await option('show-player-version-select').click();
+  await expect(
+    appWindow.locator('.app-header').getByRole('combobox', { includeHidden: true }),
+  ).toHaveCount(1);
+  await option('show-player-version-select').click();
+  await expect(
+    appWindow.locator('.app-header').getByRole('combobox', { includeHidden: true }),
+  ).toHaveCount(0);
+
+  // The dialog stays open while the header it was opened from goes away.
+  await option('hide-header').click();
+  await expect(appWindow.locator('.app-header')).toHaveCount(0);
+  await expect(dialog).toBeVisible();
+  await option('hide-header').click();
+  await expect(appWindow.locator('.app-header')).toHaveCount(1);
+
+  // The window takes the movie's 550x400 stage as soon as the option is on.
+  await option('adjust-original-size').click();
+  await expect.poll(windowSize).toEqual([550, 400]);
+  await option('adjust-original-size').click();
+  await appElectron.evaluate(
+    ({ BrowserWindow }, [width, height]) => BrowserWindow.getAllWindows()[0].setSize(width, height),
+    sizeBefore,
+  );
+
+  // Ruffle reads these two each time it needs them, so the movie takes them at once.
+  await option('hide-context').click();
+  await dialog.getByRole('checkbox', { name: menu['pause-in-background'] }).click();
+  await expect.poll(async () => (await loadedConfig()).contextMenu).toBe('off');
+  await expect.poll(async () => (await loadedConfig()).backgroundExecutionMode).toBe('none');
+  await option('hide-context').click();
+  await dialog.getByRole('checkbox', { name: menu['pause-in-background'] }).click();
+  await expect.poll(async () => (await loadedConfig()).contextMenu).toBe('on');
+  await expect.poll(async () => (await loadedConfig()).backgroundExecutionMode).toBe('mainThread');
+
+  await closeSettings();
+});
+
+test('Emulation options reach Ruffle when the movie loads again', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const menu = readMessages('en', 'menu');
+  const common = readMessages('en', 'common');
+  const dialog = settingsDialog();
+  const section = (key: string) => dialog.getByRole('region', { name: common[key] });
+  const scriptLimit = section('settings-script-limit-title').getByRole('combobox');
+
+  await openSettings('Emulation');
+
+  await section('settings-scale-title')
+    .getByRole('radio', { name: menu['scale-exact-fit'] })
+    .click();
+  await dialog.getByRole('checkbox', { name: menu['force-scale'] }).click();
+  await section('settings-letterbox-title')
+    .getByRole('radio', { name: menu['letterbox-fullscreen'] })
+    .click();
+  await section('settings-title-6').getByRole('radio', { name: '16x16' }).click();
+  await section('settings-title-8').getByRole('radio', { name: 'Canvas (experimental)' }).click();
+  await dialog.getByRole('checkbox', { name: menu['allow-fullscreen'] }).click();
+  await scriptLimit.click();
+  await appWindow.getByRole('option', { name: '60 seconds' }).click();
+
+  await expect
+    .poll(() => {
+      const config = readStoredConfig();
+
+      return [
+        config.scale,
+        config.forceScale,
+        config.letterboxMode,
+        config.quality,
+        config.deviceFontRenderer,
+        config.allowFullscreen,
+        config.maxExecutionDuration,
+      ];
+    })
+    .toEqual(['exactFit', true, 'fullscreen', '16x16', 'canvas', true, 60]);
+
+  await closeSettings();
+  await appWindow.getByRole('button', { name: 'player-replay' }).click();
+
+  await expect.poll(loadedConfig).toMatchObject({
+    scale: 'exactFit',
+    forceScale: true,
+    letterbox: 'fullscreen',
+    quality: '16x16',
+    deviceFontRenderer: 'canvas',
+    allowFullscreen: true,
+    maxExecutionDuration: 60,
+  });
+
+  // Back to the defaults for the tests that follow.
+  await openSettings('Emulation');
+  await section('settings-scale-title').getByRole('radio').first().click();
+  await dialog.getByRole('checkbox', { name: menu['force-scale'] }).click();
+  await section('settings-letterbox-title')
+    .getByRole('radio', { name: menu['letterbox-on'] })
+    .click();
+  await section('settings-title-6').getByRole('radio', { name: menu['quality-high'] }).click();
+  await section('settings-title-8').getByRole('radio', { name: 'Embedded' }).click();
+  await dialog.getByRole('checkbox', { name: menu['allow-fullscreen'] }).click();
+  await scriptLimit.click();
+  await appWindow.getByRole('option', { name: '15 seconds (recommended)' }).click();
+  await closeSettings();
+
+  await expect
+    .poll(() => {
+      const config = readStoredConfig();
+
+      return [config.scale, config.letterboxMode, config.quality, config.maxExecutionDuration];
+    })
+    .toEqual(['showAll', 'on', 'high', 15]);
+});
+
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
   await recordExternalLinks();
   await appWindow.evaluate(() => {
