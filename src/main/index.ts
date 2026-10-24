@@ -165,7 +165,7 @@ const createWindow = () => {
     ]),
   );
 
-  if (global.IS_MAC) {
+  if (global.ENV_IS_MAC) {
     systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', true);
     systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', true);
   }
