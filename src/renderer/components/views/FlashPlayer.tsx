@@ -37,6 +37,10 @@ export default function FlashPlayer({
   const contextMenuMode = stateAppScreen.appConfigHideContext ? 'off' : 'on';
   const backgroundExecutionMode = stateAppScreen.appConfigPauseInBackground ? 'none' : 'mainThread';
   const isSilent = stateAppScreen.flashMuted || stateAppScreen.flashVolume === 0;
+  // A run without hardware acceleration has no WebGL, and the automatic choice
+  // tries the GPU renderers first, which some Ruffle versions do not come back
+  // from. So it draws on a canvas, unless a renderer was chosen by hand.
+  const autoRenderer = stateAppScreen.mainGlobalValues.ENV_HARDWARE_ACCELERATION ? null : 'canvas';
   // Ruffle tells nothing when it pauses or resumes, so the controls are drawn
   // again by hand after each change.
   const [, redrawControls] = useReducer((count: number) => count + 1, 0);
@@ -116,7 +120,7 @@ export default function FlashPlayer({
           openUrlMode: 'confirm',
           preferredRenderer:
             stateAppScreen.appConfigPreferredRenderer === 'auto'
-              ? null
+              ? autoRenderer
               : stateAppScreen.appConfigPreferredRenderer,
           quality: stateAppScreen.appConfigQuality,
           scale: stateAppScreen.appConfigScale,

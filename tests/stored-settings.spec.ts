@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { ElectronApplication, Page, _electron as electron, expect, test } from '@playwright/test';
@@ -7,6 +7,15 @@ import { ElectronApplication, Page, _electron as electron, expect, test } from '
 let appElectron: ElectronApplication;
 let appWindow: Page;
 let userDataDir: string;
+
+// The same blank movie the main suite plays.
+const BLANK_SWF = Buffer.from(
+  '4657530a1e0000007800055f00000fa000001801004302ffffff40000000',
+  'hex',
+);
+
+// The repository leaves Ruffle out, so a run without it skips what needs a movie.
+const hasRuffle = existsSync('dist/js/ruffle/ruffle.js');
 
 const readStoredConfig = () => JSON.parse(readFileSync(join(userDataDir, 'config.json'), 'utf8'));
 
@@ -87,4 +96,29 @@ test('The app starts without hardware acceleration when it is turned off', async
 
   await appWindow.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
+});
+
+test('A movie still plays without hardware acceleration', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const swfPath = join(userDataDir, 'blank.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+  await appElectron.evaluate(
+    ({ BrowserWindow }, filePath) =>
+      BrowserWindow.getAllWindows()[0].webContents.send('receiveOpenFile', filePath),
+    swfPath,
+  );
+
+  // Width and height come from the movie itself, so they prove Ruffle read it.
+  await expect
+    .poll(() =>
+      appWindow.evaluate(() => (document.querySelector('#player') as any)?.metadata?.width),
+    )
+    .toBe(550);
+  expect(
+    await appWindow.evaluate(
+      () => (document.querySelector('#player') as any)?.loadedConfig?.preferredRenderer,
+    ),
+  ).toBe('canvas');
 });
