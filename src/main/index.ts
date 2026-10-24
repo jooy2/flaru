@@ -17,6 +17,7 @@ import { platform } from 'os';
 import { getFileName, isExistingPath } from 'qsu/node';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
+import { isSameDocument, isWebUrl } from './utils';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
@@ -208,6 +209,37 @@ const createWindow = () => {
     });
 
     openFromExplorer(argv, 1);
+  });
+
+  // A web page asked for goes to the system browser. Any other address, such as
+  // a local file, is not opened at all.
+  const openInBrowser = (url: string) => {
+    if (isWebUrl(url)) {
+      shell.openExternal(url).catch(() => null);
+    }
+  };
+
+  // The app never opens a second window of its own: one would take this
+  // window's preload and its lifted web security, and hand them to whatever page
+  // a movie points at.
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    openInBrowser(url);
+
+    return { action: 'deny' };
+  });
+
+  // Nor does this window leave the app's page. A movie that asks for an address
+  // in its own window, as `getURL` with no target or with `_self`, `_top` or
+  // `_parent` does, would otherwise replace the app with that page and give it
+  // the same preload. A file dropped outside the drop zone would do the same.
+  // The app's page loading itself again is let through.
+  win.webContents.on('will-navigate', (details) => {
+    if (isSameDocument(details.url, win.webContents.getURL())) {
+      return;
+    }
+
+    details.preventDefault();
+    openInBrowser(details.url);
   });
 };
 
@@ -406,7 +438,11 @@ ipcMain.on('removeAllRecentFile', async () => {
 });
 
 ipcMain.on('openExternalLink', async (event, url) => {
-  await shell.openExternal(url);
+  // Only web pages: the renderer has no reason to hand any other scheme to the
+  // system.
+  if (isWebUrl(url)) {
+    await shell.openExternal(url);
+  }
 });
 
 ipcMain.handle('startStaticServer', async (event, data) => {
