@@ -31,6 +31,20 @@ export default function FlashPlayer({
   const stateAppScreen = useSelector((state: RootState) => state.appScreen);
   const [currentFileName, setCurrentFileName] = useState('');
   const [currentFileDirectory, setCurrentFileDirectory] = useState('');
+  // The movie's listeners outlive the render that added them, so they read the
+  // option from here instead of from the state they were created with.
+  const adjustOriginalSizeRef = useRef(stateAppScreen.appConfigAdjustOriginalSize);
+  const contextMenuMode = stateAppScreen.appConfigHideContext ? 'off' : 'on';
+  const backgroundExecutionMode = stateAppScreen.appConfigPauseInBackground ? 'none' : 'mainThread';
+
+  const resizeWindowToMovie = (metaData) => {
+    if (metaData?.width && metaData?.height) {
+      window.mainApi.send('resizeWindow', {
+        width: metaData.width,
+        height: metaData.height,
+      });
+    }
+  };
 
   const handlePauseOrPlay = () => {
     if (!rufflePlayer) {
@@ -76,8 +90,9 @@ export default function FlashPlayer({
         autoplay: autoplay ? 'on' : 'off',
         base: currentFileDirectory,
         allowScriptAccess: true,
-        letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
-        contextMenu: stateAppScreen.appConfigHideContext ? 'off' : 'on',
+        letterbox: stateAppScreen.appConfigLetterboxMode,
+        contextMenu: contextMenuMode,
+        backgroundExecutionMode,
         logLevel: 'error',
         openUrlMode: 'confirm',
         preferredRenderer:
@@ -85,7 +100,12 @@ export default function FlashPlayer({
             ? null
             : stateAppScreen.appConfigPreferredRenderer,
         quality: stateAppScreen.appConfigQuality,
+        scale: stateAppScreen.appConfigScale,
+        forceScale: stateAppScreen.appConfigForceScale,
+        allowFullscreen: stateAppScreen.appConfigAllowFullscreen,
+        maxExecutionDuration: stateAppScreen.appConfigMaxExecutionDuration,
         playerRuntime: stateAppScreen.appConfigPlayerRuntime,
+        deviceFontRenderer: stateAppScreen.appConfigDeviceFontRenderer,
         warnOnUnsupportedContent: false,
         playerVersion:
           stateAppScreen.appConfigEmulatePlayerVersion === 0
@@ -143,17 +163,34 @@ export default function FlashPlayer({
           flashFileFrameRate: metaData?.frameRate,
         }),
       );
-      if (stateAppScreen.appConfigAdjustOriginalSize && metaData?.width && metaData?.height) {
-        window.mainApi.send('resizeWindow', {
-          width: metaData.width,
-          height: metaData.height,
-        });
+      if (adjustOriginalSizeRef.current) {
+        resizeWindowToMovie(metaData);
       }
     });
 
     container.appendChild(rufflePlayer);
     loadFlash();
   }, [url, filePath, stateAppScreen.appConfigEmulatePlayerVersion, rufflePlayer]);
+
+  // The options below take effect on the movie that is already playing. The
+  // other emulation options are read only when a movie loads.
+  useEffect(() => {
+    adjustOriginalSizeRef.current = stateAppScreen.appConfigAdjustOriginalSize;
+
+    if (stateAppScreen.appConfigAdjustOriginalSize) {
+      resizeWindowToMovie(rufflePlayer?.metadata);
+    }
+  }, [stateAppScreen.appConfigAdjustOriginalSize]);
+
+  // Ruffle reads these options each time it needs them rather than once at load,
+  // on a right-click and when the window is hidden or shown again, so changing
+  // them in the loaded config is enough.
+  useEffect(() => {
+    if (rufflePlayer?.loadedConfig) {
+      rufflePlayer.loadedConfig.contextMenu = contextMenuMode;
+      rufflePlayer.loadedConfig.backgroundExecutionMode = backgroundExecutionMode;
+    }
+  }, [contextMenuMode, backgroundExecutionMode]);
 
   return (
     <>

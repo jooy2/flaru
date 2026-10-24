@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -45,6 +45,14 @@ const getUrlSwf = (url: string, target: string) => {
   return Buffer.concat([fileHeader, body]);
 };
 
+// The repository leaves Ruffle out, so a run without it skips what needs a movie.
+const hasRuffle = existsSync('dist/js/ruffle/ruffle.js');
+
+const readMessages = (locale: string, namespace: string): Record<string, string> =>
+  JSON.parse(
+    readFileSync(join('src/renderer/public/locales', locale, `${namespace}.json`), 'utf8'),
+  );
+
 // The hash route the window shows, read from the main process, since a page
 // that is navigating does not answer Playwright.
 const windowRoute = () =>
@@ -83,6 +91,29 @@ const recordExternalLinks = () =>
   });
 
 const openedExternally = () => appElectron.evaluate(() => (globalThis as any).openedExternally);
+
+// What the settings file holds, written as soon as a setting changes.
+const readStoredConfig = () => JSON.parse(readFileSync(join(userDataDir, 'config.json'), 'utf8'));
+
+const settingsDialog = () => appWindow.getByRole('dialog', { name: 'Settings' });
+
+const openSettings = async (group = 'General') => {
+  await appWindow.getByRole('button', { name: 'settings' }).click();
+  await settingsDialog().getByRole('button', { name: group, exact: true }).click();
+};
+
+const closeSettings = async () => {
+  await appWindow.keyboard.press('Escape');
+  await expect(settingsDialog()).toBeHidden();
+};
+
+// Opens a file the way the system does, with the app already running.
+const playFile = (filePath: string) =>
+  appElectron.evaluate(
+    ({ BrowserWindow }, path) =>
+      BrowserWindow.getAllWindows()[0].webContents.send('receiveOpenFile', path),
+    filePath,
+  );
 
 // Every test drives the same app instance, one step after another.
 test.describe.configure({ mode: 'serial' });
@@ -141,14 +172,157 @@ test('Document element check', async () => {
   await expect(appWindow.getByTestId('uiFileOpen').first()).toBeVisible();
 });
 
-test('A new profile starts on the default graphics quality', async () => {
+test('Settings dialog groups its options in a list beside them', async () => {
+  const dialog = settingsDialog();
+
   await appWindow.getByRole('button', { name: 'settings' }).click();
 
-  const dialog = appWindow.getByRole('dialog', { name: 'Settings' });
+  await expect(dialog.getByText(readMessages('en', 'common')['settings-info'])).toBeVisible();
+  await expect(dialog.getByRole('navigation', { name: 'Settings' }).getByRole('button')).toHaveText(
+    ['General', 'Emulation', 'Advanced'],
+  );
+  await expect(dialog.getByRole('button', { name: 'General', exact: true })).toHaveAttribute(
+    'aria-current',
+    'true',
+  );
+  await expect(dialog.getByRole('heading', { name: 'Language' })).toBeVisible();
+  await expect(dialog.getByRole('combobox', { name: 'Language' })).toHaveText('Auto Detect');
 
-  await expect(dialog.getByRole('radio', { name: 'High (recommended)' })).toBeChecked();
-  await dialog.getByRole('button', { name: 'Close' }).last().click();
-  await expect(dialog).toBeHidden();
+  await dialog.getByRole('button', { name: 'Emulation', exact: true }).click();
+
+  // The emulation groups drop the "Player:" label the group now stands for.
+  await expect(
+    dialog.getByRole('heading', { name: 'Graphics Renderer', exact: true }),
+  ).toBeVisible();
+  await expect(dialog.getByRole('heading', { name: /^Player:/ })).toHaveCount(0);
+  await expect(dialog.getByRole('heading', { name: 'Language' })).toHaveCount(0);
+
+  await dialog.getByRole('button', { name: 'Advanced', exact: true }).click();
+
+  await expect(dialog.getByRole('heading', { name: 'Reset app data' })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Reset and restart the App' })).toBeVisible();
+
+  await closeSettings();
+});
+
+test('A new profile starts on the default emulation options', async () => {
+  const common = readMessages('en', 'common');
+  const dialog = settingsDialog();
+  const section = (key: string) => dialog.getByRole('region', { name: common[key] });
+
+  await openSettings('Emulation');
+
+  await expect(
+    section('settings-title-6').getByRole('radio', { name: 'High (recommended)' }),
+  ).toBeChecked();
+  await expect(
+    section('settings-scale-title').getByRole('radio', {
+      name: 'Fit, keeping the aspect ratio (recommended)',
+    }),
+  ).toBeChecked();
+  await expect(
+    section('settings-letterbox-title').getByRole('radio', { name: 'Always' }),
+  ).toBeChecked();
+  await expect(dialog.getByRole('combobox', { name: 'Script time limit' })).toHaveText(
+    '15 seconds (recommended)',
+  );
+  await expect(
+    section('settings-title-8').getByRole('radio', { name: 'Canvas (experimental)' }),
+  ).toBeVisible();
+  await expect(
+    section('settings-title-7').getByRole('radio', { name: 'Adobe Flash Player (recommended)' }),
+  ).toBeChecked();
+
+  await closeSettings();
+});
+
+test('Theme setting switches the page between dark and light', async () => {
+  const html = appWindow.locator('html');
+  const theme = settingsDialog().getByRole('group', { name: 'App theme settings' });
+
+  await openSettings();
+
+  await theme.getByRole('button', { name: 'Dark', exact: true }).click();
+  await expect(html).toHaveAttribute('data-mp-scheme', 'dark');
+  expect(readStoredConfig().theme).toBe('dark');
+
+  await theme.getByRole('button', { name: 'Light', exact: true }).click();
+  await expect(html).toHaveAttribute('data-mp-scheme', 'light');
+
+  // A press on the chosen theme leaves it chosen.
+  await theme.getByRole('button', { name: 'Light', exact: true }).click();
+  await expect(theme.getByRole('button', { name: 'Light', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+
+  await theme.getByRole('button', { name: 'Automatic Detection' }).click();
+  await expect.poll(() => readStoredConfig().theme).toBe('auto');
+
+  await closeSettings();
+});
+
+test('Launching at system start sits above the window option on macOS and Windows', async () => {
+  const dialog = settingsDialog();
+  const autoLaunch = dialog.getByRole('checkbox', {
+    name: 'Launch the app when the system starts',
+  });
+  const restoreBounds = dialog.getByRole('checkbox', {
+    name: 'Remember the size and position of the last window when exiting the app',
+  });
+
+  await openSettings();
+  await expect(restoreBounds).toBeChecked();
+
+  // Electron has no login item on Linux, so the option is not offered there.
+  if (process.platform === 'linux') {
+    await expect(autoLaunch).toHaveCount(0);
+  } else {
+    await expect(autoLaunch).not.toBeChecked();
+    expect((await autoLaunch.boundingBox())!.y).toBeLessThan(
+      (await restoreBounds.boundingBox())!.y,
+    );
+
+    // End-to-end runs keep the login item in memory instead of in the system.
+    await autoLaunch.click();
+    await expect(autoLaunch).toBeChecked();
+    await closeSettings();
+    await openSettings();
+    await expect(autoLaunch).toBeChecked();
+    await autoLaunch.click();
+    await expect(autoLaunch).not.toBeChecked();
+  }
+
+  await closeSettings();
+});
+
+test('Hardware acceleration leads the advanced options and asks for a restart', async () => {
+  const dialog = settingsDialog();
+  const acceleration = dialog.getByRole('checkbox', { name: 'Use hardware acceleration' });
+  const restartNotice = dialog.getByText(
+    'You must restart the app for the changes to take effect!',
+  );
+
+  await openSettings('Advanced');
+
+  await expect(dialog.locator('.app-settings__panel').getByRole('heading').first()).toHaveText(
+    'Hardware acceleration',
+  );
+  await expect(acceleration).toBeChecked();
+  await expect(restartNotice).toBeHidden();
+
+  await acceleration.click();
+
+  await expect(restartNotice).toBeVisible();
+  await expect.poll(() => readStoredConfig().hardwareAcceleration).toBe(false);
+
+  // Back to the value this run started with, so nothing waits for a restart.
+  await acceleration.click();
+
+  await expect(restartNotice).toBeHidden();
+  await expect.poll(() => readStoredConfig().hardwareAcceleration).toBe(true);
+
+  await closeSettings();
 });
 
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
@@ -168,6 +342,8 @@ test('A page never opens a window of the app, and a web address goes to the brow
 });
 
 test('A movie cannot take the app window to another page, and its address goes to the browser', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
   const swfPath = join(fixturesDir, 'Navigate Movie.swf');
   const windowUrl = () =>
     appElectron.evaluate(({ BrowserWindow }) =>
@@ -189,11 +365,7 @@ test('A movie cannot take the app window to another page, and its address goes t
   });
 
   writeFileSync(swfPath, getUrlSwf('https://example.com/from-movie', '_self'));
-  await appElectron.evaluate(
-    ({ BrowserWindow }, filePath) =>
-      BrowserWindow.getAllWindows()[0].webContents.send('receiveOpenFile', filePath),
-    swfPath,
-  );
+  await playFile(swfPath);
 
   await expect.poll(openedExternally).toEqual(['https://example.com/from-movie']);
   expect(await windowUrl()).toMatch(/index\.html#\/player$/);

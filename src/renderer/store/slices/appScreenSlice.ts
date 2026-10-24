@@ -12,6 +12,9 @@ interface GlobalValues {
   ENV_OS: string;
   ENV_IS_WINDOWS: string;
   ENV_IS_MAC: string;
+  // Whether this run started with hardware acceleration, which a change to the
+  // setting does not alter until the next start.
+  ENV_HARDWARE_ACCELERATION: boolean;
   WILL_OPEN_FILE_PATH: string;
 }
 
@@ -29,7 +32,7 @@ export interface AppScreenState {
   isDarkTheme: boolean;
   appConfigTheme: string;
   appConfigHideHeader: boolean;
-  appConfigLetterbox: boolean;
+  appConfigLetterboxMode: string;
   appConfigHideContext: boolean;
   appConfigLanguage: string;
   appConfigCurrentLanguage: string;
@@ -41,6 +44,13 @@ export interface AppScreenState {
   appConfigPreferredRenderer: string;
   appConfigQuality: string;
   appConfigPlayerRuntime: string;
+  appConfigDeviceFontRenderer: string;
+  appConfigScale: string;
+  appConfigForceScale: boolean;
+  appConfigAllowFullscreen: boolean;
+  appConfigPauseInBackground: boolean;
+  appConfigMaxExecutionDuration: number;
+  appConfigHardwareAcceleration: boolean;
   recentFiles: string[];
   mainGlobalValues: GlobalValues;
   dialogMetadataOpen: boolean;
@@ -63,7 +73,7 @@ const initialState: AppScreenState = {
   isDarkTheme: false,
   appConfigTheme: 'light',
   appConfigHideHeader: false,
-  appConfigLetterbox: true,
+  appConfigLetterboxMode: 'on',
   appConfigHideContext: false,
   appConfigLanguage: 'auto',
   appConfigCurrentLanguage: 'unknown',
@@ -75,6 +85,13 @@ const initialState: AppScreenState = {
   appConfigPreferredRenderer: 'auto',
   appConfigQuality: 'high',
   appConfigPlayerRuntime: 'flashPlayer',
+  appConfigDeviceFontRenderer: 'embedded',
+  appConfigScale: 'showAll',
+  appConfigForceScale: false,
+  appConfigAllowFullscreen: false,
+  appConfigPauseInBackground: false,
+  appConfigMaxExecutionDuration: 15,
+  appConfigHardwareAcceleration: true,
   recentFiles: [],
   mainGlobalValues: {
     APP_NAME: '',
@@ -87,6 +104,7 @@ const initialState: AppScreenState = {
     ENV_OS: '',
     ENV_IS_WINDOWS: '',
     ENV_IS_MAC: '',
+    ENV_HARDWARE_ACCELERATION: true,
     WILL_OPEN_FILE_PATH: '',
   },
   dialogMetadataOpen: false,

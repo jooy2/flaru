@@ -7,9 +7,10 @@ export default {
     type: 'boolean',
     default: false,
   },
-  letterbox: {
-    type: 'boolean',
-    default: true,
+  // `off`, `fullscreen` or `on`.
+  letterboxMode: {
+    type: 'string',
+    default: 'on',
   },
   hideContext: {
     type: 'boolean',
@@ -53,5 +54,35 @@ export default {
   playerRuntime: {
     type: 'string',
     default: 'flashPlayer',
+  },
+  deviceFontRenderer: {
+    type: 'string',
+    default: 'embedded',
+  },
+  scale: {
+    type: 'string',
+    default: 'showAll',
+  },
+  forceScale: {
+    type: 'boolean',
+    default: false,
+  },
+  allowFullscreen: {
+    type: 'boolean',
+    default: false,
+  },
+  pauseInBackground: {
+    type: 'boolean',
+    default: false,
+  },
+  // In seconds.
+  maxExecutionDuration: {
+    type: 'number',
+    default: 15,
+  },
+  // Read before the app is ready, so a change takes effect at the next start.
+  hardwareAcceleration: {
+    type: 'boolean',
+    default: true,
   },
 } as const;

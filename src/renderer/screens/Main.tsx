@@ -52,7 +52,7 @@ export default function Main() {
             appConfigHideHeader: configs.hideHeader,
             appConfigTheme: configs.theme,
             appConfigHideContext: configs.hideContext,
-            appConfigLetterbox: configs.letterbox,
+            appConfigLetterboxMode: configs.letterboxMode,
             appConfigLanguage: configs.language,
             appConfigCurrentLanguage: getLanguage(),
             appConfigRestoreWindowBounds: configs.restoreWindowBounds,
@@ -62,6 +62,13 @@ export default function Main() {
             appConfigPreferredRenderer: configs.preferredRenderer,
             appConfigQuality: configs.quality,
             appConfigPlayerRuntime: configs.playerRuntime,
+            appConfigDeviceFontRenderer: configs.deviceFontRenderer,
+            appConfigScale: configs.scale,
+            appConfigForceScale: configs.forceScale,
+            appConfigAllowFullscreen: configs.allowFullscreen,
+            appConfigPauseInBackground: configs.pauseInBackground,
+            appConfigMaxExecutionDuration: configs.maxExecutionDuration,
+            appConfigHardwareAcceleration: configs.hardwareAcceleration,
           }),
         );
 

@@ -18,6 +18,7 @@ import { getFileName, isExistingPath } from 'qsu/node';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
 import { getSwfArgument, isSameDocument, isWebUrl } from './utils';
+import { getAutoLaunch, initAutoLaunch, setAutoLaunch } from './autoLaunch';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
@@ -75,6 +76,21 @@ const store = new ElectronStore({ schema });
 // The graphics quality default used to sit under `appConfigQuality`, a key
 // nothing read, while the setting itself was saved as `quality`.
 store.delete('appConfigQuality' as any);
+
+// The letterbox was an on and off switch before it had a full screen only mode.
+if ((store as any).get('letterbox') === false) {
+  store.set('letterboxMode', 'off');
+}
+
+store.delete('letterbox' as any);
+
+// Chromium decides on the GPU before the app is ready, so a change to this
+// setting takes effect at the next start.
+if (store.get('hardwareAcceleration') === false) {
+  app.disableHardwareAcceleration();
+}
+
+global.ENV_HARDWARE_ACCELERATION = store.get('hardwareAcceleration') !== false;
 
 const userAgent = `Electron ${app.getVersion()}, ${pkg.displayName} ${pkg.version}`;
 let win;
@@ -351,6 +367,7 @@ app.on('ready', () => {
     callback(pathname);
   });
 
+  initAutoLaunch({ e2e: IS_E2E });
   createWindow();
 });
 
@@ -385,6 +402,10 @@ ipcMain.on('setAppConfig', (event, args) => {
 
 ipcMain.on('resetAppConfig', () => {
   store.clear();
+  restartApp();
+});
+
+ipcMain.on('restart', () => {
   restartApp();
 });
 
@@ -490,5 +511,10 @@ ipcMain.handle('getGlobalValues', () => ({
   ENV_OS: global.ENV_OS,
   ENV_IS_WINDOWS: global.ENV_IS_WINDOWS,
   ENV_IS_MAC: global.ENV_IS_MAC,
+  ENV_HARDWARE_ACCELERATION: global.ENV_HARDWARE_ACCELERATION,
   WILL_OPEN_FILE_PATH: global.WILL_OPEN_FILE_PATH,
 }));
+
+ipcMain.handle('getAutoLaunch', () => getAutoLaunch());
+
+ipcMain.handle('setAutoLaunch', (event, isEnabled: boolean) => setAutoLaunch(isEnabled));

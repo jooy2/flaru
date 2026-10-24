@@ -10,6 +10,7 @@ const mainAvailChannels: string[] = [
   'getDirnameFromPath',
   'setAppConfig',
   'resetAppConfig',
+  'restart',
   'appendRecentFiles',
   'checkFileExist',
   'resizeWindow',
@@ -17,6 +18,8 @@ const mainAvailChannels: string[] = [
   'removeAllRecentFile',
   'startStaticServer',
   'openExternalLink',
+  'getAutoLaunch',
+  'setAutoLaunch',
 ];
 const rendererAvailChannels: string[] = [
   'receiveRecentFiles',
@@ -38,6 +41,14 @@ contextBridge.exposeInMainWorld('mainApi', {
     if (rendererAvailChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => cbFunc(event, ...args));
     }
+  },
+  invoke: async (channel: string, ...data: any[]): Promise<any> => {
+    if (mainAvailChannels.includes(channel)) {
+      const result = await ipcRenderer.invoke.apply(null, [channel, ...data]);
+      return result;
+    }
+
+    throw new Error(`Unknown ipc channel name: ${channel}`);
   },
   removeListener: (event: string): void => {
     ipcRenderer.removeAllListeners(event);
