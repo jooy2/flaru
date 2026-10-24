@@ -10,7 +10,29 @@
     buildResources: './buildAssets/installer/',
     output: './release/${version}',
   },
-  files: ['dist/**/*', '!release/**/*', '!tests/**/*'],
+  // Source maps are for debugging the bundles, and nothing reads them at run time.
+  files: ['dist/**/*', '!**/*.map', '!release/**/*', '!tests/**/*'],
+  // Electron ships every Chromium locale. Only the app's own languages are kept,
+  // with the regional ones Chromium falls back on for them, each under its
+  // Windows and Linux `.pak` name and its macOS `.lproj` name. Any other system
+  // language gets Chromium's own strings in English, as the app's text does.
+  electronLanguages: [
+    'de',
+    'en',
+    'en-US',
+    'en-GB',
+    'en_GB',
+    'es',
+    'es-419',
+    'es_419',
+    'fr',
+    'ja',
+    'ko',
+    'pt-BR',
+    'pt_BR',
+    'pt-PT',
+    'pt_PT',
+  ],
   fileAssociations: [
     {
       ext: 'swf',
