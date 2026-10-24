@@ -1,6 +1,9 @@
 import { MPContainer } from 'material-plus-ui';
 import { ReactNode, useEffect } from 'react';
 import Header from '@/renderer/components/layouts/Header';
+import ModalAbout from '@/renderer/components/dialogs/ModalAbout';
+import ModalMetadata from '@/renderer/components/dialogs/ModalMetadata';
+import ModalSettings from '@/renderer/components/dialogs/ModalSettings';
 
 type LayoutProps = {
   title?: string;
@@ -54,6 +57,11 @@ export default function Layout({
           <div className={contentClassName}>{children}</div>
         )}
       </div>
+      {/* The dialogs stay with the screen rather than the header, which a
+          setting in one of them can hide. */}
+      <ModalMetadata />
+      <ModalSettings />
+      <ModalAbout />
     </div>
   );
 }

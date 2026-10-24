@@ -6,9 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/renderer/store';
 import { setConfig } from '@/renderer/store/slices/appScreenSlice';
-import ModalAbout from '@/renderer/components/dialogs/ModalAbout';
-import ModalMetadata from '@/renderer/components/dialogs/ModalMetadata';
-import ModalSettings from '@/renderer/components/dialogs/ModalSettings';
 
 export default function Header({
   title,
@@ -116,9 +113,6 @@ export default function Header({
               />
             </>
           )}
-          <ModalMetadata />
-          <ModalAbout />
-          <ModalSettings />
         </div>
       }
     />
