@@ -46,7 +46,7 @@ export default {
     type: 'string',
     default: 'auto',
   },
-  appConfigQuality: {
+  quality: {
     type: 'string',
     default: 'high',
   },

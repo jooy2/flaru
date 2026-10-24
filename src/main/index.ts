@@ -71,6 +71,11 @@ global.WILL_OPEN_FILE_PATH = null;
 
 const schema = mainStoreSchema as DeepWriteable<typeof mainStoreSchema>;
 const store = new ElectronStore({ schema });
+
+// The graphics quality default used to sit under `appConfigQuality`, a key
+// nothing read, while the setting itself was saved as `quality`.
+store.delete('appConfigQuality' as any);
+
 const userAgent = `Electron ${app.getVersion()}, ${pkg.displayName} ${pkg.version}`;
 let win;
 let staticServer: http.Server | null = null;

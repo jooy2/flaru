@@ -111,6 +111,16 @@ test('Document element check', async () => {
   await expect(appWindow.getByTestId('uiFileOpen').first()).toBeVisible();
 });
 
+test('A new profile starts on the default graphics quality', async () => {
+  await appWindow.getByRole('button', { name: 'settings' }).click();
+
+  const dialog = appWindow.getByRole('dialog', { name: 'Settings' });
+
+  await expect(dialog.getByRole('radio', { name: 'High (recommended)' })).toBeChecked();
+  await dialog.getByRole('button', { name: 'Close' }).last().click();
+  await expect(dialog).toBeHidden();
+});
+
 test('A page never opens a window of the app, and a web address goes to the browser', async () => {
   await recordExternalLinks();
   await appWindow.evaluate(() => {
