@@ -17,10 +17,10 @@ export default function Main() {
 
   const handleVersionCheck = async () => true; // TODO version check
 
-  const runFromExplorer = (filePath: string): void => {
+  const runFromExplorer = async (filePath: string): Promise<void> => {
     dispatch(
       setConfig({
-        flashFileName: filePath.split('\\').pop(),
+        flashFileName: await window.mainApi.getFileNameFromPath(filePath, true),
         flashFilePath: filePath,
       }),
     );

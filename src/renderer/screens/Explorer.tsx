@@ -76,7 +76,7 @@ export default function Explorer() {
     if (ev) ev.preventDefault();
     if (!file) return;
     window.mainApi.send('checkFileExist', {
-      name: file.split('\\').pop(),
+      name: await window.mainApi.getFileNameFromPath(file, true),
       path: file,
     });
   };

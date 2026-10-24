@@ -214,6 +214,7 @@ test('A second launch opens its SWF file in the window already open, and quits',
   for (const arg of [swfPath, pathToFileURL(swfPath).href]) {
     expect(await launchAgain(['--some-switch', arg])).toBe(0);
     await expect.poll(windowRoute).toBe('/player');
+    await expect(appWindow).toHaveTitle('Second Launch.swf - Flare Flash Player');
     await appWindow.evaluate(() => {
       window.location.hash = '#/explorer';
     });
