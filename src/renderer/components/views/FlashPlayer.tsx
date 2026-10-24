@@ -73,7 +73,7 @@ export default function FlashPlayer({
 
       rufflePlayer.ruffle().load({
         url: `http://localhost:${port}/${currentFileName}`,
-        autoplay,
+        autoplay: autoplay ? 'on' : 'off',
         base: currentFileDirectory,
         allowScriptAccess: true,
         letterbox: stateAppScreen.appConfigLetterbox ? 'on' : 'off',
