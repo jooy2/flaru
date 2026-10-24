@@ -17,7 +17,7 @@ import { platform } from 'os';
 import { getFileName, isExistingPath } from 'qsu/node';
 import pkg from '../../package.json';
 import mainStoreSchema from './schema';
-import { isSameDocument, isWebUrl } from './utils';
+import { getSwfArgument, isSameDocument, isWebUrl } from './utils';
 
 type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
 
@@ -80,18 +80,18 @@ const userAgent = `Electron ${app.getVersion()}, ${pkg.displayName} ${pkg.versio
 let win;
 let staticServer: http.Server | null = null;
 
-const openFromExplorer = (argv, argvIndex = 1) => {
-  if (
-    global.ENV_IS_WINDOWS &&
-    argv &&
-    argv.length >= argvIndex &&
-    argv[argvIndex]?.indexOf('.swf') !== -1
-  ) {
-    win.webContents.send('receiveNextRenderer', argv[argvIndex]);
-    win.webContents.send('receiveOpenFile', argv[argvIndex]);
-  } else {
-    win.webContents.send('receiveNextRenderer', global.WILL_OPEN_FILE_PATH);
-  }
+// A second launch, such as another SWF file opened from the file manager while
+// the app runs, hands its command line to the window already open and quits.
+const hasInstanceLock = app.requestSingleInstanceLock();
+
+if (!hasInstanceLock) {
+  app.quit();
+}
+
+const openFromExplorer = (argv: string[]) => {
+  const filePath = (!global.ENV_IS_MAC && getSwfArgument(argv)) || global.WILL_OPEN_FILE_PATH;
+
+  win.webContents.send('receiveNextRenderer', filePath);
 };
 
 const getWindowBounds = () => {
@@ -197,8 +197,6 @@ const createWindow = () => {
   });
 
   win.webContents.once('dom-ready', () => {
-    const { argv } = process;
-
     electronLocalShortcut.register(
       win,
       ['F12', 'CommandOrControl+R', 'CommandOrControl+Shift+R'],
@@ -212,8 +210,6 @@ const createWindow = () => {
     electronLocalShortcut.register(win, 'F5', () => {
       win.webContents.send('receiveResumeToExplorer');
     });
-
-    openFromExplorer(argv, 1);
   });
 
   // A web page asked for goes to the system browser. Any other address, such as
@@ -311,6 +307,24 @@ const startStaticServer = async (baseUrl: string): Promise<number | null> =>
     })();
   });
 
+app.on('second-instance', (event, argv) => {
+  if (!win) {
+    return;
+  }
+
+  if (win.isMinimized()) {
+    win.restore();
+  }
+
+  win.focus();
+
+  const filePath = getSwfArgument(argv);
+
+  if (filePath) {
+    win.webContents.send('receiveOpenFile', filePath);
+  }
+});
+
 app.on('open-file', (event, pathParam) => {
   event.preventDefault();
   if (win?.webContents) {
@@ -322,6 +336,10 @@ app.on('open-file', (event, pathParam) => {
 });
 
 app.on('ready', () => {
+  if (!hasInstanceLock) {
+    return;
+  }
+
   if (IS_E2E && global.ENV_IS_MAC) {
     // With the window hidden, the Dock icon is the only part of the app that
     // would still appear on screen.
@@ -349,7 +367,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('mainLoaded', async () => {
-  openFromExplorer(process?.argv, 1);
+  openFromExplorer(process.argv);
 });
 
 ipcMain.on('getAppConfig', () => {

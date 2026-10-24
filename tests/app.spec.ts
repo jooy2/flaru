@@ -1,12 +1,22 @@
+import { spawn } from 'node:child_process';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import electronPath from 'electron';
 import { ElectronApplication, Page, _electron as electron, expect, test } from '@playwright/test';
 
-// The smallest movie Ruffle will play, with a DoAction tag that runs
-// `getURL(url, target)`: an uncompressed SWF 10 header with a 550x400 stage at
-// 24 fps and one frame, then SetBackgroundColor (white), the action in the long
-// tag form, ShowFrame and End.
+// The smallest movie Ruffle will play: an uncompressed SWF 10 header with a
+// 550x400 stage at 24 fps and one frame, then SetBackgroundColor (white),
+// ShowFrame and End.
+const BLANK_SWF = Buffer.from(
+  '4657530a1e0000007800055f00000fa000001801004302ffffff40000000',
+  'hex',
+);
+
+// The blank movie, with a DoAction tag that runs
+// `getURL(url, target)` in the long tag form, since an address does not fit
+// the short one.
 const getUrlSwf = (url: string, target: string) => {
   const args = Buffer.from(`${url}\0${target}\0`, 'latin1');
   const getUrl = Buffer.alloc(3);
@@ -34,6 +44,26 @@ const getUrlSwf = (url: string, target: string) => {
 
   return Buffer.concat([fileHeader, body]);
 };
+
+// The hash route the window shows, read from the main process, since a page
+// that is navigating does not answer Playwright.
+const windowRoute = () =>
+  appElectron.evaluate(({ BrowserWindow }) =>
+    new URL(BrowserWindow.getAllWindows()[0].webContents.getURL()).hash.replace(/^#/, ''),
+  );
+
+// Starts the app again with the same app data and `args` on its command line,
+// as a file manager does, and resolves with its exit code.
+const launchAgain = (args: string[]) =>
+  new Promise<number | null>((resolve, reject) => {
+    const child = spawn(electronPath as unknown as string, ['dist/main/index.js', ...args], {
+      env: { ...process.env, E2E: 'yes', E2E_USER_DATA_DIR: userDataDir, NODE_ENV: 'production' },
+      stdio: 'ignore',
+    });
+
+    child.once('error', reject);
+    child.once('exit', resolve);
+  });
 
 let appWindow: Page;
 let appElectron: ElectronApplication;
@@ -168,6 +198,31 @@ test('A movie cannot take the app window to another page, and its address goes t
   await expect.poll(openedExternally).toEqual(['https://example.com/from-movie']);
   expect(await windowUrl()).toMatch(/index\.html#\/player$/);
   expect(await runInWindow("!!document.querySelector('#player')")).toBe(true);
+});
+
+test('A second launch opens its SWF file in the window already open, and quits', async () => {
+  const swfPath = join(fixturesDir, 'Second Launch.swf');
+
+  writeFileSync(swfPath, BLANK_SWF);
+  await appWindow.evaluate(() => {
+    window.location.hash = '#/explorer';
+  });
+  await expect.poll(windowRoute).toBe('/explorer');
+
+  // A plain path, as Windows passes it, and a `file://` address, as a Linux file
+  // manager may.
+  for (const arg of [swfPath, pathToFileURL(swfPath).href]) {
+    expect(await launchAgain(['--some-switch', arg])).toBe(0);
+    await expect.poll(windowRoute).toBe('/player');
+    await appWindow.evaluate(() => {
+      window.location.hash = '#/explorer';
+    });
+    await expect.poll(windowRoute).toBe('/explorer');
+  }
+
+  expect(
+    await appElectron.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length),
+  ).toBe(1);
 });
 
 test('No uncaught errors were thrown in the renderer', async () => {
