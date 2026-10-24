@@ -46,6 +46,14 @@ export default function FlashPlayer({
   // Ruffle tells nothing when it pauses or resumes, so the controls are drawn
   // again by hand after each change.
   const [, redrawControls] = useReducer((count: number) => count + 1, 0);
+  // Whether the game was paused for a dialog, so closing it resumes only a game
+  // that was running when it opened.
+  const pausedForDialogRef = useRef(false);
+  // The dialogs the header opens cover the movie, so the game waits under them.
+  const isCoveredByDialog =
+    stateAppScreen.dialogSettingsOpen ||
+    stateAppScreen.dialogAboutOpen ||
+    stateAppScreen.dialogMetadataOpen;
 
   const resizeWindowToMovie = (metaData) => {
     if (metaData?.width && metaData?.height) {
@@ -211,6 +219,25 @@ export default function FlashPlayer({
       resizeWindowToMovie(rufflePlayer?.metadata);
     }
   }, [stateAppScreen.appConfigAdjustOriginalSize]);
+
+  // A game the reader paused before the dialog opened stays paused after it closes.
+  useEffect(() => {
+    if (!rufflePlayer) {
+      return;
+    }
+
+    if (isCoveredByDialog) {
+      if (rufflePlayer.isPlaying) {
+        rufflePlayer.pause();
+        pausedForDialogRef.current = true;
+        redrawControls();
+      }
+    } else if (pausedForDialogRef.current) {
+      pausedForDialogRef.current = false;
+      rufflePlayer.play();
+      redrawControls();
+    }
+  }, [isCoveredByDialog, rufflePlayer]);
 
   // Ruffle reads these options each time it needs them rather than once at load,
   // on a right-click and when the window is hidden or shown again, so changing

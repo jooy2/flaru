@@ -375,6 +375,50 @@ test('Player plays a SWF file and reports its metadata', async () => {
   await expect(info).toBeHidden();
 });
 
+test('The game waits under a header dialog and goes on when it closes', async () => {
+  test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
+
+  const header = appWindow.getByRole('banner');
+  const controls = appWindow.locator('.app-player__controller');
+  const isMoviePlaying = () =>
+    appWindow.evaluate(() => (document.getElementById('player') as any)?.isPlaying);
+  const closeDialog = async (name: string) => {
+    // The file information dialog closes from its button only.
+    if (name === 'File information') {
+      await appWindow.getByRole('dialog').getByRole('button', { name: 'Close' }).click();
+    } else {
+      await appWindow.keyboard.press('Escape');
+    }
+
+    await expect(appWindow.getByRole('dialog')).toBeHidden();
+  };
+
+  await expect.poll(isMoviePlaying).toBe(true);
+
+  for (const name of ['Settings', 'About App...', 'File information']) {
+    await header.getByRole('button', { name }).click();
+    await expect(appWindow.getByRole('dialog')).toBeVisible();
+    await expect.poll(isMoviePlaying).toBe(false);
+
+    await closeDialog(name);
+
+    await expect.poll(isMoviePlaying).toBe(true);
+    await expect(controls.getByRole('button', { name: 'Pause' })).toBeVisible();
+  }
+
+  // A game the reader paused stays paused once the dialog closes.
+  await controls.getByRole('button', { name: 'Pause' }).click();
+  await expect(controls.getByRole('button', { name: 'Play' })).toBeVisible();
+
+  await header.getByRole('button', { name: 'About App...' }).click();
+  await closeDialog('About App...');
+
+  expect(await isMoviePlaying()).toBe(false);
+
+  await controls.getByRole('button', { name: 'Play' }).click();
+  await expect.poll(isMoviePlaying).toBe(true);
+});
+
 test('Volume opens from the speaker button, and unmuting brings its level back', async () => {
   test.skip(!hasRuffle, 'Ruffle is not in dist/js/ruffle');
 
